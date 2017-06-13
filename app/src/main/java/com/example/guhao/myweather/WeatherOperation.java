@@ -3,6 +3,7 @@ package com.example.guhao.myweather;
 import android.util.Log;
 
 import com.example.guhao.myweather.Bean.ForecastBean;
+import com.example.guhao.myweather.Bean.SearchBean;
 import com.example.guhao.myweather.Bean.WeatherBean;
 
 import retrofit2.Call;
@@ -22,6 +23,8 @@ public class WeatherOperation {
     private final String TAG = "test";
     private WeatherBean weather;
     private ForecastBean forecast;
+    private SearchBean search;
+
 
     public WeatherOperation(){
         Retrofit retrofit = new Retrofit
@@ -30,14 +33,16 @@ public class WeatherOperation {
                 .build();
 
         WeatherService service = retrofit.create(WeatherService.class);
-        Call<WeatherBean> call = service.getWeatherData("Beijing",KEY);
+        final Call<WeatherBean> call = service.getWeatherData("Beijing",KEY);
         final Call<ForecastBean> forecastCall = service.getForecastBean("常州",KEY);
+        final Call<SearchBean> searchCall = service.getSearchBean("常州",KEY);
 
+        //getting all weather
         call.enqueue(new Callback<WeatherBean>() {
             @Override
             public void onResponse(Call<WeatherBean> call, Response<WeatherBean> response) {
 
-                Log.d(TAG, "onResponse: " + response.body().getHeWeather5().get(0).getStatus());
+                Log.d(TAG, "onResponse all weather: " + response.body().getHeWeather5().get(0).getStatus());
                 weather = response.body();
             }
 
@@ -47,6 +52,7 @@ public class WeatherOperation {
             }
         });
 
+        //getting weather forecast
         forecastCall.enqueue(new Callback<ForecastBean>() {
             @Override
             public void onResponse(Call<ForecastBean> call, Response<ForecastBean> response) {
@@ -59,9 +65,25 @@ public class WeatherOperation {
 
             }
         });
+
+        //getting city search result
+        searchCall.enqueue(new Callback<SearchBean>() {
+            @Override
+            public void onResponse(Call<SearchBean> call, Response<SearchBean> response) {
+                Log.d(TAG, "onResponse search: " + response.body().getHeWeather5().get(0).getBasic().getId());
+                search = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<SearchBean> call, Throwable t) {
+
+            }
+        });
     }
 
     public WeatherBean getBean() {
         return weather;
     }
+
+
 }
