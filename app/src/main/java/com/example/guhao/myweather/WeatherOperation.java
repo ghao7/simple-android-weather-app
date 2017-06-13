@@ -2,7 +2,8 @@ package com.example.guhao.myweather;
 
 import android.util.Log;
 
-import java.io.IOException;
+import com.example.guhao.myweather.Bean.ForecastBean;
+import com.example.guhao.myweather.Bean.WeatherBean;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,6 +20,8 @@ public class WeatherOperation {
     private final String BASE_URL = "https://free-api.heweather.com/v5/";
     private final String KEY = "deceba7359de462db05f243f3fb1660c";
     private final String TAG = "test";
+    private WeatherBean weather;
+    private ForecastBean forecast;
 
     public WeatherOperation(){
         Retrofit retrofit = new Retrofit
@@ -28,21 +31,14 @@ public class WeatherOperation {
 
         WeatherService service = retrofit.create(WeatherService.class);
         Call<WeatherBean> call = service.getWeatherData("Beijing",KEY);
-
+        final Call<ForecastBean> forecastCall = service.getForecastBean("常州",KEY);
 
         call.enqueue(new Callback<WeatherBean>() {
             @Override
             public void onResponse(Call<WeatherBean> call, Response<WeatherBean> response) {
-                /*
-                try {
-                    System.out.println(response.body().toString());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                */
-                //System.out.println(response.body().toString());
+
                 Log.d(TAG, "onResponse: " + response.body().getHeWeather5().get(0).getStatus());
-                Log.d(TAG, "onResponse: ");
+                weather = response.body();
             }
 
             @Override
@@ -50,7 +46,22 @@ public class WeatherOperation {
                 t.printStackTrace();
             }
         });
+
+        forecastCall.enqueue(new Callback<ForecastBean>() {
+            @Override
+            public void onResponse(Call<ForecastBean> call, Response<ForecastBean> response) {
+                Log.d(TAG, "onResponse forecast: " + response.body().getHeWeather5().get(0).getStatus());
+                forecast = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<ForecastBean> call, Throwable t) {
+
+            }
+        });
     }
 
-
+    public WeatherBean getBean() {
+        return weather;
+    }
 }
