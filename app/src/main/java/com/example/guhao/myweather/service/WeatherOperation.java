@@ -1,4 +1,4 @@
-package com.example.guhao.myweather;
+package com.example.guhao.myweather.service;
 
 import android.util.Log;
 

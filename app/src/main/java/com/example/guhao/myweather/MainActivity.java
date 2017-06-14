@@ -3,6 +3,9 @@ package com.example.guhao.myweather;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.guhao.myweather.data.DBOperation;
+import com.example.guhao.myweather.service.WeatherOperation;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,5 +20,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
 
+        DBOperation dbOperation = new DBOperation(this);
     }
 }
