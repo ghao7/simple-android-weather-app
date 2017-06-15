@@ -26,7 +26,7 @@ public class CityBean {
         this.up_en = up_en;
         this.up_cn = up_cn;
     }
-
+        
     public String getArea_code() {
         return area_code;
     }
