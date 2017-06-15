@@ -11,19 +11,24 @@ import android.widget.Toast;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String CREATE_TABLE = "create table 中国城市列表 ("
-            + "地区编码 text primary key, "
-            + "英文 text, "
-            + "中文 text, "
-            + "国家代码 text, "
-            + "国家英文 text, "
-            + "国家中文 text, "
-            + "省英文 text, "
-            + "省中文 text, "
-            + "所属上级市英文 text, "
-            + "所属上级市中文 text, "
-            + "纬度 real, "
-            + "经度 real)";
+    private static final String CREATE_TABLE = "create table china_city_list ("
+            + "area_code text, "
+            + "city_en text, "
+            + "city_cn text, "
+            + "cnty_code text, "
+            + "cnty_en text, "
+            + "cnty_cn text, "
+            + "state_en text, "
+            + "state_cn text, "
+            + "up_en text, "
+            + "up_cn text, "
+            + "latitude real, "
+            + "longitude real)";
+
+    private static final String SQL = "create table Category ("
+            + "id integer primary key autoincrement, "
+            + "category_name text, "
+            + "category_code integer)";
 
     private Context context;
 
@@ -35,11 +40,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE);
+        //db.execSQL(SQL);
         Toast.makeText(context, "Table created", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        //db.execSQL("drop table if exists china_city_list");
+        //onCreate(db);
     }
 }
