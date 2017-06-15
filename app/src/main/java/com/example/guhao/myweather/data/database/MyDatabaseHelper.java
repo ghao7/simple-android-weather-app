@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String CREATE_TABLE = "create table china_city_list ("
-            + "area_code text, "
+    private static final String CREATE_TABLE = "create table if not exists china_city_list ("
+            + "area_code text primary key, "
             + "city_en text, "
             + "city_cn text, "
             + "cnty_code text, "
@@ -41,7 +41,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE);
         //db.execSQL(SQL);
-        Toast.makeText(context, "Table created", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "Table created", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        db.execSQL(CREATE_TABLE);
+
     }
 
     @Override

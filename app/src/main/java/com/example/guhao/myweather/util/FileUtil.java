@@ -10,7 +10,7 @@ import java.io.OutputStream;
  * Created by guhao on 6/14/17.
  */
 
-public class CopyFileUtil{
+public class FileUtil {
     public static void copyFile(String source, String dest){
         InputStream input = null;
         OutputStream output = null;
