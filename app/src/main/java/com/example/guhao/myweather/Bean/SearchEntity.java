@@ -6,7 +6,7 @@ import java.util.List;
  * Created by guhao on 6/13/17.
  */
 
-public class SearchBean {
+public class SearchEntity {
 
     private List<HeWeather5Bean> HeWeather5;
 
