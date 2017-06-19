@@ -1,4 +1,4 @@
-package com.example.guhao.myweather.Bean;
+package com.example.guhao.myweather.bean;
 
 /**
  * Created by guhao on 6/15/17.

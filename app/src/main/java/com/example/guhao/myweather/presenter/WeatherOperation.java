@@ -1,8 +1,8 @@
-package com.example.guhao.myweather;
+package com.example.guhao.myweather.presenter;
 
 import android.util.Log;
 
-import com.example.guhao.myweather.Bean.WeatherEntity;
+import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.service.HttpMethods;
 
 import rx.Subscriber;

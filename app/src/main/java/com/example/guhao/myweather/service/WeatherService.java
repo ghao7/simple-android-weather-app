@@ -1,14 +1,12 @@
 package com.example.guhao.myweather.service;
 
 
-import com.example.guhao.myweather.Bean.CurrentEntity;
-import com.example.guhao.myweather.Bean.ForecastEntity;
-import com.example.guhao.myweather.Bean.SearchEntity;
-import com.example.guhao.myweather.Bean.WeatherEntity;
+import com.example.guhao.myweather.bean.CurrentEntity;
+import com.example.guhao.myweather.bean.ForecastEntity;
+import com.example.guhao.myweather.bean.SearchEntity;
+import com.example.guhao.myweather.bean.WeatherEntity;
 
 
-
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;

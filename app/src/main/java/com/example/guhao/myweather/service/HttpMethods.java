@@ -1,6 +1,6 @@
 package com.example.guhao.myweather.service;
 
-import com.example.guhao.myweather.Bean.WeatherEntity;
+import com.example.guhao.myweather.bean.WeatherEntity;
 
 import java.util.concurrent.TimeUnit;
 
