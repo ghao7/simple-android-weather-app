@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.Material.Light.LightStatusBar">
+        android:theme="@style/Theme.AppCompat.DayNight">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +21,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CityListActivity"
-            android:label="@string/title_activity_city_list"></activity>
+            android:name=".CitySearchingActivity"
+            android:label="@string/title_activity_city_list" />
+        <activity
+            android:name=".CityListScrollingActivity"
+            android:label="@string/title_activity_city_list_scrolling"></activity>
     </application>
 
 </manifest>
