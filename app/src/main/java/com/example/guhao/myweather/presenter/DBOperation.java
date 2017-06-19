@@ -1,11 +1,11 @@
-package com.example.guhao.myweather.data;
+package com.example.guhao.myweather.presenter;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.guhao.myweather.Bean.CityEntity;
+import com.example.guhao.myweather.bean.CityEntity;
 import com.example.guhao.myweather.R;
 import com.example.guhao.myweather.data.database.MyDatabaseHelper;
 import com.example.guhao.myweather.util.StringUtil;
