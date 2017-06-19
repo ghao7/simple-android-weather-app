@@ -4,7 +4,7 @@ package com.example.guhao.myweather.Bean;
  * Created by guhao on 6/15/17.
  */
 
-public class CityBean {
+public class CityEntity {
     private String area_code;
     private String city_en;
     private String city_cn;
@@ -15,7 +15,7 @@ public class CityBean {
     private String up_en;
     private String up_cn;
 
-    public CityBean(String area_code, String city_en, String city_cn, String cnty_en, String cnty_cn, String state_en, String state_cn, String up_en, String up_cn) {
+    public CityEntity(String area_code, String city_en, String city_cn, String cnty_en, String cnty_cn, String state_en, String state_cn, String up_en, String up_cn) {
         this.area_code = area_code;
         this.city_en = city_en;
         this.city_cn = city_cn;

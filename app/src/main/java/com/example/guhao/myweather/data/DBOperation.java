@@ -5,9 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.guhao.myweather.Bean.CityBean;
-import com.example.guhao.myweather.Bean.ForecastBean;
-import com.example.guhao.myweather.Bean.SearchBean;
+import com.example.guhao.myweather.Bean.CityEntity;
 import com.example.guhao.myweather.R;
 import com.example.guhao.myweather.data.database.MyDatabaseHelper;
 import com.example.guhao.myweather.util.StringUtil;
@@ -35,9 +33,9 @@ public class DBOperation {
         readFile(context, db);
     }
 
-    public List<CityBean> getCityResult(String str){
+    public List<CityEntity> getCityResult(String str){
 
-        List<CityBean> cityList = new ArrayList<>();
+        List<CityEntity> cityList = new ArrayList<>();
         String sql;
         if (StringUtil.isChinese(str)){
             sql = "select * from china_city_list where up_cn glob '*"
@@ -65,7 +63,7 @@ public class DBOperation {
                 Log.d(TAG, "getCityResult: " + city_cn);
                 //Log.d(TAG, "getCityResult: " + state_en);
 
-                cityList.add(new CityBean(area_code,city_en,city_cn,cnty_en,cnty_cn,state_en,state_cn,up_en,up_cn));
+                cityList.add(new CityEntity(area_code,city_en,city_cn,cnty_en,cnty_cn,state_en,state_cn,up_en,up_cn));
 
             }while (cursor.moveToNext());
         }

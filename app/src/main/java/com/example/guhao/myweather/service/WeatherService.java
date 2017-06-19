@@ -1,14 +1,17 @@
 package com.example.guhao.myweather.service;
 
 
-import com.example.guhao.myweather.Bean.CurrentBean;
-import com.example.guhao.myweather.Bean.ForecastBean;
-import com.example.guhao.myweather.Bean.SearchBean;
-import com.example.guhao.myweather.Bean.WeatherBean;
+import com.example.guhao.myweather.Bean.CurrentEntity;
+import com.example.guhao.myweather.Bean.ForecastEntity;
+import com.example.guhao.myweather.Bean.SearchEntity;
+import com.example.guhao.myweather.Bean.WeatherEntity;
+
+
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import rx.Observable;
 
 /**
  * Created by guhao on 6/13/17.
@@ -17,19 +20,19 @@ import retrofit2.http.Query;
 public interface WeatherService {
 
     @GET("weather?")
-    Call<WeatherBean> getWeatherData(@Query("city")String city,
-                                     @Query("key")String key);
+    Observable<WeatherEntity> getWeatherData(@Query("city")String city,
+                                             @Query("key")String key);
 
     @GET("forecast?")
-    Call<ForecastBean> getForecastBean(@Query("city")String city,
-                                       @Query("key")String key);
+    Observable<ForecastEntity> getForecastBean(@Query("city")String city,
+                                         @Query("key")String key);
 
     @GET("now?")
-    Call<CurrentBean> getCurrentBean(@Query("city")String city,
-                                     @Query("key")String key);
+    Observable<CurrentEntity> getCurrentBean(@Query("city")String city,
+                                       @Query("key")String key);
 
     @GET("search?")
-    Call<SearchBean> getSearchBean(@Query("city")String city,
-                                   @Query("key")String key);
+    Observable<SearchEntity> getSearchBean(@Query("city")String city,
+                                     @Query("key")String key);
 
 }

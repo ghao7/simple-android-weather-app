@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.guhao.myweather.data.DBOperation;
+import com.example.guhao.myweather.service.WeatherOperation;
 
 public class MainActivity extends Activity {
     private final String TAG = "main activity";
@@ -19,20 +20,20 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 WeatherOperation op = new WeatherOperation();
             }
         }).start();
-        */
+
 
         initData();
         findView();
 
         //DBOperation dbOperation = new DBOperation(this);
-        //List<CityBean> cityList = dbOperation.getCityResult("changzhou");
+        //List<CityEntity> cityList = dbOperation.getCityResult("changzhou");
 
         city_list_button.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -62,7 +63,7 @@ public class MainActivity extends Activity {
         @Override
         public void run() {
             dbOperation = new DBOperation(context);
-            //List<CityBean> cityList = dbOperation.getCityResult("changzhou");
+            //List<CityEntity> cityList = dbOperation.getCityResult("changzhou");
         }
     }
 }
