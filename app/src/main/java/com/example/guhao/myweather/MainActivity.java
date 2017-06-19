@@ -3,17 +3,11 @@ package com.example.guhao.myweather;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.guhao.myweather.Bean.CityBean;
 import com.example.guhao.myweather.data.DBOperation;
-import com.example.guhao.myweather.service.WeatherOperation;
-
-import java.util.List;
 
 public class MainActivity extends Activity {
     private final String TAG = "main activity";
@@ -43,7 +37,7 @@ public class MainActivity extends Activity {
         city_list_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CityListActivity.class);
+                Intent intent = new Intent(MainActivity.this, CityListScrollingActivity.class);
                 startActivity(intent);
             }
         });
