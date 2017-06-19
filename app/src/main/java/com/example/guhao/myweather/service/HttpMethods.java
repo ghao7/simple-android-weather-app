@@ -1,5 +1,6 @@
 package com.example.guhao.myweather.service;
 
+import com.example.guhao.myweather.bean.ForecastEntity;
 import com.example.guhao.myweather.bean.WeatherEntity;
 
 import java.util.concurrent.TimeUnit;
@@ -57,4 +58,14 @@ public class HttpMethods {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
+
+    public void getForcast(Subscriber<ForecastEntity> subscriber, String location, String key){
+        service.getForecastBean(location,key)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+
 }
