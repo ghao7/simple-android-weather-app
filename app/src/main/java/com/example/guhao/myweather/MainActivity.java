@@ -4,29 +4,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.guhao.myweather.bean.ForecastEntity;
-import com.example.guhao.myweather.bean.WeatherEntity;
+import com.example.guhao.myweather.bean.CityEntity;
 import com.example.guhao.myweather.presenter.DBOperation;
-import com.example.guhao.myweather.presenter.WeatherOperation;
-import com.example.guhao.myweather.service.HttpMethods;
+import com.example.guhao.myweather.presenter.WeatherPre;
 
-import rx.Subscriber;
+import java.util.List;
+
 
 public class MainActivity extends Activity implements View.OnClickListener{
     private final String TAG = "main activity";
     private DBOperation dbOperation;
-    private WeatherEntity weather;
-    private final String KEY = "deceba7359de462db05f243f3fb1660c";
-    private Subscriber subscriber;
-    private WeatherEntity weatherResult;
-    private ForecastEntity forecastResult;
-    private String str;
+    private WeatherPre weatherPre;
 
     private Button city_list_button;
     private Button test_button;
@@ -41,9 +33,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
         findView();
         setOnClickListener();
 
-        //DBOperation dbOperation = new DBOperation(this);
-        //List<CityEntity> cityList = dbOperation.getCityResult("changzhou");
-
         //WeatherOperation op = new WeatherOperation();
         //op.getWeather("beijing");
         //weather = op.getWeatherResult();
@@ -51,12 +40,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
     }
 
-
-
-
     public void initData(){
         MyRunnable runnable = new MyRunnable(this);
         new Thread(runnable).start();
+        weatherPre = new WeatherPre();
     }
 
     public void setOnClickListener(){
@@ -78,7 +65,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.test_button:
-                getWeather("Beijing");
+                //weatherPre.getWeather("Beijing", text_view_test);
                 //Toast.makeText(getApplicationContext(),str, Toast.LENGTH_SHORT).show();
 
         }
@@ -92,33 +79,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
         @Override
         public void run() {
             dbOperation = new DBOperation(context);
-            //List<CityEntity> cityList = dbOperation.getCityResult("changzhou");
+            List<CityEntity> cityList = dbOperation.getCityResult("changzhou");
         }
     }
 
-    public void getWeather(String city){
 
-        subscriber = new Subscriber<WeatherEntity>(){
-            @Override
-            public void onCompleted() {
-                Toast.makeText(MainActivity.this, "Get Top Movie Completed", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(WeatherEntity weatherEntity) {
-                str = weatherEntity.getHeWeather5().get(0).getDaily_forecast().get(0).getCond().getTxt_d();
-                Log.d(TAG, "onResponse all weather: " + str);
-                weatherResult = weatherEntity;
-                text_view_test.setText(str);
-            }
-        };
-
-        HttpMethods.getInstance().getWeather(subscriber, city, KEY);
-
-    }
 }

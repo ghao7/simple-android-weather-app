@@ -62,7 +62,6 @@ public class HttpMethods {
     public void getForcast(Subscriber<ForecastEntity> subscriber, String location, String key){
         service.getForecastBean(location,key)
                 .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
