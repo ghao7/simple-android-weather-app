@@ -20,6 +20,7 @@ import com.baidu.location.LocationClientOption;
 import com.example.guhao.myweather.bean.CityEntity;
 import com.example.guhao.myweather.presenter.DBOperation;
 import com.example.guhao.myweather.presenter.WeatherPre;
+import com.example.guhao.myweather.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         findView();
         initListener();
 
+        MyRunnable runnable = new MyRunnable(this);
+        new Thread(runnable).start();
+
         //WeatherOperation op = new WeatherOperation();
         //op.getWeather("beijing");
         //weather = op.getWeatherResult();
@@ -55,10 +59,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     public void initData(){
-        MyRunnable runnable = new MyRunnable(this);
-        new Thread(runnable).start();
-        weatherPre = new WeatherPre();
 
+        weatherPre = new WeatherPre();
         locationService();
 
     }
@@ -134,8 +136,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             String text = latitude + longitude + locType;
             String city = bdLocation.getCity();
 
-            Log.d(TAG, "onReceiveLocation: " + city);
             //showShort(city);
+            city = StringUtil.takeOutLastChar(city);
+            Log.d(TAG, "onReceiveLocation: " + city);
+
+            weatherPre.getWeather(city,text_view_test);
+
         }
 
         @Override

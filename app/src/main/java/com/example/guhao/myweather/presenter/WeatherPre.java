@@ -1,5 +1,6 @@
 package com.example.guhao.myweather.presenter;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +22,6 @@ public class WeatherPre {
     private Subscriber subscriber;
     private final String KEY = "deceba7359de462db05f243f3fb1660c";
     private final String TAG = "Weather Presenter";
-    private String str;
 
 
     public void getWeather(String city, final TextView textView){
@@ -38,9 +38,10 @@ public class WeatherPre {
 
             @Override
             public void onNext(WeatherEntity weatherEntity) {
-                str = weatherEntity.getHeWeather5().get(0).getDaily_forecast().get(0).getCond().getTxt_d();
-                Log.d(TAG, "onResponse all weather: " + str);
-                textView.setText(str);
+                String temp = weatherEntity.getHeWeather5().get(0).getNow().getTmp();
+                Log.d(TAG, "onResponse all weather: " + temp);
+                textView.setText(temp);
+
             }
         };
 

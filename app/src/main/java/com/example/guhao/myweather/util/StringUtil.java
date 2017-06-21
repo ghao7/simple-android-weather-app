@@ -22,4 +22,8 @@ public class StringUtil {
             return false;
 
     }
+
+    public static String takeOutLastChar(String str){
+        return str.substring(0,str.length()-1);
+    }
 }
