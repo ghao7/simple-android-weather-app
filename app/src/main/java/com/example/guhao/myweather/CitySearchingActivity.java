@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import com.example.guhao.myweather.adapter.CityListAdapter;
 import com.example.guhao.myweather.bean.CityEntity;
 import com.example.guhao.myweather.presenter.DBOperation;
 
@@ -46,9 +47,9 @@ public class CitySearchingActivity extends BaseActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if(!TextUtils.isEmpty(newText)) {
-                    setCityList(getCityList(dbOperation.getCityResult(newText)));
+                    setCityList(dbOperation.getCityResult(newText));
                 }else{
-                    setCityList(new ArrayList<String>());
+                    setCityList(new ArrayList<CityEntity>());
                 }
                 return false;
             }
@@ -59,17 +60,11 @@ public class CitySearchingActivity extends BaseActivity {
                 return false;
             }
         });
+
+        //listView.setOnClickListener();
     }
 
-    public List<String> getCityList(List<CityEntity> list){
-        List<String> citylist = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++){
-            citylist.add(list.get(i).getCity_cn());
-        }
-        return citylist;
-    }
-
-    public void setCityList(List<String> list){
-        listView.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,list));
+    public void setCityList(List<CityEntity> list){
+        listView.setAdapter(new CityListAdapter(this,R.layout.city_list_dropdown_item,list));
     }
 }
