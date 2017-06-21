@@ -74,7 +74,7 @@ public class DBOperation {
                 String up_cn = cursor.getString(cursor.getColumnIndex("up_cn"));
 
                 //Log.d(TAG, "getCityResult: " + area_code);
-                Log.d(TAG, "getCityResult: " + city_cn);
+                //Log.d(TAG, "getCityResult: " + city_cn);
                 //Log.d(TAG, "getCityResult: " + state_en);
 
                 cityList.add(new CityEntity(area_code,city_en,city_cn,cnty_en,cnty_cn,state_en,state_cn,up_en,up_cn));
@@ -82,7 +82,7 @@ public class DBOperation {
             }while (cursor.moveToNext());
         }
 
-        Log.d(TAG, "getCityResult: " + "The size of city list is " + cityList.size());
+        //Log.d(TAG, "getCityResult: " + "The size of city list is " + cityList.size());
         return cityList;
     }
 

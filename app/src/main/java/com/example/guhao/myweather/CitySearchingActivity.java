@@ -1,9 +1,12 @@
 package com.example.guhao.myweather;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -11,6 +14,7 @@ import android.widget.SearchView;
 import com.example.guhao.myweather.adapter.CityListAdapter;
 import com.example.guhao.myweather.bean.CityEntity;
 import com.example.guhao.myweather.presenter.DBOperation;
+import com.example.guhao.myweather.presenter.WeatherPre;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +25,7 @@ public class CitySearchingActivity extends BaseActivity {
     private DBOperation dbOperation;
     private SearchView searchView;
     private ListView listView;
+    private WeatherPre weatherPre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +34,14 @@ public class CitySearchingActivity extends BaseActivity {
 
         initData();
         findView();
+        initView();
         initListener();
 
     }
 
     public void initData(){
         dbOperation = new DBOperation(this);
+        weatherPre = new WeatherPre();
     }
 
     public void findView(){
@@ -42,12 +49,21 @@ public class CitySearchingActivity extends BaseActivity {
         listView = (ListView)findViewById(R.id.list_view);
     }
 
+    public void initView(){
+        searchView.setIconifiedByDefault(true);
+        searchView.setFocusable(true);
+        searchView.setIconified(false);
+        searchView.requestFocusFromTouch();
+    }
+
     public void initListener(){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override
             public boolean onQueryTextChange(String newText) {
                 if(!TextUtils.isEmpty(newText)) {
-                    setCityList(dbOperation.getCityResult(newText));
+                    final List<CityEntity> cityList = dbOperation.getCityResult(newText);
+                    setCityList(cityList);
+                    searchListListener(cityList);
                 }else{
                     setCityList(new ArrayList<CityEntity>());
                 }
@@ -61,7 +77,22 @@ public class CitySearchingActivity extends BaseActivity {
             }
         });
 
-        //listView.setOnClickListener();
+
+    }
+
+    public void searchListListener(final List<CityEntity> cityList){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                CityEntity cityEntity = cityList.get(position);
+                showShort(cityEntity.getCity_cn());
+                weatherPre.getWeather(cityEntity.getArea_code());
+                Intent intent = new Intent(CitySearchingActivity.this, CityListScrollingActivity.class);
+                intent.putExtra("city",cityEntity.getArea_code());
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     public void setCityList(List<CityEntity> list){

@@ -2,11 +2,9 @@ package com.example.guhao.myweather.presenter;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.guhao.myweather.MainActivity;
 import com.example.guhao.myweather.bean.WeatherEntity;
+import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.service.HttpMethods;
 
 import rx.Subscriber;
@@ -24,7 +22,7 @@ public class WeatherPre {
     private final String TAG = "Weather Presenter";
 
 
-    public void getWeather(String city, final TextView textView){
+    public void getWeather(String city){
         subscriber = new Subscriber<WeatherEntity>(){
             @Override
             public void onCompleted() {
@@ -39,9 +37,9 @@ public class WeatherPre {
             @Override
             public void onNext(WeatherEntity weatherEntity) {
                 String temp = weatherEntity.getHeWeather5().get(0).getNow().getTmp();
-                Log.d(TAG, "onResponse all weather: " + temp);
-                textView.setText(temp);
-
+                String city = weatherEntity.getHeWeather5().get(0).getBasic().getCity();
+                Log.d(TAG, "onResponse all weather: " + city + " " +temp);
+                WeatherConstant.add(weatherEntity);
             }
         };
 

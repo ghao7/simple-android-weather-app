@@ -17,7 +17,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.example.guhao.myweather.bean.CityEntity;
+import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.presenter.DBOperation;
 import com.example.guhao.myweather.presenter.WeatherPre;
 import com.example.guhao.myweather.util.StringUtil;
@@ -47,6 +47,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         MyRunnable runnable = new MyRunnable(this);
         new Thread(runnable).start();
+
 
         //WeatherOperation op = new WeatherOperation();
         //op.getWeather("beijing");
@@ -136,7 +137,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             city = StringUtil.takeOutLastChar(city);
             Log.d(TAG, "onReceiveLocation: " + city);
 
-            weatherPre.getWeather(city,text_view_test);
+            weatherPre.getWeather(city);
 
         }
 
@@ -165,8 +166,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.test_button:
-                //weatherPre.getWeather("Beijing", text_view_test);
-                //Toast.makeText(getApplicationContext(),str, Toast.LENGTH_SHORT).show();
+//                if (WeatherConstant.getWeatherList() != null) {
+//                    showShort(WeatherConstant.getWeatherList().get(0).getHeWeather5().get(0).getBasic().getCity());
+//                }
+                showShort(WeatherConstant.getWeatherList().size()+"");
                 break;
         }
     }

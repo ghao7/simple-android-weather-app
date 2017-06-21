@@ -33,7 +33,13 @@ public class CityListAdapter extends ArrayAdapter<CityEntity> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         CityEntity cityEntity = getItem(position);
-        TextView textView = (TextView)LayoutInflater.from(getContext()).inflate(resource,parent,false);
+        TextView textView;
+        if (convertView == null){
+            textView = (TextView)LayoutInflater.from(getContext()).inflate(resource,parent,false);
+        }else{
+            textView = (TextView) convertView;
+        }
+
         //TextView textView = new TextView(getContext());
 
         String cityName;
@@ -51,4 +57,6 @@ public class CityListAdapter extends ArrayAdapter<CityEntity> {
         //textView.
         return textView;
     }
+
+
 }
