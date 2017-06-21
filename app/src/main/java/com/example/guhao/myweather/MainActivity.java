@@ -32,12 +32,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private WeatherPre weatherPre;
     private LocationClient locationClient;
 
-
     private Button city_list_button;
     private Button test_button;
     private TextView text_view_test;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +56,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     public void initData(){
-
         weatherPre = new WeatherPre();
         locationService();
 
@@ -171,7 +167,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             case R.id.test_button:
                 //weatherPre.getWeather("Beijing", text_view_test);
                 //Toast.makeText(getApplicationContext(),str, Toast.LENGTH_SHORT).show();
-
+                break;
         }
     }
 
@@ -183,7 +179,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         @Override
         public void run() {
             dbOperation = new DBOperation(context);
-            List<CityEntity> cityList = dbOperation.getCityResult("changzhou");
+            //List<CityEntity> cityList = dbOperation.getCityResult("changzhou");
         }
     }
 

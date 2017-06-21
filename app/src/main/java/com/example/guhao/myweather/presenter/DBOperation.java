@@ -24,8 +24,13 @@ public class DBOperation {
     private final String TAG = "";
     private MyDatabaseHelper dbHelper;
     SQLiteDatabase db;
+    String sql_detail_cn;
+    String sql_detail_en;
+    String sql_cn;
+    String sql_en;
 
     public DBOperation(Context context){
+
         dbHelper = new MyDatabaseHelper(context, "china-city-list.db", null, 2);
         db = dbHelper.getWritableDatabase();
 
@@ -33,16 +38,25 @@ public class DBOperation {
         readFile(context, db);
     }
 
-    public List<CityEntity> getCityResult(String str){
+    public void initData(String str){
+        sql_detail_cn = "select * from china_city_list where up_cn glob '*"
+                + str + "*' or city_cn glob '*" + str + "*'";
 
-        List<CityEntity> cityList = new ArrayList<>();
+        sql_detail_en = "select * from china_city_list where up_en glob '*"
+                + str + "*' or city_en glob '*" + str + "*'";
+
+        sql_cn = "select * from china_city_list where city_cn glob '*" + str + "*'";
+        sql_en = "select * from china_city_list where city_en glob '*" + str + "*'";
+    }
+
+    public List<CityEntity> getCityResult(String str){
+        initData(str);
         String sql;
+        List<CityEntity> cityList = new ArrayList<>();
         if (StringUtil.isChinese(str)){
-            sql = "select * from china_city_list where up_cn glob '*"
-                    + str + "*' or city_cn glob '*" + str + "*'";
+            sql = sql_detail_cn;
         }else{
-            sql = "select * from china_city_list where up_en glob '*"
-                    + str + "*' or city_en glob '*" + str + "*'";
+            sql = sql_detail_en;
         }
 
         Cursor cursor = db.rawQuery(sql,null);
