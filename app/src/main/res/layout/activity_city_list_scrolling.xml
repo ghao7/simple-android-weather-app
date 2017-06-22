@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
         <include layout="@layout/include_toolbar" />
 
     </android.support.design.widget.AppBarLayout>
@@ -28,13 +29,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
-        app:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="@color/colorAccent"
         app:fabSize="normal"
         android:src="@mipmap/ic_toolbar_add"
         app:pressedTranslationZ="2dp"
         app:layout_anchor="@id/city_list_recycler_view"
         app:layout_anchorGravity="bottom|right"
-        app:rippleColor="@color/colorPrimaryDark"
+        app:rippleColor="#FFFFFF"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 

@@ -2,6 +2,7 @@
     <string name="app_name">My Weather</string>
     <string name="title_activity_city_list">CityListActivity</string>
     <string name="title_activity_city_list_scrolling">CityListScrollingActivity</string>
+    <string name="search">搜索</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
