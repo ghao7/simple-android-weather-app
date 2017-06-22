@@ -3,25 +3,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.guhao.myweather.CityListScrollingActivity">
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <include layout="@layout/include_toolbar" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <!-- A RecyclerView with some commonly used attributes -->
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvToDoList"
+        android:id="@+id/city_list_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        app:fabSize="normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
-        app:layout_anchor="@id/rvToDoList"
-        app:layout_anchorGravity="bottom|right|end"/>
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="normal"
+        android:src="@mipmap/ic_toolbar_add"
+        app:pressedTranslationZ="2dp"
+        app:layout_anchor="@id/city_list_recycler_view"
+        app:layout_anchorGravity="bottom|right"
+        app:rippleColor="@color/colorPrimaryDark"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
 
 </android.support.design.widget.CoordinatorLayout>

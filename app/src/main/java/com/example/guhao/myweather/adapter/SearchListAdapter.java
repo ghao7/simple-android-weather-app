@@ -21,10 +21,10 @@ import java.util.List;
  * Desc:
  */
 
-public class CityListAdapter extends ArrayAdapter<CityEntity> {
+public class SearchListAdapter extends ArrayAdapter<CityEntity> {
     private int resource;
 
-    public CityListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<CityEntity> objects) {
+    public SearchListAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<CityEntity> objects) {
         super(context, resource, objects);
         this.resource = resource;
     }

@@ -2,16 +2,13 @@ package com.example.guhao.myweather;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-import com.example.guhao.myweather.adapter.CityListAdapter;
+import com.example.guhao.myweather.adapter.SearchListAdapter;
 import com.example.guhao.myweather.bean.CityEntity;
 import com.example.guhao.myweather.presenter.DBOperation;
 import com.example.guhao.myweather.presenter.WeatherPre;
@@ -96,6 +93,6 @@ public class CitySearchingActivity extends BaseActivity {
     }
 
     public void setCityList(List<CityEntity> list){
-        listView.setAdapter(new CityListAdapter(this,R.layout.city_list_dropdown_item,list));
+        listView.setAdapter(new SearchListAdapter(this,R.layout.city_list_dropdown_item,list));
     }
 }
