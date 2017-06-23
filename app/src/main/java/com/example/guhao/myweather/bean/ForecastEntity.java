@@ -8,6 +8,7 @@ import java.util.List;
 
 public class ForecastEntity {
 
+
     private List<HeWeather5Bean> HeWeather5;
 
     public List<HeWeather5Bean> getHeWeather5() {
@@ -20,8 +21,8 @@ public class ForecastEntity {
 
     public static class HeWeather5Bean {
         /**
-         * basic : {"city":"北京","cnty":"中国","id":"CN101010100","lat":"39.904000","lon":"116.391000","prov":"北京","update":{"loc":"2016-08-31 11:52","utc":"2016-08-31 03:52"}}
-         * daily_forecast : [{"astro":{"mr":"04:19","ms":"18:07","sr":"05:41","ss":"18:47"},"cond":{"code_d":"100","code_n":"104","txt_d":"晴","txt_n":"阴"},"date":"2016-08-31","hum":"17","pcpn":"0.0","pop":"1","pres":"997","tmp":{"max":"33","min":"19"},"vis":"10","wind":{"deg":"342","dir":"北风","sc":"3-4","spd":"10"}}]
+         * basic : {"city":"北京","cnty":"中国","id":"CN101010100","lat":"39.90498734","lon":"116.40528870","update":{"loc":"2017-06-23 10:50","utc":"2017-06-23 02:50"}}
+         * daily_forecast : [{"astro":{"mr":"04:00","ms":"18:42","sr":"04:48","ss":"19:45"},"cond":{"code_d":"306","code_n":"302","txt_d":"中雨","txt_n":"雷阵雨"},"date":"2017-06-23","hum":"87","pcpn":"4.2","pop":"100","pres":"1003","tmp":{"max":"24","min":"19"},"uv":"6","vis":"15","wind":{"deg":"97","dir":"东风","sc":"微风","spd":"7"}},{"astro":{"mr":"04:56","ms":"19:48","sr":"04:48","ss":"19:46"},"cond":{"code_d":"300","code_n":"104","txt_d":"阵雨","txt_n":"阴"},"date":"2017-06-24","hum":"75","pcpn":"0.1","pop":"23","pres":"1003","tmp":{"max":"27","min":"18"},"uv":"7","vis":"17","wind":{"deg":"109","dir":"北风","sc":"微风","spd":"3"}},{"astro":{"mr":"05:58","ms":"20:47","sr":"04:48","ss":"19:46"},"cond":{"code_d":"104","code_n":"101","txt_d":"阴","txt_n":"多云"},"date":"2017-06-25","hum":"72","pcpn":"0.3","pop":"44","pres":"1004","tmp":{"max":"29","min":"20"},"uv":"8","vis":"19","wind":{"deg":"169","dir":"南风","sc":"微风","spd":"8"}}]
          * status : ok
          */
 
@@ -58,10 +59,9 @@ public class ForecastEntity {
              * city : 北京
              * cnty : 中国
              * id : CN101010100
-             * lat : 39.904000
-             * lon : 116.391000
-             * prov : 北京
-             * update : {"loc":"2016-08-31 11:52","utc":"2016-08-31 03:52"}
+             * lat : 39.90498734
+             * lon : 116.40528870
+             * update : {"loc":"2017-06-23 10:50","utc":"2017-06-23 02:50"}
              */
 
             private String city;
@@ -69,7 +69,6 @@ public class ForecastEntity {
             private String id;
             private String lat;
             private String lon;
-            private String prov;
             private UpdateBean update;
 
             public String getCity() {
@@ -112,14 +111,6 @@ public class ForecastEntity {
                 this.lon = lon;
             }
 
-            public String getProv() {
-                return prov;
-            }
-
-            public void setProv(String prov) {
-                this.prov = prov;
-            }
-
             public UpdateBean getUpdate() {
                 return update;
             }
@@ -130,8 +121,8 @@ public class ForecastEntity {
 
             public static class UpdateBean {
                 /**
-                 * loc : 2016-08-31 11:52
-                 * utc : 2016-08-31 03:52
+                 * loc : 2017-06-23 10:50
+                 * utc : 2017-06-23 02:50
                  */
 
                 private String loc;
@@ -157,16 +148,17 @@ public class ForecastEntity {
 
         public static class DailyForecastBean {
             /**
-             * astro : {"mr":"04:19","ms":"18:07","sr":"05:41","ss":"18:47"}
-             * cond : {"code_d":"100","code_n":"104","txt_d":"晴","txt_n":"阴"}
-             * date : 2016-08-31
-             * hum : 17
-             * pcpn : 0.0
-             * pop : 1
-             * pres : 997
-             * tmp : {"max":"33","min":"19"}
-             * vis : 10
-             * wind : {"deg":"342","dir":"北风","sc":"3-4","spd":"10"}
+             * astro : {"mr":"04:00","ms":"18:42","sr":"04:48","ss":"19:45"}
+             * cond : {"code_d":"306","code_n":"302","txt_d":"中雨","txt_n":"雷阵雨"}
+             * date : 2017-06-23
+             * hum : 87
+             * pcpn : 4.2
+             * pop : 100
+             * pres : 1003
+             * tmp : {"max":"24","min":"19"}
+             * uv : 6
+             * vis : 15
+             * wind : {"deg":"97","dir":"东风","sc":"微风","spd":"7"}
              */
 
             private AstroBean astro;
@@ -177,6 +169,7 @@ public class ForecastEntity {
             private String pop;
             private String pres;
             private TmpBean tmp;
+            private String uv;
             private String vis;
             private WindBean wind;
 
@@ -244,6 +237,14 @@ public class ForecastEntity {
                 this.tmp = tmp;
             }
 
+            public String getUv() {
+                return uv;
+            }
+
+            public void setUv(String uv) {
+                this.uv = uv;
+            }
+
             public String getVis() {
                 return vis;
             }
@@ -262,10 +263,10 @@ public class ForecastEntity {
 
             public static class AstroBean {
                 /**
-                 * mr : 04:19
-                 * ms : 18:07
-                 * sr : 05:41
-                 * ss : 18:47
+                 * mr : 04:00
+                 * ms : 18:42
+                 * sr : 04:48
+                 * ss : 19:45
                  */
 
                 private String mr;
@@ -308,10 +309,10 @@ public class ForecastEntity {
 
             public static class CondBean {
                 /**
-                 * code_d : 100
-                 * code_n : 104
-                 * txt_d : 晴
-                 * txt_n : 阴
+                 * code_d : 306
+                 * code_n : 302
+                 * txt_d : 中雨
+                 * txt_n : 雷阵雨
                  */
 
                 private String code_d;
@@ -354,7 +355,7 @@ public class ForecastEntity {
 
             public static class TmpBean {
                 /**
-                 * max : 33
+                 * max : 24
                  * min : 19
                  */
 
@@ -380,10 +381,10 @@ public class ForecastEntity {
 
             public static class WindBean {
                 /**
-                 * deg : 342
-                 * dir : 北风
-                 * sc : 3-4
-                 * spd : 10
+                 * deg : 97
+                 * dir : 东风
+                 * sc : 微风
+                 * spd : 7
                  */
 
                 private String deg;

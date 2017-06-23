@@ -83,11 +83,11 @@ public class CitySearchingActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CityEntity cityEntity = cityList.get(position);
                 showShort(cityEntity.getCity_cn());
-                weatherPre.getWeather(cityEntity.getArea_code());
-                Intent intent = new Intent(CitySearchingActivity.this, CityListScrollingActivity.class);
-                intent.putExtra("city",cityEntity.getArea_code());
-                startActivity(intent);
-                finish();
+                weatherPre.getWeather(cityEntity.getArea_code(), CitySearchingActivity.this, CityListScrollingActivity.class);
+//                Intent intent = new Intent(CitySearchingActivity.this, CityListScrollingActivity.class);
+//                intent.putExtra("city",cityEntity.getArea_code());
+//                startActivity(intent);
+                //finish();
             }
         });
     }

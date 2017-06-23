@@ -1,6 +1,7 @@
 package com.example.guhao.myweather.presenter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.example.guhao.myweather.bean.WeatherEntity;
@@ -22,7 +23,7 @@ public class WeatherPre {
     private final String TAG = "Weather Presenter";
 
 
-    public void getWeather(String city){
+    public void getWeather(String city, final Context context, final Class<?> cls){
         subscriber = new Subscriber<WeatherEntity>(){
             @Override
             public void onCompleted() {
@@ -40,6 +41,37 @@ public class WeatherPre {
                 String city = weatherEntity.getHeWeather5().get(0).getBasic().getCity();
                 Log.d(TAG, "onResponse all weather: " + city + " " +temp);
                 WeatherConstant.add(weatherEntity);
+
+                Intent intent = new Intent(context, cls);
+                context.startActivity(intent);
+                Log.d(TAG, "onNext: finished");
+
+            }
+        };
+
+        HttpMethods.getInstance().getWeather(subscriber, city, KEY);
+
+    }
+
+    public void addLocation(String city){
+        subscriber = new Subscriber<WeatherEntity>(){
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(WeatherEntity weatherEntity) {
+                String temp = weatherEntity.getHeWeather5().get(0).getNow().getTmp();
+                String city = weatherEntity.getHeWeather5().get(0).getBasic().getCity();
+                Log.d(TAG, "onResponse all weather: " + city + " " +temp);
+                WeatherConstant.add(weatherEntity);
+
             }
         };
 

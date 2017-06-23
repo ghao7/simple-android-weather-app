@@ -21,6 +21,8 @@
         android:id="@+id/city_list_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#EEEEEE"
+        android:layout_marginTop="4dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.design.widget.FloatingActionButton

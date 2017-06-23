@@ -137,7 +137,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             city = StringUtil.takeOutLastChar(city);
             Log.d(TAG, "onReceiveLocation: " + city);
 
-            weatherPre.getWeather(city);
+            weatherPre.addLocation(city);
 
         }
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.guhao.myweather.R;
+import com.example.guhao.myweather.bean.WeatherEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,27 +21,35 @@ import java.util.List;
 
 
 public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleViewAdapter.ViewHolder>{
-    private List<String> mData;
+    private List<WeatherEntity> mData;
 
-    public CityRecycleViewAdapter(List<String> data) {
+    public CityRecycleViewAdapter(List<WeatherEntity> data) {
         this.mData = data;
     }
 
-    public void updateData(ArrayList<String> data) {
+    public void updateData(ArrayList<WeatherEntity> data) {
         this.mData = data;
         notifyDataSetChanged();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item1,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.city_item,parent,false);
         ViewHolder holder = new ViewHolder(v);
         return holder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTv.setText(mData.get(position));
+        holder.mTv.setText(getInfo(mData.get(position)));
+    }
+
+    public String getInfo(WeatherEntity entity){
+        String city = entity.getHeWeather5().get(0).getBasic().getCity();
+        String temp = entity.getHeWeather5().get(0).getNow().getTmp();
+        String cond = entity.getHeWeather5().get(0).getNow().getCond().getTxt();
+
+        return city + "\n" + temp + "\n" + cond;
     }
 
     @Override
@@ -54,7 +63,7 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mTv = (TextView) itemView.findViewById(R.id.item_tv);
+            mTv = (TextView) itemView.findViewById(R.id.city_card_tv);
         }
     }
 }

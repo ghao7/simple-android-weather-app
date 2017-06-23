@@ -1,30 +1,20 @@
 package com.example.guhao.myweather;
 
-import android.app.SearchManager;
-import android.app.Service;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+
 
 import com.example.guhao.myweather.adapter.CityRecycleViewAdapter;
+import com.example.guhao.myweather.data.WeatherConstant;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CityListScrollingActivity extends BaseActivity {
@@ -38,10 +28,18 @@ public class CityListScrollingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_city_list_scrolling);
         findView();
-        initData();
+        setSupportActionBar(tb_toolbar);
         fabListener();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initData();
+
     }
 
     @Override
@@ -67,22 +65,15 @@ public class CityListScrollingActivity extends BaseActivity {
     }
 
     public void initData(){
-        initList();
+
+
         //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new CityRecycleViewAdapter(mlist));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(new CityRecycleViewAdapter(WeatherConstant.getWeatherList()));
+        //recyclerView.setItemAnimator(new DefaultItemAnimator());
         //recyclerView.addItemDecoration();
 
-        setSupportActionBar(tb_toolbar);
 
-    }
-
-    public void initList(){
-        mlist = new ArrayList<>();
-        for (int i = 0; i < 100; i++){
-            mlist.add(i+"");
-        }
     }
 
     public void findView(){
