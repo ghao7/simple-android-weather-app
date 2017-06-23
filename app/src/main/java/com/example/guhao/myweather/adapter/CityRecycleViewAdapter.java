@@ -27,7 +27,7 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
         this.mData = data;
     }
 
-    public void updateData(ArrayList<WeatherEntity> data) {
+    public void updateData(List<WeatherEntity> data) {
         this.mData = data;
         notifyDataSetChanged();
     }

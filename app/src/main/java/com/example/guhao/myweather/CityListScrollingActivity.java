@@ -43,6 +43,13 @@ public class CityListScrollingActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        String city = getIntent().getStringExtra("city");
+        Log.d(TAG, "onResume: City list scrolling activity" + city);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
         Log.d(TAG, "onCreateOptionsMenu: ");

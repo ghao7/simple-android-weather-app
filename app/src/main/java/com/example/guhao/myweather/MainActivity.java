@@ -17,9 +17,11 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.presenter.DBOperation;
-import com.example.guhao.myweather.presenter.WeatherPre;
+//import com.example.guhao.myweather.presenter.WeatherPre;
+import com.example.guhao.myweather.service.HttpMethods;
 import com.example.guhao.myweather.util.StringUtil;
 
 import java.util.ArrayList;
@@ -29,12 +31,16 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements View.OnClickListener{
     private final String TAG = "main activity";
     private DBOperation dbOperation;
-    private WeatherPre weatherPre;
+//    private WeatherPre weatherPre;
     private LocationClient locationClient;
 
     private Button city_list_button;
     private Button test_button;
     private TextView text_view_test;
+
+    private final String KEY = "deceba7359de462db05f243f3fb1660c";
+
+    private SubscriberOnNextListener getWeatherOnNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +60,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         //weather = op.getWeatherResult();
         //Log.d(TAG, "onCreate: " + op.getStr());
 
+        getWeatherOnNext = new SubscriberOnNextListener<WeatherEntity>(){
+            @Override
+            public void onNext(WeatherEntity entity) {
+                Log.d(TAG, "onNext: Get response");
+                String temp = entity.getHeWeather5().get(0).getNow().getTmp();
+                String city = entity.getHeWeather5().get(0).getBasic().getCity();
+                Log.d(TAG, "onResponse all weather: " + city + " " +temp);
+                WeatherConstant.add(entity);
+                text_view_test.setText(entity.getHeWeather5().get(0).getBasic().getCity());
+            }
+        };
     }
 
     public void initData(){
-        weatherPre = new WeatherPre();
+//        weatherPre = new WeatherPre();
         locationService();
 
     }
@@ -137,14 +154,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             city = StringUtil.takeOutLastChar(city);
             Log.d(TAG, "onReceiveLocation: " + city);
 
-            weatherPre.addLocation(city);
-
+//            weatherPre.addLocation(city);
+            getWeatherRequest(city);
         }
 
         @Override
         public void onConnectHotSpotMessage(String s, int i) {
 
         }
+    }
+
+    //进行网络请求
+    private void getWeatherRequest(String city){
+
+        HttpMethods.getInstance().getWeather(new WeatherSubscriber(getWeatherOnNext, MainActivity.this), city, KEY);
     }
 
     public void initListener(){
