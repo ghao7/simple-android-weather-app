@@ -28,10 +28,6 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
         this.mData = data;
     }
 
-    public void updateData(List<String> data) {
-        this.mData = data;
-        notifyDataSetChanged();
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -43,7 +39,13 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         //holder.mTv.setText(getInfo(mData.get(position)));
+        //holder.mTv.setText(mData.get(position));
         holder.mTv.setText(mData.get(position));
+    }
+
+    public void updateData(String str, int position){
+        mData.set(position,str);
+        notifyItemChanged(position);
     }
 
     public String getInfo(WeatherEntity entity){

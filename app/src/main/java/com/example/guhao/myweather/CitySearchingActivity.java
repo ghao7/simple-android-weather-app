@@ -94,6 +94,7 @@ public class CitySearchingActivity extends BaseActivity {
                 //startActivity(intent);
 
 
+
                 finish();
             }
         });
