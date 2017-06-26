@@ -17,6 +17,7 @@ import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.network.SubscriberOnNextListener;
 import com.example.guhao.myweather.presenter.WeatherPre;
+import com.example.guhao.myweather.util.StringUtil;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class CityListScrollingActivity extends BaseActivity {
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
     private Toolbar tb_toolbar;
+    private RecyclerView rv_city_card;
 
     List<String> mlist;
     private SubscriberOnNextListener getWeatherOnNext;
@@ -86,6 +88,7 @@ public class CityListScrollingActivity extends BaseActivity {
     public void initData(){
         //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         recyclerView.setAdapter(new CityRecycleViewAdapter(WeatherConstant.citySlotList));
         //recyclerView.setItemAnimator(new DefaultItemAnimator());
         //recyclerView.addItemDecoration();
@@ -97,6 +100,7 @@ public class CityListScrollingActivity extends BaseActivity {
         fab = (FloatingActionButton)findViewById(R.id.fab);
         recyclerView = (RecyclerView)findViewById(R.id.city_list_recycler_view);
         tb_toolbar = (Toolbar)findViewById(R.id.tb_toolbar);
+        rv_city_card = (RecyclerView)findViewById(R.id.city_list_recycler_view);
     }
 
     public void fabListener(){
@@ -116,6 +120,8 @@ public class CityListScrollingActivity extends BaseActivity {
             public void onNext(WeatherEntity entity) {
                 String cityName = entity.getHeWeather5().get(0).getBasic().getCity();
 //                showShort(cityName);
+                //WeatherConstant.cardList.get(0).setText(StringUtil.getDisplay(entity));
+
 
 
             }

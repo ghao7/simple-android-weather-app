@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.guhao.myweather.R;
 import com.example.guhao.myweather.bean.WeatherEntity;
+import com.example.guhao.myweather.data.WeatherConstant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,7 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
         public ViewHolder(View itemView) {
             super(itemView);
             mTv = (TextView) itemView.findViewById(R.id.city_card_tv);
+            WeatherConstant.cardList.add(mTv);
         }
     }
 }
