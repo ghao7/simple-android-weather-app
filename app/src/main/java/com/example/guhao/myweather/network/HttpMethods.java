@@ -1,4 +1,4 @@
-package com.example.guhao.myweather.service;
+package com.example.guhao.myweather.network;
 
 import com.example.guhao.myweather.bean.ForecastEntity;
 import com.example.guhao.myweather.bean.WeatherEntity;

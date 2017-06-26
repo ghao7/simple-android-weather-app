@@ -1,4 +1,4 @@
-package com.example.guhao.myweather;
+package com.example.guhao.myweather.network;
 
 import android.content.Context;
 
