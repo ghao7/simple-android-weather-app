@@ -62,19 +62,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public void initData(){
 //        weatherPre = new WeatherPre();
         locationService();
-
-        getWeatherOnNext = new SubscriberOnNextListener<WeatherEntity>(){
-            @Override
-            public void onNext(WeatherEntity entity) {
-                Log.d(TAG, "onNext: Get response");
-                String temp = entity.getHeWeather5().get(0).getNow().getTmp();
-                String city = entity.getHeWeather5().get(0).getBasic().getCity();
-                Log.d(TAG, "onResponse all weather: " + city + " " +temp);
-                WeatherConstant.add(entity);
-                text_view_test.setText(entity.getHeWeather5().get(0).getBasic().getCity());
-            }
-        };
-
     }
 
     public void locationService(){
@@ -141,17 +128,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public class MylocationListener implements BDLocationListener{
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
-
-            String latitude = bdLocation.getLatitude() + " ";
-            String longitude = bdLocation.getLongitude() + " ";
-            String locType = bdLocation.getLocType() + " ";
-            String text = latitude + longitude + locType;
             String city = bdLocation.getCity();
-
             //showShort(city);
             city = StringUtil.takeOutLastChar(city);
             Log.d(TAG, "onReceiveLocation: " + city);
-
+            WeatherConstant.citySlotList.add(city);
             WeatherPre.getWeatherRequest(city,getWeatherOnNext,MainActivity.this);
         }
 
@@ -164,6 +145,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public void initListener(){
         city_list_button.setOnClickListener(this);
         test_button.setOnClickListener(this);
+
+        getWeatherOnNext = new SubscriberOnNextListener<WeatherEntity>(){
+            @Override
+            public void onNext(WeatherEntity entity) {
+                Log.d(TAG, "onNext: Get response");
+                String temp = entity.getHeWeather5().get(0).getNow().getTmp();
+                String city = entity.getHeWeather5().get(0).getBasic().getCity();
+                Log.d(TAG, "onResponse all weather: " + city + " " +temp);
+                WeatherConstant.add(entity);
+                text_view_test.setText(entity.getHeWeather5().get(0).getBasic().getCity());
+            }
+        };
     }
 
     public void findView(){
@@ -180,9 +173,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.test_button:
-//                if (WeatherConstant.getWeatherList() != null) {
-//                    showShort(WeatherConstant.getWeatherList().get(0).getHeWeather5().get(0).getBasic().getCity());
-//                }
                 showShort(WeatherConstant.getWeatherList().size()+"");
                 break;
         }

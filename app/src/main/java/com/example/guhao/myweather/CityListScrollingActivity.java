@@ -13,7 +13,10 @@ import android.view.View;
 
 
 import com.example.guhao.myweather.adapter.CityRecycleViewAdapter;
+import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
+import com.example.guhao.myweather.network.SubscriberOnNextListener;
+import com.example.guhao.myweather.presenter.WeatherPre;
 
 import java.util.List;
 
@@ -24,6 +27,7 @@ public class CityListScrollingActivity extends BaseActivity {
     private Toolbar tb_toolbar;
 
     List<String> mlist;
+    private SubscriberOnNextListener getWeatherOnNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,30 +35,23 @@ public class CityListScrollingActivity extends BaseActivity {
 
         setContentView(R.layout.activity_city_list_scrolling);
         findView();
+        initData();
         setSupportActionBar(tb_toolbar);
         fabListener();
+        weatherSubscriberListener();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        initData();
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        String city = getIntent().getStringExtra("city");
-        Log.d(TAG, "onResume: City list scrolling activity" + city);
+//        String result = getIntent().getStringExtra("city");
+//        showShort(result);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
         Log.d(TAG, "onCreateOptionsMenu: ");
-
-
         return true;
     }
 
@@ -71,12 +68,25 @@ public class CityListScrollingActivity extends BaseActivity {
         return true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 1:
+                if (resultCode == RESULT_OK){
+                    String returnedData = data.getStringExtra("city");
+                    //showShort(returnedData);
+                    WeatherPre.getWeatherRequest(returnedData,getWeatherOnNext,CityListScrollingActivity.this);
+
+                }
+                break;
+            default:
+        }
+    }
+
     public void initData(){
-
-
         //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new CityRecycleViewAdapter(WeatherConstant.getWeatherList()));
+        recyclerView.setAdapter(new CityRecycleViewAdapter(WeatherConstant.citySlotList));
         //recyclerView.setItemAnimator(new DefaultItemAnimator());
         //recyclerView.addItemDecoration();
 
@@ -94,9 +104,22 @@ public class CityListScrollingActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CityListScrollingActivity.this, CitySearchingActivity.class);
-                startActivity(intent);
+                //startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
+    }
+
+    public void weatherSubscriberListener(){
+        getWeatherOnNext = new SubscriberOnNextListener<WeatherEntity>(){
+            @Override
+            public void onNext(WeatherEntity entity) {
+                String cityName = entity.getHeWeather5().get(0).getBasic().getCity();
+//                showShort(cityName);
+
+
+            }
+        };
     }
 
 }

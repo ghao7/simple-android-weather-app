@@ -14,6 +14,7 @@ import java.util.List;
 
 public class WeatherConstant {
     public static List<WeatherEntity> weatherList = new ArrayList<>();
+    public static List<String> citySlotList = new ArrayList<>();
 
     public static void add(WeatherEntity entity){
         if (!checkIfExist(entity)){

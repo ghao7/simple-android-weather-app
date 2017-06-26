@@ -10,6 +10,7 @@ import android.widget.SearchView;
 
 import com.example.guhao.myweather.adapter.SearchListAdapter;
 import com.example.guhao.myweather.bean.CityEntity;
+import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.presenter.DBOperation;
 //import com.example.guhao.myweather.presenter.WeatherPre;
 
@@ -83,13 +84,16 @@ public class CitySearchingActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CityEntity cityEntity = cityList.get(position);
-                showShort(cityEntity.getCity_cn());
-                //weatherPre.getWeather(cityEntity.getArea_code(), CitySearchingActivity.this, CityListScrollingActivity.class);
-//                weatherPre.addLocation(cityEntity.getArea_code());
+                //showShort(cityEntity.getCity_cn());
 
-                Intent intent = new Intent(CitySearchingActivity.this, CityListScrollingActivity.class);
+                //Intent intent = new Intent(CitySearchingActivity.this, CityListScrollingActivity.class);
+                WeatherConstant.citySlotList.add(cityEntity.getCity_cn());
+                Intent intent = new Intent();
                 intent.putExtra("city",cityEntity.getArea_code());
-                startActivity(intent);
+                setResult(RESULT_OK, intent);
+                //startActivity(intent);
+
+
                 finish();
             }
         });

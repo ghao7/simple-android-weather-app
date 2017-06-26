@@ -21,13 +21,13 @@ import java.util.List;
 
 
 public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleViewAdapter.ViewHolder>{
-    private List<WeatherEntity> mData;
+    private List<String> mData;
 
-    public CityRecycleViewAdapter(List<WeatherEntity> data) {
+    public CityRecycleViewAdapter(List<String> data) {
         this.mData = data;
     }
 
-    public void updateData(List<WeatherEntity> data) {
+    public void updateData(List<String> data) {
         this.mData = data;
         notifyDataSetChanged();
     }
@@ -41,7 +41,8 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTv.setText(getInfo(mData.get(position)));
+        //holder.mTv.setText(getInfo(mData.get(position)));
+        holder.mTv.setText(mData.get(position));
     }
 
     public String getInfo(WeatherEntity entity){
