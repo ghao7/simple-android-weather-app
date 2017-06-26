@@ -1,5 +1,7 @@
 package com.example.guhao.myweather.data;
 
+import android.widget.TextView;
+
 import com.example.guhao.myweather.bean.WeatherEntity;
 
 import java.util.ArrayList;
@@ -14,6 +16,8 @@ import java.util.List;
 
 public class WeatherConstant {
     public static List<WeatherEntity> weatherList = new ArrayList<>();
+    public static List<String> citySlotList = new ArrayList<>();
+    public static List<TextView> cardList = new ArrayList<>();
 
     public static void add(WeatherEntity entity){
         if (!checkIfExist(entity)){

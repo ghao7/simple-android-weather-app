@@ -1,14 +1,10 @@
 package com.example.guhao.myweather.presenter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 
-import com.example.guhao.myweather.bean.WeatherEntity;
-import com.example.guhao.myweather.data.WeatherConstant;
-import com.example.guhao.myweather.service.HttpMethods;
-
-import rx.Subscriber;
+import com.example.guhao.myweather.network.HttpMethods;
+import com.example.guhao.myweather.network.SubscriberOnNextListener;
+import com.example.guhao.myweather.network.WeatherSubscriber;
 
 /**
  * Author: GuHao
@@ -18,64 +14,9 @@ import rx.Subscriber;
  */
 
 public class WeatherPre {
-    private Subscriber subscriber;
-    private final String KEY = "deceba7359de462db05f243f3fb1660c";
-    private final String TAG = "Weather Presenter";
+    private static final String KEY = "deceba7359de462db05f243f3fb1660c";
 
-
-    public void getWeather(String city, final Context context, final Class<?> cls){
-        subscriber = new Subscriber<WeatherEntity>(){
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(WeatherEntity weatherEntity) {
-                String temp = weatherEntity.getHeWeather5().get(0).getNow().getTmp();
-                String city = weatherEntity.getHeWeather5().get(0).getBasic().getCity();
-                Log.d(TAG, "onResponse all weather: " + city + " " +temp);
-                WeatherConstant.add(weatherEntity);
-
-                Intent intent = new Intent(context, cls);
-                context.startActivity(intent);
-                Log.d(TAG, "onNext: finished");
-
-            }
-        };
-
-        HttpMethods.getInstance().getWeather(subscriber, city, KEY);
-
-    }
-
-    public void addLocation(String city){
-        subscriber = new Subscriber<WeatherEntity>(){
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(WeatherEntity weatherEntity) {
-                String temp = weatherEntity.getHeWeather5().get(0).getNow().getTmp();
-                String city = weatherEntity.getHeWeather5().get(0).getBasic().getCity();
-                Log.d(TAG, "onResponse all weather: " + city + " " +temp);
-                WeatherConstant.add(weatherEntity);
-
-            }
-        };
-
-        HttpMethods.getInstance().getWeather(subscriber, city, KEY);
-
+    public static void getWeatherRequest(String city, SubscriberOnNextListener listener, Context context){
+        HttpMethods.getInstance().getWeather(new WeatherSubscriber(listener, context), city, KEY);
     }
 }

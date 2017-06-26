@@ -1,5 +1,7 @@
 package com.example.guhao.myweather.util;
 
+import com.example.guhao.myweather.bean.WeatherEntity;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,5 +27,13 @@ public class StringUtil {
 
     public static String takeOutLastChar(String str){
         return str.substring(0,str.length()-1);
+    }
+
+    public static String getDisplay(WeatherEntity entity){
+        String city = entity.getHeWeather5().get(0).getBasic().getCity();
+        String temp = entity.getHeWeather5().get(0).getNow().getTmp();
+        String cond = entity.getHeWeather5().get(0).getNow().getCond().getTxt();
+
+        return city + "\n" + temp + "\n" + cond;
     }
 }

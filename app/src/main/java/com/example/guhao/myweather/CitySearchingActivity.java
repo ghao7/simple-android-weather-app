@@ -10,8 +10,9 @@ import android.widget.SearchView;
 
 import com.example.guhao.myweather.adapter.SearchListAdapter;
 import com.example.guhao.myweather.bean.CityEntity;
+import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.presenter.DBOperation;
-import com.example.guhao.myweather.presenter.WeatherPre;
+//import com.example.guhao.myweather.presenter.WeatherPre;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +20,11 @@ import java.util.List;
 public class CitySearchingActivity extends BaseActivity {
     private final String TAG = "citysearch";
 
+
     private DBOperation dbOperation;
     private SearchView searchView;
     private ListView listView;
-    private WeatherPre weatherPre;
+//    private WeatherPre weatherPre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class CitySearchingActivity extends BaseActivity {
 
     public void initData(){
         dbOperation = new DBOperation(this);
-        weatherPre = new WeatherPre();
+//        weatherPre = new WeatherPre();
     }
 
     public void findView(){
@@ -82,12 +84,18 @@ public class CitySearchingActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CityEntity cityEntity = cityList.get(position);
-                showShort(cityEntity.getCity_cn());
-                weatherPre.getWeather(cityEntity.getArea_code(), CitySearchingActivity.this, CityListScrollingActivity.class);
-//                Intent intent = new Intent(CitySearchingActivity.this, CityListScrollingActivity.class);
-//                intent.putExtra("city",cityEntity.getArea_code());
-//                startActivity(intent);
-                //finish();
+                //showShort(cityEntity.getCity_cn());
+
+                //Intent intent = new Intent(CitySearchingActivity.this, CityListScrollingActivity.class);
+                WeatherConstant.citySlotList.add(cityEntity.getCity_cn());
+                Intent intent = new Intent();
+                intent.putExtra("city",cityEntity.getArea_code());
+                setResult(RESULT_OK, intent);
+                //startActivity(intent);
+
+
+
+                finish();
             }
         });
     }

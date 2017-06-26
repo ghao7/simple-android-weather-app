@@ -13,7 +13,11 @@ import android.view.View;
 
 
 import com.example.guhao.myweather.adapter.CityRecycleViewAdapter;
+import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
+import com.example.guhao.myweather.network.SubscriberOnNextListener;
+import com.example.guhao.myweather.presenter.WeatherPre;
+import com.example.guhao.myweather.util.StringUtil;
 
 import java.util.List;
 
@@ -22,8 +26,11 @@ public class CityListScrollingActivity extends BaseActivity {
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
     private Toolbar tb_toolbar;
+    private RecyclerView rv_city_card;
+    private CityRecycleViewAdapter rvAdapter;
 
     List<String> mlist;
+    private SubscriberOnNextListener getWeatherOnNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,23 +38,32 @@ public class CityListScrollingActivity extends BaseActivity {
 
         setContentView(R.layout.activity_city_list_scrolling);
         findView();
+        initData();
         setSupportActionBar(tb_toolbar);
         fabListener();
+        weatherSubscriberListener();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        initData();
-
+//        String result = getIntent().getStringExtra("city");
+//        showShort(result);
+        String str = "Something Wrong";
+        if (WeatherConstant.weatherList.size() > 0) {
+            str = StringUtil.getDisplay(WeatherConstant.weatherList.get(0));
+        }else if (WeatherConstant.citySlotList.size() > 0){
+            str = WeatherConstant.citySlotList.get(0);
+        }else{
+            str = "定位中";
+        }
+        rvAdapter.updateData(str,0);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
         Log.d(TAG, "onCreateOptionsMenu: ");
-
-
         return true;
     }
 
@@ -56,7 +72,10 @@ public class CityListScrollingActivity extends BaseActivity {
         Log.d(TAG, "onOptionsItemSelected: ");
         switch (item.getItemId()){
             case R.id.action_search:
-                showShort("Clicked");
+                //showShort("Clicked");
+                Intent intent = new Intent(CityListScrollingActivity.this, CitySearchingActivity.class);
+                //startActivity(intent);
+                startActivityForResult(intent,1);
                 break;
 
             default:
@@ -64,32 +83,64 @@ public class CityListScrollingActivity extends BaseActivity {
         return true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 1:
+                if (resultCode == RESULT_OK){
+                    String returnedData = data.getStringExtra("city");
+                    //showShort(returnedData);
+                    WeatherPre.getWeatherRequest(returnedData,getWeatherOnNext,CityListScrollingActivity.this);
+
+                }
+                break;
+            default:
+        }
+    }
+
     public void initData(){
-
-
+        rvAdapter = new CityRecycleViewAdapter(WeatherConstant.citySlotList);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new CityRecycleViewAdapter(WeatherConstant.getWeatherList()));
+        recyclerView.setAdapter(rvAdapter);
         //recyclerView.setItemAnimator(new DefaultItemAnimator());
         //recyclerView.addItemDecoration();
-
-
+        //showShort("呵呵");
     }
 
     public void findView(){
         fab = (FloatingActionButton)findViewById(R.id.fab);
         recyclerView = (RecyclerView)findViewById(R.id.city_list_recycler_view);
         tb_toolbar = (Toolbar)findViewById(R.id.tb_toolbar);
+        rv_city_card = (RecyclerView)findViewById(R.id.city_list_recycler_view);
     }
 
     public void fabListener(){
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CityListScrollingActivity.this, CitySearchingActivity.class);
+//                Intent intent = new Intent(CityListScrollingActivity.this, CitySearchingActivity.class);
+//                //startActivity(intent);
+//                startActivityForResult(intent,1);
+                Intent intent = new Intent(CityListScrollingActivity.this,MainActivity.class);
                 startActivity(intent);
             }
         });
+
+
+    }
+
+    public void weatherSubscriberListener(){
+        getWeatherOnNext = new SubscriberOnNextListener<WeatherEntity>(){
+            @Override
+            public void onNext(WeatherEntity entity) {
+                String cityName = entity.getHeWeather5().get(0).getBasic().getCity();
+//                showShort(cityName);
+                //WeatherConstant.cardList.get(0).setText(StringUtil.getDisplay(entity));
+                rvAdapter.updateData(StringUtil.getDisplay(entity),WeatherConstant.citySlotList.size()-1);
+
+            }
+        };
     }
 
 }

@@ -17,7 +17,9 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
+import com.example.guhao.myweather.network.SubscriberOnNextListener;
 import com.example.guhao.myweather.presenter.DBOperation;
 import com.example.guhao.myweather.presenter.WeatherPre;
 import com.example.guhao.myweather.util.StringUtil;
@@ -29,12 +31,13 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements View.OnClickListener{
     private final String TAG = "main activity";
     private DBOperation dbOperation;
-    private WeatherPre weatherPre;
     private LocationClient locationClient;
 
     private Button city_list_button;
     private Button test_button;
     private TextView text_view_test;
+
+    private SubscriberOnNextListener getWeatherOnNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,18 +51,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         MyRunnable runnable = new MyRunnable(this);
         new Thread(runnable).start();
 
-
         //WeatherOperation op = new WeatherOperation();
         //op.getWeather("beijing");
         //weather = op.getWeatherResult();
         //Log.d(TAG, "onCreate: " + op.getStr());
 
+
     }
 
     public void initData(){
-        weatherPre = new WeatherPre();
+//        weatherPre = new WeatherPre();
         locationService();
-
     }
 
     public void locationService(){
@@ -126,19 +128,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public class MylocationListener implements BDLocationListener{
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
-
-            String latitude = bdLocation.getLatitude() + " ";
-            String longitude = bdLocation.getLongitude() + " ";
-            String locType = bdLocation.getLocType() + " ";
-            String text = latitude + longitude + locType;
             String city = bdLocation.getCity();
-
             //showShort(city);
             city = StringUtil.takeOutLastChar(city);
             Log.d(TAG, "onReceiveLocation: " + city);
-
-            weatherPre.addLocation(city);
-
+            WeatherConstant.citySlotList.add(city);
+            WeatherPre.getWeatherRequest(city,getWeatherOnNext,MainActivity.this);
         }
 
         @Override
@@ -150,6 +145,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public void initListener(){
         city_list_button.setOnClickListener(this);
         test_button.setOnClickListener(this);
+
+        getWeatherOnNext = new SubscriberOnNextListener<WeatherEntity>(){
+            @Override
+            public void onNext(WeatherEntity entity) {
+                Log.d(TAG, "onNext: Get response");
+                String temp = entity.getHeWeather5().get(0).getNow().getTmp();
+                String city = entity.getHeWeather5().get(0).getBasic().getCity();
+                Log.d(TAG, "onResponse all weather: " + city + " " +temp);
+                WeatherConstant.add(entity);
+                text_view_test.setText(entity.getHeWeather5().get(0).getBasic().getCity());
+            }
+        };
     }
 
     public void findView(){
@@ -166,9 +173,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.test_button:
-//                if (WeatherConstant.getWeatherList() != null) {
-//                    showShort(WeatherConstant.getWeatherList().get(0).getHeWeather5().get(0).getBasic().getCity());
-//                }
                 showShort(WeatherConstant.getWeatherList().size()+"");
                 break;
         }
@@ -182,7 +186,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         @Override
         public void run() {
             dbOperation = new DBOperation(context);
-            //List<CityEntity> cityList = dbOperation.getCityResult("changzhou");
         }
     }
 

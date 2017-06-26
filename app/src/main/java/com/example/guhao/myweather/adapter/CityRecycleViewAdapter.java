@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.guhao.myweather.R;
 import com.example.guhao.myweather.bean.WeatherEntity;
+import com.example.guhao.myweather.data.WeatherConstant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +22,12 @@ import java.util.List;
 
 
 public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleViewAdapter.ViewHolder>{
-    private List<WeatherEntity> mData;
+    private List<String> mData;
 
-    public CityRecycleViewAdapter(List<WeatherEntity> data) {
+    public CityRecycleViewAdapter(List<String> data) {
         this.mData = data;
     }
 
-    public void updateData(ArrayList<WeatherEntity> data) {
-        this.mData = data;
-        notifyDataSetChanged();
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -41,7 +38,14 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTv.setText(getInfo(mData.get(position)));
+        //holder.mTv.setText(getInfo(mData.get(position)));
+        //holder.mTv.setText(mData.get(position));
+        holder.mTv.setText(mData.get(position));
+    }
+
+    public void updateData(String str, int position){
+        mData.set(position,str);
+        notifyItemChanged(position);
     }
 
     public String getInfo(WeatherEntity entity){
@@ -64,6 +68,7 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
         public ViewHolder(View itemView) {
             super(itemView);
             mTv = (TextView) itemView.findViewById(R.id.city_card_tv);
+            WeatherConstant.cardList.add(mTv);
         }
     }
 }
