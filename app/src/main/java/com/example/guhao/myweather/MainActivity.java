@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -20,6 +22,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.example.guhao.myweather.adapter.CityFragmentPagerAdapter;
 import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.network.SubscriberOnNextListener;
@@ -33,20 +36,24 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity {
     private final String TAG = "main activity";
+    private static final int NUM_PAGES = 5;
+
     private DBOperation dbOperation;
     private LocationClient locationClient;
 
     private Toolbar tb_toolbar;
+    private ViewPager viewPager;
 
     private SubscriberOnNextListener getWeatherOnNext;
+    private PagerAdapter mPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initData();
         findView();
+        initData();
         initListener();
 
 
@@ -77,6 +84,8 @@ public class MainActivity extends BaseActivity {
     public void initData() {
 //        weatherPre = new WeatherPre();
         locationService();
+        mPagerAdapter = new CityFragmentPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(mPagerAdapter);
     }
 
     public void locationService() {
@@ -172,6 +181,7 @@ public class MainActivity extends BaseActivity {
 
     public void findView() {
         tb_toolbar = (Toolbar) findViewById(R.id.tb_toolbar);
+        viewPager = (ViewPager) findViewById(R.id.main_activity_view_pager);
     }
 
 
