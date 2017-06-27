@@ -36,6 +36,10 @@ public class CityListScrollingActivity extends BaseActivity {
         findView();
         initData();
         setSupportActionBar(tb_toolbar);
+        initListner();
+    }
+
+    public void initListner() {
         fabListener();
         weatherSubscriberListener();
     }
@@ -48,12 +52,12 @@ public class CityListScrollingActivity extends BaseActivity {
         String str;
         if (WeatherConstant.weatherList.size() > 0) {
             str = StringUtil.getDisplay(WeatherConstant.weatherList.get(0));
-        }else if (WeatherConstant.citySlotList.size() > 0){
+        } else if (WeatherConstant.citySlotList.size() > 0) {
             str = WeatherConstant.citySlotList.get(0);
-        }else{
+        } else {
             str = "定位中";
         }
-        rvAdapter.updateData(str,0);
+        rvAdapter.updateData(str, 0);
     }
 
     @Override
@@ -65,12 +69,12 @@ public class CityListScrollingActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d(TAG, "onOptionsItemSelected: ");
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_search:
                 //showShort("Clicked");
                 Intent intent = new Intent(CityListScrollingActivity.this, CitySearchingActivity.class);
                 //startActivity(intent);
-                startActivityForResult(intent,1);
+                startActivityForResult(intent, 1);
                 break;
 
             default:
@@ -80,12 +84,12 @@ public class CityListScrollingActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case 1:
-                if (resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     String returnedData = data.getStringExtra("city");
                     //showShort(returnedData);
-                    WeatherPre.getWeatherRequest(returnedData,getWeatherOnNext,CityListScrollingActivity.this);
+                    WeatherPre.getWeatherRequest(returnedData, getWeatherOnNext, CityListScrollingActivity.this);
 
                 }
                 break;
@@ -93,7 +97,7 @@ public class CityListScrollingActivity extends BaseActivity {
         }
     }
 
-    public void initData(){
+    public void initData() {
         rvAdapter = new CityRecycleViewAdapter(WeatherConstant.citySlotList);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -103,20 +107,20 @@ public class CityListScrollingActivity extends BaseActivity {
         //showShort("呵呵");
     }
 
-    public void findView(){
-        fab = (FloatingActionButton)findViewById(R.id.fab);
-        recyclerView = (RecyclerView)findViewById(R.id.city_list_recycler_view);
-        tb_toolbar = (Toolbar)findViewById(R.id.tb_toolbar);
+    public void findView() {
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        recyclerView = (RecyclerView) findViewById(R.id.city_list_recycler_view);
+        tb_toolbar = (Toolbar) findViewById(R.id.tb_toolbar);
     }
 
-    public void fabListener(){
-        fab.setOnClickListener(new View.OnClickListener(){
+    public void fabListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(CityListScrollingActivity.this, CitySearchingActivity.class);
 //                //startActivity(intent);
 //                startActivityForResult(intent,1);
-                Intent intent = new Intent(CityListScrollingActivity.this,MainActivity.class);
+                Intent intent = new Intent(CityListScrollingActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -124,14 +128,14 @@ public class CityListScrollingActivity extends BaseActivity {
 
     }
 
-    public void weatherSubscriberListener(){
-        getWeatherOnNext = new SubscriberOnNextListener<WeatherEntity>(){
+    public void weatherSubscriberListener() {
+        getWeatherOnNext = new SubscriberOnNextListener<WeatherEntity>() {
             @Override
             public void onNext(WeatherEntity entity) {
                 String cityName = entity.getHeWeather5().get(0).getBasic().getCity();
 //                showShort(cityName);
                 //WeatherConstant.cardList.get(0).setText(StringUtil.getDisplay(entity));
-                rvAdapter.updateData(StringUtil.getDisplay(entity),WeatherConstant.citySlotList.size()-1);
+                rvAdapter.updateData(StringUtil.getDisplay(entity), WeatherConstant.citySlotList.size() - 1);
 
             }
         };

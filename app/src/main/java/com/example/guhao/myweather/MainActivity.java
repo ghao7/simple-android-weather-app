@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity {
     private final String TAG = "main activity";
     private DBOperation dbOperation;
     private LocationClient locationClient;
@@ -49,6 +49,7 @@ public class MainActivity extends BaseActivity{
         findView();
         initListener();
 
+
         setSupportActionBar(tb_toolbar);
         MyRunnable runnable = new MyRunnable(this);
         new Thread(runnable).start();
@@ -57,13 +58,13 @@ public class MainActivity extends BaseActivity{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_list,menu);
+        getMenuInflater().inflate(R.menu.menu_list, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_list:
                 Intent intent = new Intent(MainActivity.this, CityListScrollingActivity.class);
                 startActivity(intent);
@@ -73,12 +74,12 @@ public class MainActivity extends BaseActivity{
         return true;
     }
 
-    public void initData(){
+    public void initData() {
 //        weatherPre = new WeatherPre();
         locationService();
     }
 
-    public void locationService(){
+    public void locationService() {
         locationClient = new LocationClient(getApplicationContext());
 
         LocationClientOption option = new LocationClientOption();
@@ -91,26 +92,26 @@ public class MainActivity extends BaseActivity{
 
         List<String> permissionList = new ArrayList<>();
         if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED){
+                != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(android.Manifest.permission.ACCESS_FINE_LOCATION);
         }
         if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.READ_PHONE_STATE)
-                != PackageManager.PERMISSION_GRANTED){
+                != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(android.Manifest.permission.READ_PHONE_STATE);
         }
         if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
+                != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
-        if (!permissionList.isEmpty()){
+        if (!permissionList.isEmpty()) {
             String[] permissions = permissionList.toArray(new String[permissionList.size()]);
             ActivityCompat.requestPermissions(MainActivity.this, permissions, 1);
-        }else{
+        } else {
             requestLocation();
         }
     }
 
-    public void requestLocation(){
+    public void requestLocation() {
         locationClient.start();
 
     }
@@ -118,19 +119,19 @@ public class MainActivity extends BaseActivity{
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
+        switch (requestCode) {
             case 1:
-                if (grantResults.length > 0){
-                    for (int result : grantResults){
-                        if (result != PackageManager.PERMISSION_GRANTED){
-                            Toast.makeText(this,"请同意所有权限",Toast.LENGTH_SHORT).show();
+                if (grantResults.length > 0) {
+                    for (int result : grantResults) {
+                        if (result != PackageManager.PERMISSION_GRANTED) {
+                            Toast.makeText(this, "请同意所有权限", Toast.LENGTH_SHORT).show();
                             finish();
                             return;
                         }
                     }
                     requestLocation();
-                }else{
-                    Toast.makeText(this,"申请权限发生未知错误",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "申请权限发生未知错误", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 break;
@@ -139,7 +140,7 @@ public class MainActivity extends BaseActivity{
         }
     }
 
-    public class MylocationListener implements BDLocationListener{
+    public class MylocationListener implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
             String city = bdLocation.getCity();
@@ -147,7 +148,7 @@ public class MainActivity extends BaseActivity{
             city = StringUtil.takeOutLastChar(city);
             Log.d(TAG, "onReceiveLocation: " + city);
             WeatherConstant.citySlotList.add(city);
-            WeatherPre.getWeatherRequest(city,getWeatherOnNext,MainActivity.this);
+            WeatherPre.getWeatherRequest(city, getWeatherOnNext, MainActivity.this);
         }
 
         @Override
@@ -156,29 +157,31 @@ public class MainActivity extends BaseActivity{
         }
     }
 
-    public void initListener(){
-        getWeatherOnNext = new SubscriberOnNextListener<WeatherEntity>(){
+    public void initListener() {
+        getWeatherOnNext = new SubscriberOnNextListener<WeatherEntity>() {
             @Override
             public void onNext(WeatherEntity entity) {
                 Log.d(TAG, "onNext: Get response");
                 String temp = entity.getHeWeather5().get(0).getNow().getTmp();
                 String city = entity.getHeWeather5().get(0).getBasic().getCity();
-                Log.d(TAG, "onResponse all weather: " + city + " " +temp);
+                Log.d(TAG, "onResponse all weather: " + city + " " + temp);
                 WeatherConstant.add(entity);
             }
         };
     }
 
-    public void findView(){
+    public void findView() {
         tb_toolbar = (Toolbar) findViewById(R.id.tb_toolbar);
     }
 
 
-    class MyRunnable implements Runnable{
+    class MyRunnable implements Runnable {
         Context context;
-        public MyRunnable(Context context){
+
+        public MyRunnable(Context context) {
             this.context = context;
         }
+
         @Override
         public void run() {
             dbOperation = new DBOperation(context);
