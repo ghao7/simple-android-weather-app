@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,14 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends BaseActivity implements View.OnClickListener{
+public class MainActivity extends BaseActivity{
     private final String TAG = "main activity";
     private DBOperation dbOperation;
     private LocationClient locationClient;
 
-    private Button city_list_button;
-    private Button test_button;
-    private TextView text_view_test;
+    private Toolbar tb_toolbar;
 
     private SubscriberOnNextListener getWeatherOnNext;
 
@@ -48,15 +49,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         findView();
         initListener();
 
+        setSupportActionBar(tb_toolbar);
         MyRunnable runnable = new MyRunnable(this);
         new Thread(runnable).start();
 
-        //WeatherOperation op = new WeatherOperation();
-        //op.getWeather("beijing");
-        //weather = op.getWeatherResult();
-        //Log.d(TAG, "onCreate: " + op.getStr());
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_list,menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_list:
+                Intent intent = new Intent(MainActivity.this, CityListScrollingActivity.class);
+                startActivity(intent);
+                break;
+            default:
+        }
+        return true;
     }
 
     public void initData(){
@@ -143,9 +157,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     public void initListener(){
-        city_list_button.setOnClickListener(this);
-        test_button.setOnClickListener(this);
-
         getWeatherOnNext = new SubscriberOnNextListener<WeatherEntity>(){
             @Override
             public void onNext(WeatherEntity entity) {
@@ -154,29 +165,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 String city = entity.getHeWeather5().get(0).getBasic().getCity();
                 Log.d(TAG, "onResponse all weather: " + city + " " +temp);
                 WeatherConstant.add(entity);
-                text_view_test.setText(entity.getHeWeather5().get(0).getBasic().getCity());
             }
         };
     }
 
     public void findView(){
-        city_list_button = (Button)findViewById(R.id.city_list_button);
-        test_button = (Button)findViewById(R.id.test_button);
-        text_view_test = (TextView)findViewById(R.id.textView_test);
+        tb_toolbar = (Toolbar) findViewById(R.id.tb_toolbar);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.city_list_button:
-                Intent intent = new Intent(MainActivity.this, CityListScrollingActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.test_button:
-                showShort(WeatherConstant.getWeatherList().size()+"");
-                break;
-        }
-    }
 
     class MyRunnable implements Runnable{
         Context context;

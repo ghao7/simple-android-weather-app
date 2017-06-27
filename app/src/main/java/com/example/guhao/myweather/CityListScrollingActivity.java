@@ -19,17 +19,13 @@ import com.example.guhao.myweather.network.SubscriberOnNextListener;
 import com.example.guhao.myweather.presenter.WeatherPre;
 import com.example.guhao.myweather.util.StringUtil;
 
-import java.util.List;
-
 public class CityListScrollingActivity extends BaseActivity {
     private final String TAG = "";
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
     private Toolbar tb_toolbar;
-    private RecyclerView rv_city_card;
     private CityRecycleViewAdapter rvAdapter;
 
-    List<String> mlist;
     private SubscriberOnNextListener getWeatherOnNext;
 
     @Override
@@ -49,7 +45,7 @@ public class CityListScrollingActivity extends BaseActivity {
         super.onStart();
 //        String result = getIntent().getStringExtra("city");
 //        showShort(result);
-        String str = "Something Wrong";
+        String str;
         if (WeatherConstant.weatherList.size() > 0) {
             str = StringUtil.getDisplay(WeatherConstant.weatherList.get(0));
         }else if (WeatherConstant.citySlotList.size() > 0){
@@ -63,7 +59,6 @@ public class CityListScrollingActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
-        Log.d(TAG, "onCreateOptionsMenu: ");
         return true;
     }
 
@@ -112,7 +107,6 @@ public class CityListScrollingActivity extends BaseActivity {
         fab = (FloatingActionButton)findViewById(R.id.fab);
         recyclerView = (RecyclerView)findViewById(R.id.city_list_recycler_view);
         tb_toolbar = (Toolbar)findViewById(R.id.tb_toolbar);
-        rv_city_card = (RecyclerView)findViewById(R.id.city_list_recycler_view);
     }
 
     public void fabListener(){
