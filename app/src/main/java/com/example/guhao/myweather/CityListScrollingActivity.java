@@ -90,7 +90,6 @@ public class CityListScrollingActivity extends BaseActivity {
                     String returnedData = data.getStringExtra("city");
                     //showShort(returnedData);
                     WeatherPre.getWeatherRequest(returnedData, getWeatherOnNext, CityListScrollingActivity.this);
-
                 }
                 break;
             default:
@@ -136,7 +135,7 @@ public class CityListScrollingActivity extends BaseActivity {
 //                showShort(cityName);
                 //WeatherConstant.cardList.get(0).setText(StringUtil.getDisplay(entity));
                 rvAdapter.updateData(StringUtil.getDisplay(entity), WeatherConstant.citySlotList.size() - 1);
-
+                WeatherConstant.weatherList.add(entity);
             }
         };
     }

@@ -87,14 +87,17 @@ public class CitySearchingActivity extends BaseActivity {
                 //showShort(cityEntity.getCity_cn());
 
                 //Intent intent = new Intent(CitySearchingActivity.this, CityListScrollingActivity.class);
-                WeatherConstant.citySlotList.add(cityEntity.getCity_cn());
-                Intent intent = new Intent();
-                intent.putExtra("city",cityEntity.getArea_code());
-                setResult(RESULT_OK, intent);
-                //startActivity(intent);
-
-
-
+                //if (!WeatherConstant.checkIfExistCitySlot(cityEntity.getCity_cn())) {
+                    WeatherConstant.citySlotList.add(cityEntity.getCity_cn());
+                    Intent intent = new Intent();
+                    intent.putExtra("city", cityEntity.getArea_code());
+                    setResult(RESULT_OK, intent);
+//                }else{
+//                    Intent intent = new Intent();
+//                    intent.putExtra("city", cityEntity.getArea_code());
+//                    setResult(RESULT_CANCELED, intent);
+//
+//                }
                 finish();
             }
         });

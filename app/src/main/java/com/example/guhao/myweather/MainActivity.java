@@ -6,16 +6,13 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -25,6 +22,7 @@ import com.baidu.location.LocationClientOption;
 import com.example.guhao.myweather.adapter.CityFragmentPagerAdapter;
 import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
+import com.example.guhao.myweather.fragment.SingleCityFragment;
 import com.example.guhao.myweather.network.SubscriberOnNextListener;
 import com.example.guhao.myweather.presenter.DBOperation;
 import com.example.guhao.myweather.presenter.WeatherPre;
@@ -45,7 +43,7 @@ public class MainActivity extends BaseActivity {
     private ViewPager viewPager;
 
     private SubscriberOnNextListener getWeatherOnNext;
-    private PagerAdapter mPagerAdapter;
+    private CityFragmentPagerAdapter mPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +53,6 @@ public class MainActivity extends BaseActivity {
         findView();
         initData();
         initListener();
-
 
         setSupportActionBar(tb_toolbar);
         MyRunnable runnable = new MyRunnable(this);
@@ -86,38 +83,36 @@ public class MainActivity extends BaseActivity {
         locationService();
         mPagerAdapter = new CityFragmentPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(mPagerAdapter);
+
+        SingleCityFragment cityFragment = new SingleCityFragment();
+        mPagerAdapter.addFragment(cityFragment);
     }
 
-    public void locationService() {
-        locationClient = new LocationClient(getApplicationContext());
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //showShort("main resume");
+        loadCityInfo();
+    }
 
-        LocationClientOption option = new LocationClientOption();
-        option.setIsNeedAddress(true);
-        //option.setOpenGps(true);
+    public void loadCityInfo(){
+        if (mPagerAdapter.getCount() < WeatherConstant.weatherList.size()){
 
-        //option.setScanSpan(0);
-        locationClient.setLocOption(option);
-        locationClient.registerLocationListener(new MylocationListener());
+            int pagerCount = mPagerAdapter.getCount();
+            for (int i = pagerCount; i < WeatherConstant.weatherList.size(); i++){
+                SingleCityFragment cityFragment = new SingleCityFragment();
+                //cityFragment.setWeatherInfo(WeatherConstant.weatherList.get(i));
+                mPagerAdapter.addFragment(cityFragment);
+                WeatherEntity city = WeatherConstant.weatherList.get(i);
+                mPagerAdapter.setInfo(i,city);
 
-        List<String> permissionList = new ArrayList<>();
-        if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(android.Manifest.permission.ACCESS_FINE_LOCATION);
+                Log.d(TAG, "loadCityInfo: " + mPagerAdapter.getCount());
+                Log.d(TAG, "loadCityInfo: " + WeatherConstant.citySlotList.size() );
+                Log.d(TAG, "loadCityInfo: " + WeatherConstant.weatherList.size());
+            }
+
         }
-        if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.READ_PHONE_STATE)
-                != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(android.Manifest.permission.READ_PHONE_STATE);
-        }
-        if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-        if (!permissionList.isEmpty()) {
-            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
-            ActivityCompat.requestPermissions(MainActivity.this, permissions, 1);
-        } else {
-            requestLocation();
-        }
+
     }
 
     public void requestLocation() {
@@ -174,7 +169,8 @@ public class MainActivity extends BaseActivity {
                 String temp = entity.getHeWeather5().get(0).getNow().getTmp();
                 String city = entity.getHeWeather5().get(0).getBasic().getCity();
                 Log.d(TAG, "onResponse all weather: " + city + " " + temp);
-                WeatherConstant.add(entity);
+                WeatherConstant.weatherList.add(entity);
+                mPagerAdapter.setInfo(0,entity);
             }
         };
     }
@@ -202,5 +198,37 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         locationClient.stop();
+    }
+
+    public void locationService() {
+        locationClient = new LocationClient(getApplicationContext());
+
+        LocationClientOption option = new LocationClientOption();
+        option.setIsNeedAddress(true);
+        //option.setOpenGps(true);
+
+        //option.setScanSpan(0);
+        locationClient.setLocOption(option);
+        locationClient.registerLocationListener(new MylocationListener());
+
+        List<String> permissionList = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(android.Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(android.Manifest.permission.READ_PHONE_STATE);
+        }
+        if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (!permissionList.isEmpty()) {
+            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
+            ActivityCompat.requestPermissions(MainActivity.this, permissions, 1);
+        } else {
+            requestLocation();
+        }
     }
 }
