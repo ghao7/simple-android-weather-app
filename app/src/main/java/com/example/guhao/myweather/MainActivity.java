@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -85,7 +84,7 @@ public class MainActivity extends BaseActivity {
         viewPager.setAdapter(mPagerAdapter);
 
         SingleCityFragment cityFragment = new SingleCityFragment();
-        mPagerAdapter.addFragment(cityFragment);
+        //mPagerAdapter.addFragment(cityFragment);
     }
 
     @Override
@@ -95,29 +94,30 @@ public class MainActivity extends BaseActivity {
         loadCityInfo();
     }
 
-    public void loadCityInfo(){
-        if (mPagerAdapter.getCount() < WeatherConstant.weatherList.size()){
+    public void loadCityInfo() {
+        if (mPagerAdapter.getCount() < WeatherConstant.weatherList.size()) {
 
             int pagerCount = mPagerAdapter.getCount();
-            for (int i = pagerCount; i < WeatherConstant.weatherList.size(); i++){
-                SingleCityFragment cityFragment = new SingleCityFragment();
-                //cityFragment.setWeatherInfo(WeatherConstant.weatherList.get(i));
-                mPagerAdapter.addFragment(cityFragment);
+            for (int i = pagerCount; i < WeatherConstant.weatherList.size(); i++) {
+
                 WeatherEntity city = WeatherConstant.weatherList.get(i);
-                mPagerAdapter.setInfo(i,city);
-
-                Log.d(TAG, "loadCityInfo: " + mPagerAdapter.getCount());
-                Log.d(TAG, "loadCityInfo: " + WeatherConstant.citySlotList.size() );
-                Log.d(TAG, "loadCityInfo: " + WeatherConstant.weatherList.size());
+                mPagerAdapter.addFragment(getSingleCityFragment(city));
             }
-
         }
+    }
 
+    public SingleCityFragment getSingleCityFragment(WeatherEntity entity) {
+        Bundle args = new Bundle();
+        String weather = StringUtil.getDisplay(entity);
+        args.putString("weather", weather);
+        SingleCityFragment cityFragment = new SingleCityFragment();
+        cityFragment.setArguments(args);
+
+        return cityFragment;
     }
 
     public void requestLocation() {
         locationClient.start();
-
     }
 
     @Override
@@ -140,7 +140,6 @@ public class MainActivity extends BaseActivity {
                 }
                 break;
             default:
-                break;
         }
     }
 
@@ -170,7 +169,9 @@ public class MainActivity extends BaseActivity {
                 String city = entity.getHeWeather5().get(0).getBasic().getCity();
                 Log.d(TAG, "onResponse all weather: " + city + " " + temp);
                 WeatherConstant.weatherList.add(entity);
-                mPagerAdapter.setInfo(0,entity);
+                //mPagerAdapter.setInfo(0, entity);
+
+                mPagerAdapter.addFragment(getSingleCityFragment(entity));
             }
         };
     }
