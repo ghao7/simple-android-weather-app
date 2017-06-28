@@ -30,7 +30,9 @@ import com.example.guhao.myweather.util.StringUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * 主界面
+ */
 public class MainActivity extends BaseActivity {
     private final String TAG = "main activity";
     private static final int NUM_PAGES = 5;
@@ -70,7 +72,7 @@ public class MainActivity extends BaseActivity {
         switch (item.getItemId()) {
             case R.id.action_list:
                 Intent intent = new Intent(MainActivity.this, CityListScrollingActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,1);
                 break;
             default:
         }
@@ -78,22 +80,44 @@ public class MainActivity extends BaseActivity {
     }
 
     public void initData() {
-//        weatherPre = new WeatherPre();
-        locationService();
+        locationService();//automatic positioning
+
+        //set scrollable view adapter
         mPagerAdapter = new CityFragmentPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(mPagerAdapter);
-
-        SingleCityFragment cityFragment = new SingleCityFragment();
-        //mPagerAdapter.addFragment(cityFragment);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //showShort("main resume");
         loadCityInfo();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    Log.d(TAG, "onActivityResult: RESULT_OK");
+                    final int position = data.getIntExtra("position",0);
+                    Log.d(TAG, "moveToCurrentCity: " + position);
+//                    viewPager.setCurrentItem(position,false);
+                    viewPager.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            viewPager.setCurrentItem(position);
+                        }
+                    });
+
+                }
+                break;
+            default:
+        }
+    }
+
+    /**
+     * Load more views if the user add cities in the list activity
+     */
     public void loadCityInfo() {
         if (mPagerAdapter.getCount() < WeatherConstant.weatherList.size()) {
 
@@ -112,7 +136,6 @@ public class MainActivity extends BaseActivity {
         args.putString("weather", weather);
         SingleCityFragment cityFragment = new SingleCityFragment();
         cityFragment.setArguments(args);
-
         return cityFragment;
     }
 
