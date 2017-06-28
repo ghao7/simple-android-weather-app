@@ -13,6 +13,7 @@ import android.view.View;
 
 
 import com.example.guhao.myweather.adapter.CityRecycleViewAdapter;
+import com.example.guhao.myweather.adapter.MyItemOnClickListener;
 import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.network.SubscriberOnNextListener;
@@ -94,7 +95,13 @@ public class CityListScrollingActivity extends BaseActivity {
     }
 
     public void initData(){
-        rvAdapter = new CityRecycleViewAdapter(WeatherConstant.citySlotList);
+        rvAdapter = new CityRecycleViewAdapter(WeatherConstant.citySlotList, new MyItemOnClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Log.d(TAG, "onItemClick: position " + position);
+                showShort(position+"");
+            }
+        });
         //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(rvAdapter);

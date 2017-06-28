@@ -23,16 +23,24 @@ import java.util.List;
 
 public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleViewAdapter.ViewHolder>{
     private List<String> mData;
+    MyItemOnClickListener listener;
 
-    public CityRecycleViewAdapter(List<String> data) {
+    public CityRecycleViewAdapter(List<String> data, MyItemOnClickListener listener) {
         this.mData = data;
+        this.listener = listener;
     }
 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.city_item,parent,false);
-        ViewHolder holder = new ViewHolder(v);
+        final ViewHolder holder = new ViewHolder(v);
+        v.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v, holder.getLayoutPosition());
+            }
+        });
         return holder;
     }
 
