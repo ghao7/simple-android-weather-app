@@ -34,6 +34,15 @@ public class WeatherConstant {
         return false;
     }
 
+    public static boolean checkIfExistCitySlot(String cityName){
+        for (int i = 0; i < citySlotList.size(); i++){
+            if (citySlotList.get(i).equals(cityName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static List<WeatherEntity> getWeatherList(){
         return weatherList;
     }
