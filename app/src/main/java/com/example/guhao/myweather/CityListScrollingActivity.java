@@ -13,6 +13,7 @@ import android.view.View;
 
 
 import com.example.guhao.myweather.adapter.CityRecycleViewAdapter;
+import com.example.guhao.myweather.adapter.MyItemOnClickListener;
 import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.network.SubscriberOnNextListener;
@@ -42,6 +43,20 @@ public class CityListScrollingActivity extends BaseActivity {
     public void initListner() {
         fabListener();
         weatherSubscriberListener();
+        recyclerviewListener();
+    }
+
+    public void recyclerviewListener(){
+        rvAdapter.setItemOnClickListener(new MyItemOnClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent();
+                intent.putExtra("position",position);
+                setResult(RESULT_OK,intent);
+                finish();
+//                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -88,7 +103,6 @@ public class CityListScrollingActivity extends BaseActivity {
             case 1:
                 if (resultCode == RESULT_OK) {
                     String returnedData = data.getStringExtra("city");
-                    //showShort(returnedData);
                     WeatherPre.getWeatherRequest(returnedData, getWeatherOnNext, CityListScrollingActivity.this);
                 }
                 break;
@@ -96,8 +110,9 @@ public class CityListScrollingActivity extends BaseActivity {
         }
     }
 
-    public void initData() {
+    public void initData(){
         rvAdapter = new CityRecycleViewAdapter(WeatherConstant.citySlotList);
+
         //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(rvAdapter);
