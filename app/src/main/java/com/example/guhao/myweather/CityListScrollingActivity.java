@@ -22,7 +22,6 @@ import com.example.guhao.myweather.util.StringUtil;
 
 public class CityListScrollingActivity extends BaseActivity {
     private final String TAG = "";
-    private FloatingActionButton fab;
     private RecyclerView recyclerView;
     private Toolbar tb_toolbar;
     private CityRecycleViewAdapter rvAdapter;
@@ -41,7 +40,6 @@ public class CityListScrollingActivity extends BaseActivity {
     }
 
     public void initListner() {
-        fabListener();
         weatherSubscriberListener();
         recyclerviewListener();
     }
@@ -73,6 +71,14 @@ public class CityListScrollingActivity extends BaseActivity {
             str = "定位中";
         }
         rvAdapter.updateData(str, 0);
+
+        for (int i = 0; i < WeatherConstant.weatherList.size(); i++){
+            String info = StringUtil.getDisplay(WeatherConstant.weatherList.get(i));
+            rvAdapter.updateData(info,i);
+        }
+
+        StringUtil.showPref(getApplicationContext());
+
     }
 
     @Override
@@ -122,11 +128,11 @@ public class CityListScrollingActivity extends BaseActivity {
     }
 
     public void findView() {
-        fab = (FloatingActionButton) findViewById(R.id.fab);
         recyclerView = (RecyclerView) findViewById(R.id.city_list_recycler_view);
         tb_toolbar = (Toolbar) findViewById(R.id.tb_toolbar);
     }
 
+    /*
     public void fabListener() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +147,7 @@ public class CityListScrollingActivity extends BaseActivity {
 
 
     }
+    */
 
     public void weatherSubscriberListener() {
         getWeatherOnNext = new SubscriberOnNextListener<WeatherEntity>() {
@@ -150,9 +157,10 @@ public class CityListScrollingActivity extends BaseActivity {
 //                showShort(cityName);
                 //WeatherConstant.cardList.get(0).setText(StringUtil.getDisplay(entity));
                 rvAdapter.updateData(StringUtil.getDisplay(entity), WeatherConstant.citySlotList.size() - 1);
-                WeatherConstant.weatherList.add(entity);
+                WeatherConstant.addWeatherEntity(entity);
             }
         };
     }
+
 
 }

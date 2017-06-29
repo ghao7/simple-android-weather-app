@@ -16,7 +16,7 @@ import android.widget.Toast;
  * Desc:
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,5 +33,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     // Toast 长时间
     public void showShort(String msg){
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public void delay(int time) {
+
     }
 }
