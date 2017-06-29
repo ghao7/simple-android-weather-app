@@ -36,7 +36,15 @@ public class CityFragmentPagerAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return list.size();
     }
-    
+
+
+    public void updateFragment(int position, SingleCityFragment fragment){
+        if (list.size() > 0){
+            list.set(position,fragment);
+        }else{
+            addFragment(fragment);
+        }
+    }
 
     public void addFragment(SingleCityFragment fragment){
         list.add(fragment);

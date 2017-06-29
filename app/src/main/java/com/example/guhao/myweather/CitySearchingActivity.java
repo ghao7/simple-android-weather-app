@@ -88,7 +88,7 @@ public class CitySearchingActivity extends BaseActivity {
 
                 //Intent intent = new Intent(CitySearchingActivity.this, CityListScrollingActivity.class);
                 //if (!WeatherConstant.checkIfExistCitySlot(cityEntity.getCity_cn())) {
-                    WeatherConstant.citySlotList.add(cityEntity.getCity_cn());
+                    WeatherConstant.addCitySlot(cityEntity.getCity_cn(),getApplicationContext());
                     Intent intent = new Intent();
                     intent.putExtra("city", cityEntity.getArea_code());
                     setResult(RESULT_OK, intent);
