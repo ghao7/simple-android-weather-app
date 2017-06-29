@@ -74,7 +74,6 @@ public class MainActivity extends BaseActivity {
                 WeatherConstant.citySlotList.add(city);
                 mPagerAdapter.addFragment(getSingleCityFragmentLite(city));
                 WeatherConstant.weatherList.add(null);
-
                 WeatherConstant.updateWeather(i,city, MainActivity.this, mPagerAdapter);
 //                UpdateWeatherRunnable runnable = new UpdateWeatherRunnable(i,city);
 //                new Thread(runnable).start();
@@ -136,7 +135,6 @@ public class MainActivity extends BaseActivity {
                             viewPager.setCurrentItem(position);
                         }
                     });
-
                 }
                 break;
             default:
@@ -231,7 +229,7 @@ public class MainActivity extends BaseActivity {
                 WeatherConstant.addLocalEntity(entity);
                 //mPagerAdapter.setInfo(0, entity);
 
-                mPagerAdapter.updateFragment(0,getSingleCityFragment(entity));
+                mPagerAdapter.updateFragment(0,getSingleCityFragment(entity),entity);
             }
         };
     }

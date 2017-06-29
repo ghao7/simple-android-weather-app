@@ -50,6 +50,7 @@ public class WeatherConstant{
         SharedPreferences.Editor editor = context.getSharedPreferences("city",Context.MODE_PRIVATE).edit();
         String key = "city" + (citySlotList.size()-1);
         editor.putString(key, city);
+        editor.putInt("size", citySlotList.size());
         editor.apply();
 
     }
@@ -83,7 +84,9 @@ public class WeatherConstant{
             @Override
             public void onNext(WeatherEntity entity) {
                 weatherList.set(position,entity);
-                adapter.updateFragment(position,getSingleCityFragment(entity));
+                adapter.updateFragment(position,getSingleCityFragment(entity),entity);
+//                adapter.addFragment(getSingleCityFragment(entity));
+
             }
         };
         WeatherPre.getWeatherRequest(city,listener,context);
