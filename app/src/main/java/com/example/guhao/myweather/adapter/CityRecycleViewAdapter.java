@@ -101,10 +101,12 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
         if (fromPosition < toPosition) {
             for (int i = fromPosition; i < toPosition; i++) {
                 Collections.swap(mData, i, i + 1);
+                Collections.swap(WeatherConstant.weatherList, i, i + 1);
             }
         } else {
             for (int i = fromPosition; i > toPosition; i--) {
                 Collections.swap(mData, i, i - 1);
+                Collections.swap(WeatherConstant.weatherList, i, i - 1);
             }
         }
         notifyItemMoved(fromPosition, toPosition);
