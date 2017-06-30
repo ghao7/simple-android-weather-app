@@ -1,12 +1,13 @@
 package com.example.guhao.myweather.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by guhao on 6/9/17.
  */
 
-public class WeatherEntity {
+public class WeatherEntity implements Serializable{
 
 
     private List<HeWeather5Bean> HeWeather5;

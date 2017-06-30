@@ -13,6 +13,7 @@ import android.view.View;
 
 
 import com.example.guhao.myweather.adapter.CityRecycleViewAdapter;
+import com.example.guhao.myweather.adapter.MyItemOnClickListener;
 import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.network.SubscriberOnNextListener;
@@ -21,7 +22,6 @@ import com.example.guhao.myweather.util.StringUtil;
 
 public class CityListScrollingActivity extends BaseActivity {
     private final String TAG = "";
-    private FloatingActionButton fab;
     private RecyclerView recyclerView;
     private Toolbar tb_toolbar;
     private CityRecycleViewAdapter rvAdapter;
@@ -40,8 +40,21 @@ public class CityListScrollingActivity extends BaseActivity {
     }
 
     public void initListner() {
-        fabListener();
         weatherSubscriberListener();
+        recyclerviewListener();
+    }
+
+    public void recyclerviewListener(){
+        rvAdapter.setItemOnClickListener(new MyItemOnClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent();
+                intent.putExtra("position",position);
+                setResult(RESULT_OK,intent);
+                finish();
+//                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -58,6 +71,14 @@ public class CityListScrollingActivity extends BaseActivity {
             str = "定位中";
         }
         rvAdapter.updateData(str, 0);
+
+        for (int i = 0; i < WeatherConstant.weatherList.size(); i++){
+            String info = StringUtil.getDisplay(WeatherConstant.weatherList.get(i));
+            rvAdapter.updateData(info,i);
+        }
+
+        StringUtil.showPref(getApplicationContext());
+
     }
 
     @Override
@@ -88,7 +109,6 @@ public class CityListScrollingActivity extends BaseActivity {
             case 1:
                 if (resultCode == RESULT_OK) {
                     String returnedData = data.getStringExtra("city");
-                    //showShort(returnedData);
                     WeatherPre.getWeatherRequest(returnedData, getWeatherOnNext, CityListScrollingActivity.this);
                 }
                 break;
@@ -96,8 +116,9 @@ public class CityListScrollingActivity extends BaseActivity {
         }
     }
 
-    public void initData() {
+    public void initData(){
         rvAdapter = new CityRecycleViewAdapter(WeatherConstant.citySlotList);
+
         //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(rvAdapter);
@@ -107,11 +128,11 @@ public class CityListScrollingActivity extends BaseActivity {
     }
 
     public void findView() {
-        fab = (FloatingActionButton) findViewById(R.id.fab);
         recyclerView = (RecyclerView) findViewById(R.id.city_list_recycler_view);
         tb_toolbar = (Toolbar) findViewById(R.id.tb_toolbar);
     }
 
+    /*
     public void fabListener() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +147,7 @@ public class CityListScrollingActivity extends BaseActivity {
 
 
     }
+    */
 
     public void weatherSubscriberListener() {
         getWeatherOnNext = new SubscriberOnNextListener<WeatherEntity>() {
@@ -135,9 +157,10 @@ public class CityListScrollingActivity extends BaseActivity {
 //                showShort(cityName);
                 //WeatherConstant.cardList.get(0).setText(StringUtil.getDisplay(entity));
                 rvAdapter.updateData(StringUtil.getDisplay(entity), WeatherConstant.citySlotList.size() - 1);
-                WeatherConstant.weatherList.add(entity);
+                WeatherConstant.addWeatherEntity(entity);
             }
         };
     }
+
 
 }

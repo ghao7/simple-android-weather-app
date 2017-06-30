@@ -1,10 +1,12 @@
 package com.example.guhao.myweather.adapter;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.guhao.myweather.R;
 import com.example.guhao.myweather.bean.WeatherEntity;
@@ -24,6 +26,7 @@ import java.util.List;
 
 public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleViewAdapter.ViewHolder> implements ItemTouchHelperAdapter{
     private List<String> mData;
+    private MyItemOnClickListener listener;
 
     public CityRecycleViewAdapter(List<String> data) {
         this.mData = data;
@@ -33,8 +36,21 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.city_item,parent,false);
-        ViewHolder holder = new ViewHolder(v);
+        final ViewHolder holder = new ViewHolder(v);
+        holder.cardview.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+//                String str = mData.get(position);
+                listener.onItemClick(v,position);
+            }
+        });
+
         return holder;
+    }
+
+    public void setItemOnClickListener(MyItemOnClickListener listener){
+        this.listener = listener;
     }
 
     @Override
@@ -65,9 +81,11 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView mTv;
+        CardView cardview;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            cardview = (CardView) itemView.findViewById(R.id.city_card_view);
             mTv = (TextView) itemView.findViewById(R.id.city_card_tv);
             //WeatherConstant.cardList.add(mTv);
         }

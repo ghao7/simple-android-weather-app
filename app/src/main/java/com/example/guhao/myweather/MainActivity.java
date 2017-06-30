@@ -2,6 +2,7 @@ package com.example.guhao.myweather;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -30,7 +31,9 @@ import com.example.guhao.myweather.util.StringUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * 主界面
+ */
 public class MainActivity extends BaseActivity {
     private final String TAG = "main activity";
     private static final int NUM_PAGES = 5;
@@ -57,6 +60,29 @@ public class MainActivity extends BaseActivity {
         MyRunnable runnable = new MyRunnable(this);
         new Thread(runnable).start();
 
+
+    }
+
+    public void loadCityPreferences(){
+        String key = "city";
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("city",MODE_PRIVATE);
+        boolean check = true;
+        int i = 0;
+        while (check){
+            String city = preferences.getString(key+i, "null");
+            if (!city.equals("null")){
+                WeatherConstant.citySlotList.add(city);
+                mPagerAdapter.addFragment(getSingleCityFragmentLite(city));
+                WeatherConstant.weatherList.add(null);
+                WeatherConstant.updateWeather(i,city, MainActivity.this, mPagerAdapter);
+//                UpdateWeatherRunnable runnable = new UpdateWeatherRunnable(i,city);
+//                new Thread(runnable).start();
+
+                i++;
+            }else{
+                check = false;
+            }
+        }
     }
 
     @Override
@@ -70,7 +96,7 @@ public class MainActivity extends BaseActivity {
         switch (item.getItemId()) {
             case R.id.action_list:
                 Intent intent = new Intent(MainActivity.this, CityListScrollingActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,1);
                 break;
             default:
         }
@@ -78,22 +104,46 @@ public class MainActivity extends BaseActivity {
     }
 
     public void initData() {
-//        weatherPre = new WeatherPre();
-        locationService();
+        locationService();//automatic positioning
+
         mPagerAdapter = new CityFragmentPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(mPagerAdapter);
+        loadCityPreferences();
+        //set scrollable view adapter
 
-        SingleCityFragment cityFragment = new SingleCityFragment();
-        //mPagerAdapter.addFragment(cityFragment);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        //showShort("main resume");
-        loadCityInfo();
+        StringUtil.showPref(getApplicationContext());
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    loadCityInfo();
+                    Log.d(TAG, "onActivityResult: RESULT_OK");
+                    final int position = data.getIntExtra("position",0);
+                    Log.d(TAG, "moveToCurrentCity: " + position);
+//                    viewPager.setCurrentItem(position,false);
+                    viewPager.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            viewPager.setCurrentItem(position);
+                        }
+                    });
+                }
+                break;
+            default:
+        }
+    }
+
+    /**
+     * Load more views if the user add cities in the list activity
+     */
     public void loadCityInfo() {
         if (mPagerAdapter.getCount() < WeatherConstant.weatherList.size()) {
 
@@ -112,7 +162,14 @@ public class MainActivity extends BaseActivity {
         args.putString("weather", weather);
         SingleCityFragment cityFragment = new SingleCityFragment();
         cityFragment.setArguments(args);
+        return cityFragment;
+    }
 
+    public SingleCityFragment getSingleCityFragmentLite(String city) {
+        Bundle args = new Bundle();
+        args.putString("weather", city);
+        SingleCityFragment cityFragment = new SingleCityFragment();
+        cityFragment.setArguments(args);
         return cityFragment;
     }
 
@@ -150,7 +207,8 @@ public class MainActivity extends BaseActivity {
             //showShort(city);
             city = StringUtil.takeOutLastChar(city);
             Log.d(TAG, "onReceiveLocation: " + city);
-            WeatherConstant.citySlotList.add(city);
+
+            WeatherConstant.addLocal(city,getApplicationContext());
             WeatherPre.getWeatherRequest(city, getWeatherOnNext, MainActivity.this);
         }
 
@@ -168,10 +226,10 @@ public class MainActivity extends BaseActivity {
                 String temp = entity.getHeWeather5().get(0).getNow().getTmp();
                 String city = entity.getHeWeather5().get(0).getBasic().getCity();
                 Log.d(TAG, "onResponse all weather: " + city + " " + temp);
-                WeatherConstant.weatherList.add(entity);
+                WeatherConstant.addLocalEntity(entity);
                 //mPagerAdapter.setInfo(0, entity);
 
-                mPagerAdapter.addFragment(getSingleCityFragment(entity));
+                mPagerAdapter.updateFragment(0,getSingleCityFragment(entity),entity);
             }
         };
     }
@@ -192,6 +250,21 @@ public class MainActivity extends BaseActivity {
         @Override
         public void run() {
             dbOperation = new DBOperation(context);
+        }
+    }
+
+    class UpdateWeatherRunnable implements Runnable{
+        int i;
+        String city;
+
+        public UpdateWeatherRunnable(int i, String city){
+            this.i = i;
+            this.city = city;
+        }
+
+        @Override
+        public void run() {
+            WeatherConstant.updateWeather(i,city, MainActivity.this, mPagerAdapter);
         }
     }
 
