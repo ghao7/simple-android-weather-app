@@ -125,9 +125,7 @@ public class MainActivity extends BaseActivity {
             case 1:
                 if (resultCode == RESULT_OK) {
                     loadCityInfo();
-                    Log.d(TAG, "onActivityResult: RESULT_OK");
                     final int position = data.getIntExtra("position",0);
-                    Log.d(TAG, "moveToCurrentCity: " + position);
 //                    viewPager.setCurrentItem(position,false);
                     viewPager.post(new Runnable() {
                         @Override
@@ -206,7 +204,6 @@ public class MainActivity extends BaseActivity {
             String city = bdLocation.getCity();
             //showShort(city);
             city = StringUtil.takeOutLastChar(city);
-            Log.d(TAG, "onReceiveLocation: " + city);
 
             WeatherConstant.addLocal(city,getApplicationContext());
             WeatherPre.getWeatherRequest(city, getWeatherOnNext, MainActivity.this);

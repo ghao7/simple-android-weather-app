@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import android.view.View;
 
 import com.example.guhao.myweather.adapter.CityRecycleViewAdapter;
 import com.example.guhao.myweather.adapter.MyItemOnClickListener;
+import com.example.guhao.myweather.adapter.SimpleItemTouchHelperCallback;
 import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.network.SubscriberOnNextListener;
@@ -89,7 +91,6 @@ public class CityListScrollingActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d(TAG, "onOptionsItemSelected: ");
         switch (item.getItemId()) {
             case R.id.action_search:
                 //showShort("Clicked");
@@ -125,6 +126,11 @@ public class CityListScrollingActivity extends BaseActivity {
         //recyclerView.setItemAnimator(new DefaultItemAnimator());
         //recyclerView.addItemDecoration();
         //showShort("呵呵");
+
+        ItemTouchHelper.Callback callback =
+                new SimpleItemTouchHelperCallback(rvAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(recyclerView);
     }
 
     public void findView() {
