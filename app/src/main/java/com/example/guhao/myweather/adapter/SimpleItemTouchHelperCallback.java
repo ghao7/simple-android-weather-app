@@ -45,6 +45,17 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     }
 
     @Override
+    public boolean canDropOver(RecyclerView recyclerView, RecyclerView.ViewHolder current, RecyclerView.ViewHolder target) {
+        if (target.getAdapterPosition() != 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+
+    @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
         mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
         Log.d(TAG, "onSwiped: call back removed");

@@ -271,10 +271,19 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        locationClient.stop();
+//    }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        locationClient.stop();
+        Log.d(TAG, "onDestroy: ");
+        WeatherConstant.citySlotList.clear();
+        WeatherConstant.weatherList.clear();
     }
 
     public void locationService() {

@@ -122,6 +122,8 @@ public class CityListScrollingActivity extends BaseActivity {
         return true;
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
