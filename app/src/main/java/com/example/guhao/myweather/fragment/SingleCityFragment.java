@@ -67,7 +67,6 @@ public class SingleCityFragment extends Fragment {
     public void setWeatherInfo(WeatherEntity entity){
         String str = StringUtil.getDisplay(entity);
         test_tv.setText(str);
-        Log.d(TAG, "setContent: 生气");
 
     }
 }

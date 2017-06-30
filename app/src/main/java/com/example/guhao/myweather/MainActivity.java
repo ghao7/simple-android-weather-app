@@ -64,6 +64,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void loadCityPreferences(){
+        Log.d(TAG, "loadCityPreferences: ");
         String key = "city";
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("city",MODE_PRIVATE);
         boolean check = true;
@@ -140,18 +141,23 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * Load more views if the user add cities in the list activity
+     * Refresh views if the user add cities in the list activity
      */
     public void loadCityInfo() {
-        if (mPagerAdapter.getCount() < WeatherConstant.weatherList.size()) {
+        Log.d(TAG, "loadCityInfo: need clear? "+ mPagerAdapter.getCount() + " " + WeatherConstant.weatherList.size());
+        mPagerAdapter.clear();
+        //viewPager.removeAllViews();
+        mPagerAdapter = new CityFragmentPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(mPagerAdapter);
 
-            int pagerCount = mPagerAdapter.getCount();
-            for (int i = pagerCount; i < WeatherConstant.weatherList.size(); i++) {
+        for (int i = 0; i < WeatherConstant.weatherList.size(); i++) {
+            Log.d(TAG, "loadCityInfo: " + WeatherConstant.weatherList.get(i).getHeWeather5().get(0).getBasic().getCity());
+            WeatherEntity city = WeatherConstant.weatherList.get(i);
+            mPagerAdapter.addFragment(getSingleCityFragment(city));
 
-                WeatherEntity city = WeatherConstant.weatherList.get(i);
-                mPagerAdapter.addFragment(getSingleCityFragment(city));
-            }
         }
+        Log.d(TAG, "loadCityInfo: after? "+ mPagerAdapter.getCount() + " " + WeatherConstant.weatherList.size());
+
     }
 
     public SingleCityFragment getSingleCityFragment(WeatherEntity entity) {

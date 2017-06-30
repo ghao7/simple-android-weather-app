@@ -3,6 +3,7 @@ package com.example.guhao.myweather.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.guhao.myweather.adapter.CityFragmentPagerAdapter;
@@ -28,6 +29,7 @@ public class WeatherConstant{
     public static List<String> citySlotList = new ArrayList<>();
     public static List<TextView> cardList = new ArrayList<>();
     private static SubscriberOnNextListener listener;
+    private static final String TAG = "";
 
     public static void addLocal(String city, Context context){
         if (citySlotList.size() == 0){

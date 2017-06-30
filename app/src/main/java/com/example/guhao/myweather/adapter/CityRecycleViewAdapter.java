@@ -1,7 +1,9 @@
 package com.example.guhao.myweather.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +29,12 @@ import java.util.List;
 public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleViewAdapter.ViewHolder> implements ItemTouchHelperAdapter{
     private List<String> mData;
     private MyItemOnClickListener listener;
+    private Context context;
+    private final String TAG = "";
 
-    public CityRecycleViewAdapter(List<String> data) {
+    public CityRecycleViewAdapter(List<String> data, Context context) {
         this.mData = data;
+        this.context = context;
     }
 
 
@@ -92,7 +97,7 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
     }
 
     @Override
-    public boolean onItemMove(int fromPosition, int toPosition) {
+    public void onItemMove(int fromPosition, int toPosition) {
         if (fromPosition < toPosition) {
             for (int i = fromPosition; i < toPosition; i++) {
                 Collections.swap(mData, i, i + 1);
@@ -103,12 +108,14 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
             }
         }
         notifyItemMoved(fromPosition, toPosition);
-        return true;
+        Log.d(TAG, "onItemMove: moved!!!!!!!!!");
     }
 
     @Override
     public void onItemDismiss(int position) {
         mData.remove(position);
+
+        WeatherConstant.weatherList.remove(position);
         notifyItemRemoved(position);
     }
 }

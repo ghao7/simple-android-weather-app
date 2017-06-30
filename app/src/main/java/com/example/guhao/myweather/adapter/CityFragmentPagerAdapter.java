@@ -19,9 +19,11 @@ import java.util.List;
 
 public class CityFragmentPagerAdapter extends FragmentStatePagerAdapter {
     private List<SingleCityFragment> list;
+    private FragmentManager fm;
 
     public CityFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
+        this.fm = fm;
         list = new ArrayList<>();
     }
 
@@ -54,6 +56,11 @@ public class CityFragmentPagerAdapter extends FragmentStatePagerAdapter {
     public void addFragment(SingleCityFragment fragment){
         list.add(fragment);
         notifyDataSetChanged();
+    }
+
+    public void clear(){
+//        fm.getFragments().clear();
+        list = new ArrayList<>();
     }
 
     public void setInfo(int position, WeatherEntity entity){

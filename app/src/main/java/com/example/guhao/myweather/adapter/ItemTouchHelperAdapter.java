@@ -9,7 +9,7 @@ package com.example.guhao.myweather.adapter;
 
 public interface ItemTouchHelperAdapter {
 
-    boolean onItemMove(int fromPosition, int toPosition);
+    void onItemMove(int fromPosition, int toPosition);
 
     void onItemDismiss(int position);
 }

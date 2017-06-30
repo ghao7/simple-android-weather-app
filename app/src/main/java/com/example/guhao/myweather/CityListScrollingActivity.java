@@ -22,11 +22,14 @@ import com.example.guhao.myweather.network.SubscriberOnNextListener;
 import com.example.guhao.myweather.presenter.WeatherPre;
 import com.example.guhao.myweather.util.StringUtil;
 
+import java.util.List;
+
 public class CityListScrollingActivity extends BaseActivity {
     private final String TAG = "";
     private RecyclerView recyclerView;
     private Toolbar tb_toolbar;
     private CityRecycleViewAdapter rvAdapter;
+    private FloatingActionButton fab;
 
     private SubscriberOnNextListener getWeatherOnNext;
 
@@ -39,11 +42,21 @@ public class CityListScrollingActivity extends BaseActivity {
         initData();
         setSupportActionBar(tb_toolbar);
         initListner();
+        update();
     }
 
     public void initListner() {
         weatherSubscriberListener();
         recyclerviewListener();
+
+        fab.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //showShort("city " + WeatherConstant.citySlotList.size() + " weather " + WeatherConstant.weatherList.size());
+                List<String> list = WeatherConstant.citySlotList;
+                showShort(list.toString());
+            }
+        });
     }
 
     public void recyclerviewListener(){
@@ -64,6 +77,15 @@ public class CityListScrollingActivity extends BaseActivity {
         super.onStart();
 //        String result = getIntent().getStringExtra("city");
 //        showShort(result);
+        //update();
+
+        Log.d(TAG, "onStart: cityslotlist" + WeatherConstant.citySlotList.size());
+        Log.d(TAG, "onStart: weatherlist" + WeatherConstant.weatherList.size());
+        StringUtil.showPref(getApplicationContext());
+
+    }
+
+    public void update(){
         String str;
         if (WeatherConstant.weatherList.size() > 0) {
             str = StringUtil.getDisplay(WeatherConstant.weatherList.get(0));
@@ -74,13 +96,11 @@ public class CityListScrollingActivity extends BaseActivity {
         }
         rvAdapter.updateData(str, 0);
 
+
         for (int i = 0; i < WeatherConstant.weatherList.size(); i++){
             String info = StringUtil.getDisplay(WeatherConstant.weatherList.get(i));
             rvAdapter.updateData(info,i);
         }
-
-        StringUtil.showPref(getApplicationContext());
-
     }
 
     @Override
@@ -118,8 +138,12 @@ public class CityListScrollingActivity extends BaseActivity {
     }
 
     public void initData(){
-        rvAdapter = new CityRecycleViewAdapter(WeatherConstant.citySlotList);
-
+        rvAdapter = new CityRecycleViewAdapter(WeatherConstant.citySlotList, getApplicationContext());
+//        Log.d(TAG, "initData: cityslotlist size is " + WeatherConstant.citySlotList.size());
+        ItemTouchHelper.Callback callback =
+                new SimpleItemTouchHelperCallback(rvAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(recyclerView);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(rvAdapter);
@@ -127,33 +151,15 @@ public class CityListScrollingActivity extends BaseActivity {
         //recyclerView.addItemDecoration();
         //showShort("呵呵");
 
-        ItemTouchHelper.Callback callback =
-                new SimpleItemTouchHelperCallback(rvAdapter);
-        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
-        touchHelper.attachToRecyclerView(recyclerView);
+
     }
 
     public void findView() {
         recyclerView = (RecyclerView) findViewById(R.id.city_list_recycler_view);
         tb_toolbar = (Toolbar) findViewById(R.id.tb_toolbar);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
     }
 
-    /*
-    public void fabListener() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(CityListScrollingActivity.this, CitySearchingActivity.class);
-//                //startActivity(intent);
-//                startActivityForResult(intent,1);
-                Intent intent = new Intent(CityListScrollingActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
-    }
-    */
 
     public void weatherSubscriberListener() {
         getWeatherOnNext = new SubscriberOnNextListener<WeatherEntity>() {
