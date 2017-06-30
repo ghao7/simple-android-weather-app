@@ -109,15 +109,15 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
                 Collections.swap(WeatherConstant.weatherList, i, i - 1);
             }
         }
+        //WeatherConstant.updateSharedPreferences(context);
         notifyItemMoved(fromPosition, toPosition);
-        Log.d(TAG, "onItemMove: moved!!!!!!!!!");
     }
 
     @Override
     public void onItemDismiss(int position) {
         mData.remove(position);
-
         WeatherConstant.weatherList.remove(position);
+        WeatherConstant.updateSharedPreferences(context);
         notifyItemRemoved(position);
     }
 }

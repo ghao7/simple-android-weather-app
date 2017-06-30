@@ -57,6 +57,18 @@ public class WeatherConstant{
 
     }
 
+    public static void updateSharedPreferences(Context context){
+        SharedPreferences.Editor editor = context.getSharedPreferences("city",Context.MODE_PRIVATE).edit();
+        editor.clear();
+        editor.commit();
+        String key = "city";
+        for (int i = 0; i < weatherList.size();i++){
+            editor.putString(key+i, weatherList.get(i).getHeWeather5().get(0).getBasic().getCity());
+            editor.commit();
+        }
+
+    }
+
     public static void addWeatherEntity(WeatherEntity entity){
         if (!checkIfExist(entity)){
             weatherList.add(entity);
@@ -72,14 +84,6 @@ public class WeatherConstant{
         return false;
     }
 
-    public static boolean checkIfExistCitySlot(String cityName){
-        for (int i = 0; i < citySlotList.size(); i++){
-            if (citySlotList.get(i).equals(cityName)){
-                return true;
-            }
-        }
-        return false;
-    }
 
     public static void updateWeather(final int position, String city, final Context context, final CityFragmentPagerAdapter adapter){
         listener = new SubscriberOnNextListener<WeatherEntity>(){
@@ -103,5 +107,7 @@ public class WeatherConstant{
         cityFragment.setArguments(args);
         return cityFragment;
     }
+
+
 
 }

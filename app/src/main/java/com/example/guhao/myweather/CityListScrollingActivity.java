@@ -52,9 +52,7 @@ public class CityListScrollingActivity extends BaseActivity {
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //showShort("city " + WeatherConstant.citySlotList.size() + " weather " + WeatherConstant.weatherList.size());
-                List<String> list = WeatherConstant.citySlotList;
-                showShort(list.toString());
+                StringUtil.showPref(getApplicationContext());
             }
         });
     }
