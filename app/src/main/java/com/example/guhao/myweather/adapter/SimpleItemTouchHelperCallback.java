@@ -1,5 +1,6 @@
 package com.example.guhao.myweather.adapter;
 
+import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
@@ -33,6 +34,9 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
         int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+        if (viewHolder.getAdapterPosition() == 0){
+            return  makeMovementFlags(0,0);
+        }
         return makeMovementFlags(dragFlags, swipeFlags);
     }
 
