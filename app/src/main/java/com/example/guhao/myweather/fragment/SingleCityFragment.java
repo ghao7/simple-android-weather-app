@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.guhao.myweather.R;
 import com.example.guhao.myweather.bean.WeatherEntity;
@@ -57,7 +56,9 @@ public class SingleCityFragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public void onRefresh() {
         //swipeRefreshLayout.setRefreshing(false);
-        WeatherConstant.updateRawWeather(swipeRefreshLayout);
+        Log.d(TAG, "onRefresh: ");
+//        WeatherConstant.updateRawWeather(swipeRefreshLayout);
+        WeatherConstant.updateSingleCity(0,swipeRefreshLayout);
     }
 
     public void findView(){

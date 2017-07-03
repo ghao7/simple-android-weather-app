@@ -101,18 +101,22 @@ public class WeatherConstant{
     }
 
     public static void updateRawWeather(final SwipeRefreshLayout layout){
+//        weatherList = new ArrayList<>();
+//        for (int i = 0; i < citySlotList.size(); i++){
+//            weatherList.add(null);
+//        }
         for (int i = 0; i < citySlotList.size(); i++) {
             updateSingleCity(i,layout);
             //updateWeather(i,adapter);
         }
     }
 
-    public static void updateSingleCity(int i,final SwipeRefreshLayout layout){
-        final int position = i;
+    public static void updateSingleCity(final int i,final SwipeRefreshLayout layout){
         SubscriberOnNextListener<WeatherEntity> updateListener = new SubscriberOnNextListener<WeatherEntity>() {
             @Override
             public void onNext(WeatherEntity weatherEntity) {
-                weatherList.set(position, weatherEntity);
+                Log.d(TAG, "updateRawWeather: " + i);
+                //weatherList.set(i, weatherEntity);
                 layout.setRefreshing(false);
             }
         };
