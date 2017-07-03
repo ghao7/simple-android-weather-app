@@ -4,15 +4,22 @@
     android:layout_height="match_parent"
     tools:context="com.example.guhao.myweather.fragment.SingleCityFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <ScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/test_textView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/large_text" />
+        android:layout_height="match_parent"
+        android:id="@+id/city_fragment_swipe_refresh">
 
-    </ScrollView>
+        <!-- TODO: Update blank fragment layout -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/test_textView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/large_text" />
+
+        </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 </FrameLayout>

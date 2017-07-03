@@ -3,6 +3,7 @@ package com.example.guhao.myweather.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -85,7 +86,7 @@ public class WeatherConstant{
     }
 
 
-    public static void updateWeather(final int position, String city, final Context context, final CityFragmentPagerAdapter adapter){
+    public static void updateWeather(final int position, final CityFragmentPagerAdapter adapter){
         listener = new SubscriberOnNextListener<WeatherEntity>(){
             @Override
             public void onNext(WeatherEntity entity) {
@@ -95,22 +96,28 @@ public class WeatherConstant{
 
             }
         };
-        WeatherPre.getWeatherRequest(city,listener);
+        WeatherPre.getWeatherRequest(citySlotList.get(position),listener);
 
     }
 
-    public static void updateRawWeather(){
+    public static void updateRawWeather(final SwipeRefreshLayout layout){
         for (int i = 0; i < citySlotList.size(); i++) {
-            final int position = i;
-            SubscriberOnNextListener<WeatherEntity> updateListener = new SubscriberOnNextListener<WeatherEntity>() {
-                @Override
-                public void onNext(WeatherEntity weatherEntity) {
-                    weatherList.set(position, weatherEntity);
-                }
-            };
-
-            WeatherPre.getWeatherRequest(citySlotList.get(i), updateListener);
+            updateSingleCity(i,layout);
+            //updateWeather(i,adapter);
         }
+    }
+
+    public static void updateSingleCity(int i,final SwipeRefreshLayout layout){
+        final int position = i;
+        SubscriberOnNextListener<WeatherEntity> updateListener = new SubscriberOnNextListener<WeatherEntity>() {
+            @Override
+            public void onNext(WeatherEntity weatherEntity) {
+                weatherList.set(position, weatherEntity);
+                layout.setRefreshing(false);
+            }
+        };
+
+        WeatherPre.getWeatherRequest(citySlotList.get(i), updateListener);
     }
 
 

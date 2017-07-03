@@ -1,25 +1,30 @@
 package com.example.guhao.myweather.fragment;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.guhao.myweather.R;
 import com.example.guhao.myweather.bean.WeatherEntity;
+import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.util.StringUtil;
 
 
-public class SingleCityFragment extends Fragment {
+public class SingleCityFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     private final String TAG = "fragment";
 
     private TextView test_tv;
     private View view;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public SingleCityFragment() {
         // Required empty public constructor
@@ -49,8 +54,16 @@ public class SingleCityFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onRefresh() {
+        //swipeRefreshLayout.setRefreshing(false);
+        WeatherConstant.updateRawWeather(swipeRefreshLayout);
+    }
+
     public void findView(){
         test_tv = (TextView)view.findViewById(R.id.test_textView);
+        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.city_fragment_swipe_refresh);
+
     }
 
     public void setContent(WeatherEntity entity){
@@ -62,6 +75,8 @@ public class SingleCityFragment extends Fragment {
         if (getArguments() != null) {
             test_tv.setText(getArguments().getString("weather"));
         }
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeColors(Color.RED);
     }
 
     public void setWeatherInfo(WeatherEntity entity){

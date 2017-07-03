@@ -34,7 +34,7 @@ public class UpdateService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        WeatherConstant.updateRawWeather();
+//        WeatherConstant.updateRawWeather();
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
         int aMinute = 60 * 1000;
         long triggerAtTime = SystemClock.elapsedRealtime() + aMinute;

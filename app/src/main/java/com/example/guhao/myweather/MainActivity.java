@@ -91,7 +91,7 @@ public class MainActivity extends BaseActivity {
                 WeatherConstant.citySlotList.add(city);
                 mPagerAdapter.addFragment(getSingleCityFragmentLite(city));
                 WeatherConstant.weatherList.add(null);
-                WeatherConstant.updateWeather(i,city, MainActivity.this, mPagerAdapter);
+                WeatherConstant.updateWeather(i, mPagerAdapter);
 //                UpdateWeatherRunnable runnable = new UpdateWeatherRunnable(i,city);
 //                new Thread(runnable).start();
 
@@ -285,7 +285,7 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public void run() {
-            WeatherConstant.updateWeather(i,city, MainActivity.this, mPagerAdapter);
+            WeatherConstant.updateWeather(i, mPagerAdapter);
         }
     }
 
