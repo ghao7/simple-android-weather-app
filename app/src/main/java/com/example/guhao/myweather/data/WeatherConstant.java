@@ -99,7 +99,7 @@ public class WeatherConstant{
 
     }
 
-    public static void updateRawWeather(Context context){
+    public static void updateRawWeather(){
         for (int i = 0; i < citySlotList.size(); i++) {
             final int position = i;
             SubscriberOnNextListener<WeatherEntity> updateListener = new SubscriberOnNextListener<WeatherEntity>() {

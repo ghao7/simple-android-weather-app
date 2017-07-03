@@ -62,8 +62,8 @@ public class MainActivity extends BaseActivity {
         new Thread(runnable).start();
         Log.d(TAG, "onCreate: ");
 
-        Intent service = new Intent(this, UpdateService.class);
-        startService(service);
+//        Intent service = new Intent(this, UpdateService.class);
+//        startService(service);
 
     }
 
@@ -297,8 +297,7 @@ public class MainActivity extends BaseActivity {
 //        WeatherConstant.citySlotList.clear();
 //        WeatherConstant.weatherList.clear();
 
-        Intent stop = new Intent(this,UpdateService.class);
-        startService(stop);
+//        onst
     }
 
     @Override
