@@ -129,7 +129,7 @@ public class CityListScrollingActivity extends BaseActivity {
             case 1:
                 if (resultCode == RESULT_OK) {
                     String returnedData = data.getStringExtra("city");
-                    WeatherPre.getWeatherRequest(returnedData, getWeatherOnNext, CityListScrollingActivity.this);
+                    WeatherPre.getWeatherRequest(returnedData, getWeatherOnNext);
                 }
                 break;
             default:

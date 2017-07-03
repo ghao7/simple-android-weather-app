@@ -230,7 +230,7 @@ public class MainActivity extends BaseActivity {
             city = StringUtil.takeOutLastChar(city);
 
             WeatherConstant.addLocal(city,getApplicationContext());
-            WeatherPre.getWeatherRequest(city, getWeatherOnNext, MainActivity.this);
+            WeatherPre.getWeatherRequest(city, getWeatherOnNext);
         }
 
         @Override

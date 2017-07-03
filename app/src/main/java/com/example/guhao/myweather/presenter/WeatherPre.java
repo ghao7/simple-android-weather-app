@@ -16,7 +16,7 @@ import com.example.guhao.myweather.network.WeatherSubscriber;
 public class WeatherPre {
     private static final String KEY = "deceba7359de462db05f243f3fb1660c";
 
-    public static void getWeatherRequest(String city, SubscriberOnNextListener listener, Context context){
-        HttpMethods.getInstance().getWeather(new WeatherSubscriber(listener, context), city, KEY);
+    public static void getWeatherRequest(String city, SubscriberOnNextListener listener){
+        HttpMethods.getInstance().getWeather(new WeatherSubscriber(listener), city, KEY);
     }
 }

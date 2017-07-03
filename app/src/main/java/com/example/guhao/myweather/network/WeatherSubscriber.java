@@ -15,9 +15,9 @@ public class WeatherSubscriber<T> extends Subscriber<T> {
     private SubscriberOnNextListener mSubscriberOnNextListener;
     private Context context;
 
-    public WeatherSubscriber(SubscriberOnNextListener mSubscriberOnNextListener, Context context) {
+    public WeatherSubscriber(SubscriberOnNextListener mSubscriberOnNextListener) {
         this.mSubscriberOnNextListener = mSubscriberOnNextListener;
-        this.context = context;
+//        this.context = context;
     }
 
     @Override

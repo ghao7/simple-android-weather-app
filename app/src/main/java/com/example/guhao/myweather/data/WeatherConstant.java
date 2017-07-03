@@ -95,7 +95,7 @@ public class WeatherConstant{
 
             }
         };
-        WeatherPre.getWeatherRequest(city,listener,context);
+        WeatherPre.getWeatherRequest(city,listener);
 
     }
 
@@ -109,7 +109,7 @@ public class WeatherConstant{
                 }
             };
 
-            WeatherPre.getWeatherRequest(citySlotList.get(i), updateListener, context);
+            WeatherPre.getWeatherRequest(citySlotList.get(i), updateListener);
         }
     }
 
