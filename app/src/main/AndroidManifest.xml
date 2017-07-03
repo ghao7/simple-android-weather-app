@@ -22,9 +22,10 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="kb3C7PnlQyfPgbYtOdsFfGRTFTLEXFr2"/>
+            android:value="kb3C7PnlQyfPgbYtOdsFfGRTFTLEXFr2" />
 
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,10 +39,16 @@
         <activity
             android:name=".CityListScrollingActivity"
             android:label="@string/title_activity_city_list_scrolling"
-            android:launchMode="singleInstance"></activity>
+            android:launchMode="singleInstance" />
 
-        <service android:name="com.baidu.location.f" android:enabled="true"
-            android:process=":remote"></service>
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+        <service
+            android:name=".service.UpdateService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

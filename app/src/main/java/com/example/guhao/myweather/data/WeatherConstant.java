@@ -99,6 +99,21 @@ public class WeatherConstant{
 
     }
 
+    public static void updateRawWeather(Context context){
+        for (int i = 0; i < citySlotList.size(); i++) {
+            final int position = i;
+            SubscriberOnNextListener<WeatherEntity> updateListener = new SubscriberOnNextListener<WeatherEntity>() {
+                @Override
+                public void onNext(WeatherEntity weatherEntity) {
+                    weatherList.set(position, weatherEntity);
+                }
+            };
+
+            WeatherPre.getWeatherRequest(citySlotList.get(i), updateListener, context);
+        }
+    }
+
+
     public static SingleCityFragment getSingleCityFragment(WeatherEntity entity) {
         Bundle args = new Bundle();
         String weather = StringUtil.getDisplay(entity);

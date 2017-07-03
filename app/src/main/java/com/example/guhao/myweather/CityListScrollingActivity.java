@@ -40,7 +40,6 @@ public class CityListScrollingActivity extends BaseActivity {
         setContentView(R.layout.activity_city_list_scrolling);
         findView();
         initData();
-        setSupportActionBar(tb_toolbar);
         initListner();
         update();
     }
@@ -151,7 +150,8 @@ public class CityListScrollingActivity extends BaseActivity {
         //recyclerView.addItemDecoration();
         //showShort("呵呵");
 
-
+        setSupportActionBar(tb_toolbar);
+        tb_toolbar.setTitle(R.string.citylist);
     }
 
     public void findView() {

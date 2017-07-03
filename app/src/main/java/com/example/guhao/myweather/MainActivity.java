@@ -26,6 +26,7 @@ import com.example.guhao.myweather.fragment.SingleCityFragment;
 import com.example.guhao.myweather.network.SubscriberOnNextListener;
 import com.example.guhao.myweather.presenter.DBOperation;
 import com.example.guhao.myweather.presenter.WeatherPre;
+import com.example.guhao.myweather.service.UpdateService;
 import com.example.guhao.myweather.util.StringUtil;
 
 import java.util.ArrayList;
@@ -59,8 +60,23 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(tb_toolbar);
         MyRunnable runnable = new MyRunnable(this);
         new Thread(runnable).start();
+        Log.d(TAG, "onCreate: ");
 
+        Intent service = new Intent(this, UpdateService.class);
+        startService(service);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: ");
     }
 
     public void loadCityPreferences(){
@@ -111,6 +127,8 @@ public class MainActivity extends BaseActivity {
         viewPager.setAdapter(mPagerAdapter);
         loadCityPreferences();
         //set scrollable view adapter
+
+        tb_toolbar.setTitle(R.string.citylist);
 
     }
 
@@ -271,17 +289,21 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        locationClient.stop();
-//    }
-
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "onDestroy: ");
+//        Log.d(TAG, "onDestroy: ");
+//        WeatherConstant.citySlotList.clear();
+//        WeatherConstant.weatherList.clear();
+
+        Intent stop = new Intent(this,UpdateService.class);
+        startService(stop);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         WeatherConstant.citySlotList.clear();
         WeatherConstant.weatherList.clear();
     }
