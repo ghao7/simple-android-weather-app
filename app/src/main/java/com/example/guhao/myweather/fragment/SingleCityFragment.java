@@ -18,12 +18,12 @@ import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.util.StringUtil;
 
 
-public class SingleCityFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class SingleCityFragment extends Fragment{
     private final String TAG = "fragment";
 
     private TextView test_tv;
     private View view;
-    private SwipeRefreshLayout swipeRefreshLayout;
+//    private SwipeRefreshLayout swipeRefreshLayout;
 
     public SingleCityFragment() {
         // Required empty public constructor
@@ -53,17 +53,17 @@ public class SingleCityFragment extends Fragment implements SwipeRefreshLayout.O
         }
     }
 
-    @Override
-    public void onRefresh() {
-        //swipeRefreshLayout.setRefreshing(false);
-        Log.d(TAG, "onRefresh: ");
-//        WeatherConstant.updateRawWeather(swipeRefreshLayout);
-        WeatherConstant.updateSingleCity(0,swipeRefreshLayout);
-    }
+//    @Override
+//    public void onRefresh() {
+//        //swipeRefreshLayout.setRefreshing(false);
+//        Log.d(TAG, "onRefresh: ");
+////        WeatherConstant.updateRawWeather(swipeRefreshLayout);
+//        WeatherConstant.updateSingleCity(0,swipeRefreshLayout);
+//    }
 
     public void findView(){
         test_tv = (TextView)view.findViewById(R.id.test_textView);
-        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.city_fragment_swipe_refresh);
+//        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.city_fragment_swipe_refresh);
 
     }
 
@@ -76,8 +76,8 @@ public class SingleCityFragment extends Fragment implements SwipeRefreshLayout.O
         if (getArguments() != null) {
             test_tv.setText(getArguments().getString("weather"));
         }
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeColors(Color.RED);
+//        swipeRefreshLayout.setOnRefreshListener(this);
+//        swipeRefreshLayout.setColorSchemeColors(Color.RED);
     }
 
     public void setWeatherInfo(WeatherEntity entity){

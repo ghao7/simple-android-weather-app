@@ -100,23 +100,25 @@ public class WeatherConstant{
 
     }
 
-    public static void updateRawWeather(final SwipeRefreshLayout layout){
+    public static void updateRawWeather(final SwipeRefreshLayout layout, CityFragmentPagerAdapter adapter){
 //        weatherList = new ArrayList<>();
 //        for (int i = 0; i < citySlotList.size(); i++){
 //            weatherList.add(null);
 //        }
         for (int i = 0; i < citySlotList.size(); i++) {
-            updateSingleCity(i,layout);
+            //WeatherConstant.weatherList.add(null);
+            updateSingleCity(i,layout, adapter);
             //updateWeather(i,adapter);
         }
     }
 
-    public static void updateSingleCity(final int i,final SwipeRefreshLayout layout){
+    public static void updateSingleCity(final int i,final SwipeRefreshLayout layout, final CityFragmentPagerAdapter adapter){
         SubscriberOnNextListener<WeatherEntity> updateListener = new SubscriberOnNextListener<WeatherEntity>() {
             @Override
             public void onNext(WeatherEntity weatherEntity) {
                 Log.d(TAG, "updateRawWeather: " + i);
                 //weatherList.set(i, weatherEntity);
+                adapter.updateFragment(i,getSingleCityFragment(weatherEntity),weatherEntity);
                 layout.setRefreshing(false);
             }
         };

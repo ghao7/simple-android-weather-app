@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -35,7 +37,7 @@ import java.util.List;
 /**
  * 主界面
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, ViewPager.OnPageChangeListener{
     private final String TAG = "main activity";
     private static final int NUM_PAGES = 5;
 
@@ -44,6 +46,7 @@ public class MainActivity extends BaseActivity {
 
     private Toolbar tb_toolbar;
     private ViewPager viewPager;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private SubscriberOnNextListener getWeatherOnNext;
     private CityFragmentPagerAdapter mPagerAdapter;
@@ -125,11 +128,13 @@ public class MainActivity extends BaseActivity {
 
         mPagerAdapter = new CityFragmentPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(mPagerAdapter);
+        viewPager.setOnPageChangeListener(this);
         loadCityPreferences();
         //set scrollable view adapter
 
         tb_toolbar.setTitle(R.string.citylist);
-
+        swipeRefreshLayout.setColorSchemeColors(Color.RED);
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -158,6 +163,14 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onRefresh() {
+        //WeatherConstant.weatherList.clear();
+//        WeatherConstant.updateRawWeather(swipeRefreshLayout,mPagerAdapter);
+        swipeRefreshLayout.setRefreshing(false);
+
+    }
+
     /**
      * Refresh views if the user add cities in the list activity
      */
@@ -176,6 +189,31 @@ public class MainActivity extends BaseActivity {
         }
         Log.d(TAG, "loadCityInfo: after? "+ mPagerAdapter.getCount() + " " + WeatherConstant.weatherList.size());
 
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        enableDisableSwipeRefresh(state == ViewPager.SCROLL_STATE_IDLE);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    /**
+     * Solve conflict when swiping refresh and scrolling viewpager
+     * @param enable
+     */
+    protected void enableDisableSwipeRefresh(boolean enable) {
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setEnabled(enable);
+        }
     }
 
     public SingleCityFragment getSingleCityFragment(WeatherEntity entity) {
@@ -258,6 +296,7 @@ public class MainActivity extends BaseActivity {
     public void findView() {
         tb_toolbar = (Toolbar) findViewById(R.id.tb_toolbar);
         viewPager = (ViewPager) findViewById(R.id.main_activity_view_pager);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.city_fragment_swipe_refresh);
     }
 
 
@@ -273,22 +312,6 @@ public class MainActivity extends BaseActivity {
             dbOperation = new DBOperation(context);
         }
     }
-
-    class UpdateWeatherRunnable implements Runnable{
-        int i;
-        String city;
-
-        public UpdateWeatherRunnable(int i, String city){
-            this.i = i;
-            this.city = city;
-        }
-
-        @Override
-        public void run() {
-            WeatherConstant.updateWeather(i, mPagerAdapter);
-        }
-    }
-
 
     @Override
     protected void onDestroy() {
