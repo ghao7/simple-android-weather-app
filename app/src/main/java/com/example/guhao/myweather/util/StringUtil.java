@@ -2,6 +2,7 @@ package com.example.guhao.myweather.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.example.guhao.myweather.bean.WeatherEntity;
@@ -61,4 +62,20 @@ public class StringUtil {
         }
 
     }
+
+    public static Bundle makeArgs(Bundle args, WeatherEntity entity){
+        String city_name = entity.getHeWeather5().get(0).getBasic().getCity();
+        String now_temp = entity.getHeWeather5().get(0).getNow().getTmp();
+        WeatherEntity.HeWeather5Bean.DailyForecastBean.TmpBean tmpBean = entity.getHeWeather5().get(0).getDaily_forecast().get(0).getTmp();
+        String max = tmpBean.getMax();
+        String min = tmpBean.getMin();
+        String now_cond = entity.getHeWeather5().get(0).getNow().getCond().getTxt();
+        String condComb = now_cond+" "+max+"˚"+"/"+min+"˚"+"C";
+        args.putString("city_name", city_name);
+        args.putString("now_temp", now_temp+"˚");
+        args.putString("now_cond", condComb);
+        return args;
+    }
+
+
 }

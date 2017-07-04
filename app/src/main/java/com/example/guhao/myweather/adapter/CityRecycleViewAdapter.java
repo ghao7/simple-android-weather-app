@@ -28,13 +28,20 @@ import java.util.List;
 
 public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleViewAdapter.ViewHolder> implements ItemTouchHelperAdapter{
     private List<String> mData;
+    private List<String> mCond;
+    private List<String> mTemp;
     private MyItemOnClickListener listener;
     private Context context;
-    private final String TAG = "";
 
     public CityRecycleViewAdapter(List<String> data, Context context) {
         this.mData = data;
         this.context = context;
+        mCond = new ArrayList<>();
+        mTemp = new ArrayList<>();
+        for (int i = 0; i < data.size();i++){
+            mCond.add(null);
+            mTemp.add(null);
+        }
     }
 
 
@@ -46,7 +53,6 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-//                String str = mData.get(position);
                 listener.onItemClick(v,position);
             }
         });
@@ -60,22 +66,16 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        //holder.mTv.setText(getInfo(mData.get(position)));
-        //holder.mTv.setText(mData.get(position));
-        holder.mTv.setText(mData.get(position));
+        holder.city_cond.setText(mCond.get(position));
+        holder.city_name.setText(mData.get(position));
+        holder.city_temp.setText(mTemp.get(position)+"˚");
     }
 
-    public void updateData(String str, int position){
-        mData.set(position,str);
+    public void updateData(String city,String cond, String temp, int position){
+        mData.set(position,city);
+        mCond.set(position,cond);
+        mTemp.set(position,temp);
         notifyItemChanged(position);
-    }
-
-    public String getInfo(WeatherEntity entity){
-        String city = entity.getHeWeather5().get(0).getBasic().getCity();
-        String temp = entity.getHeWeather5().get(0).getNow().getTmp();
-        String cond = entity.getHeWeather5().get(0).getNow().getCond().getTxt();
-
-        return city + "\n" + temp + "\n" + cond;
     }
 
     @Override
@@ -85,14 +85,17 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mTv;
+        TextView city_name;
+        TextView city_cond;
+        TextView city_temp;
         CardView cardview;
 
         public ViewHolder(View itemView) {
             super(itemView);
             cardview = (CardView) itemView.findViewById(R.id.city_card_view);
-            mTv = (TextView) itemView.findViewById(R.id.city_card_tv);
-            //WeatherConstant.cardList.add(mTv);
+            city_cond = (TextView) itemView.findViewById(R.id.city_cond);
+            city_temp = (TextView) itemView.findViewById(R.id.city_temp);
+            city_name = (TextView) itemView.findViewById(R.id.city_card_tv);
         }
     }
 
@@ -101,11 +104,15 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
         if (fromPosition < toPosition) {
             for (int i = fromPosition; i < toPosition; i++) {
                 Collections.swap(mData, i, i + 1);
+                Collections.swap(mCond, i, i + 1);
+                Collections.swap(mTemp, i, i + 1);
                 Collections.swap(WeatherConstant.weatherList, i, i + 1);
             }
         } else {
             for (int i = fromPosition; i > toPosition; i--) {
                 Collections.swap(mData, i, i - 1);
+                Collections.swap(mCond, i, i - 1);
+                Collections.swap(mTemp, i, i - 1);
                 Collections.swap(WeatherConstant.weatherList, i, i - 1);
             }
         }
@@ -116,6 +123,8 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
     @Override
     public void onItemDismiss(int position) {
         mData.remove(position);
+        mCond.remove(position);
+        mTemp.remove(position);
         WeatherConstant.weatherList.remove(position);
         WeatherConstant.updateSharedPreferences(context);
         notifyItemRemoved(position);

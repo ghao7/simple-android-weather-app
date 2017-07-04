@@ -55,12 +55,6 @@ public class SingleCityFragment extends Fragment{
         now_cond = (TextView) view.findViewById(R.id.now_cond);
     }
 
-    public void setContent(WeatherEntity entity){
-        city_name.setText(entity.getHeWeather5().get(0).getBasic().getCity());
-        now_temp.setText(entity.getHeWeather5().get(0).getNow().getTmp());
-        now_cond.setText(entity.getHeWeather5().get(0).getNow().getCond().getTxt());
-    }
-
     public void initData(){
         if (getArguments() != null) {
             city_name.setText(getArguments().getString("city_name"));
@@ -70,9 +64,13 @@ public class SingleCityFragment extends Fragment{
     }
 
     public void setWeatherInfo(WeatherEntity entity){
+        WeatherEntity.HeWeather5Bean.DailyForecastBean.TmpBean tmpBean = entity.getHeWeather5().get(0).getDaily_forecast().get(0).getTmp();
+        String max = tmpBean.getMax();
+        String min = tmpBean.getMin();
+        String nowCond = entity.getHeWeather5().get(0).getNow().getCond().getTxt();
+        String condComb = nowCond+" "+max+"˚"+"/"+min+"˚"+"C";
         city_name.setText(entity.getHeWeather5().get(0).getBasic().getCity());
-        now_temp.setText(entity.getHeWeather5().get(0).getNow().getTmp());
-        now_cond.setText(entity.getHeWeather5().get(0).getNow().getCond().getTxt());
-
+        now_temp.setText(entity.getHeWeather5().get(0).getNow().getTmp()+"˚");
+        now_cond.setText(condComb);
     }
 }

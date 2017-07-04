@@ -97,4 +97,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="citylist">城市列表</string>
     <string name="nerwork_down">请您检查一下网络 搜不到天气了</string>
+    <string name="degree">˚</string>
+    <string name="city">城市</string>
+    <string name="city_cond">晴天</string>
+    <string name="city_sample_temp">27˚</string>
 </resources>

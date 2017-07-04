@@ -141,7 +141,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         loadCityPreferences();
         //set scrollable view adapter
 
-        tb_toolbar.setTitle(R.string.citylist);
+        //tb_toolbar.setTitle(R.string.citylist);
         swipeRefreshLayout.setColorSchemeColors(Color.RED);
         swipeRefreshLayout.setOnRefreshListener(this);
     }
@@ -226,12 +226,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     public SingleCityFragment getSingleCityFragment(WeatherEntity entity) {
         Bundle args = new Bundle();
-        String city_name = entity.getHeWeather5().get(0).getBasic().getCity();
-        String now_temp = entity.getHeWeather5().get(0).getNow().getTmp();
-        String now_cond = entity.getHeWeather5().get(0).getNow().getCond().getTxt();
-        args.putString("city_name", city_name);
-        args.putString("now_temp", now_temp);
-        args.putString("now_cond", now_cond);
+        args = StringUtil.makeArgs(args,entity);
         SingleCityFragment cityFragment = new SingleCityFragment();
         cityFragment.setArguments(args);
         return cityFragment;
