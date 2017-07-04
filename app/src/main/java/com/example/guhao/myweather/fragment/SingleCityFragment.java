@@ -14,16 +14,14 @@ import android.widget.TextView;
 
 import com.example.guhao.myweather.R;
 import com.example.guhao.myweather.bean.WeatherEntity;
-import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.util.StringUtil;
 
 
 public class SingleCityFragment extends Fragment{
-    private final String TAG = "fragment";
-
-    private TextView test_tv;
+    private TextView city_name;
+    private TextView now_temp;
+    private TextView now_cond;
     private View view;
-//    private SwipeRefreshLayout swipeRefreshLayout;
 
     public SingleCityFragment() {
         // Required empty public constructor
@@ -41,48 +39,45 @@ public class SingleCityFragment extends Fragment{
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("weather",test_tv.getText().toString());
+        outState.putString("city_name",city_name.getText().toString());
+        outState.putString("now_temp",now_temp.getText().toString());
+        outState.putString("now_cond",now_cond.getText().toString());
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
-            String weather = savedInstanceState.getString("weather");
-            test_tv.setText(weather);
+            city_name.setText(savedInstanceState.getString("city_name"));
+            now_temp.setText(savedInstanceState.getString("now_temp"));
+            now_cond.setText(savedInstanceState.getString("now_cond"));
         }
     }
 
-//    @Override
-//    public void onRefresh() {
-//        //swipeRefreshLayout.setRefreshing(false);
-//        Log.d(TAG, "onRefresh: ");
-////        WeatherConstant.updateRawWeather(swipeRefreshLayout);
-//        WeatherConstant.updateSingleCity(0,swipeRefreshLayout);
-//    }
-
     public void findView(){
-        test_tv = (TextView)view.findViewById(R.id.test_textView);
-//        swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.city_fragment_swipe_refresh);
-
+        city_name = (TextView)view.findViewById(R.id.city_name);
+        now_temp = (TextView) view.findViewById(R.id.now_temp);
+        now_cond = (TextView) view.findViewById(R.id.now_cond);
     }
 
     public void setContent(WeatherEntity entity){
-        String info = StringUtil.getDisplay(entity);
-        test_tv.setText(info);
+        city_name.setText(entity.getHeWeather5().get(0).getBasic().getCity());
+        now_temp.setText(entity.getHeWeather5().get(0).getNow().getTmp());
+        now_cond.setText(entity.getHeWeather5().get(0).getNow().getCond().getTxt());
     }
 
     public void initData(){
         if (getArguments() != null) {
-            test_tv.setText(getArguments().getString("weather"));
+            city_name.setText(getArguments().getString("city_name"));
+            now_temp.setText(getArguments().getString("now_temp"));
+            now_cond.setText(getArguments().getString("now_cond"));
         }
-//        swipeRefreshLayout.setOnRefreshListener(this);
-//        swipeRefreshLayout.setColorSchemeColors(Color.RED);
     }
 
     public void setWeatherInfo(WeatherEntity entity){
-        String str = StringUtil.getDisplay(entity);
-        test_tv.setText(str);
+        city_name.setText(entity.getHeWeather5().get(0).getBasic().getCity());
+        now_temp.setText(entity.getHeWeather5().get(0).getNow().getTmp());
+        now_cond.setText(entity.getHeWeather5().get(0).getNow().getCond().getTxt());
 
     }
 }
