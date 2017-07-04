@@ -9,6 +9,11 @@ import java.util.List;
 
 public class WeatherEntity implements Serializable{
 
+    @Override
+    public String toString() {
+        String str = getHeWeather5().get(0).getBasic().getCity();
+        return str;
+    }
 
     private List<HeWeather5Bean> HeWeather5;
 
