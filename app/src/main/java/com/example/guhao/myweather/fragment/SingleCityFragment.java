@@ -1,12 +1,8 @@
 package com.example.guhao.myweather.fragment;
 
-
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.guhao.myweather.R;
 import com.example.guhao.myweather.bean.WeatherEntity;
-import com.example.guhao.myweather.util.StringUtil;
 
 
 public class SingleCityFragment extends Fragment{

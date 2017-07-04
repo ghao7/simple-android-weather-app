@@ -28,7 +28,7 @@ import com.example.guhao.myweather.fragment.SingleCityFragment;
 import com.example.guhao.myweather.network.SubscriberOnNextListener;
 import com.example.guhao.myweather.presenter.DBOperation;
 import com.example.guhao.myweather.presenter.WeatherPre;
-import com.example.guhao.myweather.service.UpdateService;
+import com.example.guhao.myweather.util.NetworkUtil;
 import com.example.guhao.myweather.util.StringUtil;
 
 import java.util.ArrayList;
@@ -54,19 +54,22 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        findView();
-        initData();
-        initListener();
+        if (NetworkUtil.isNetworkAvailable(this)) {
+            setContentView(R.layout.activity_main);
+            findView();
+            initData();
+            initListener();
 
-        setSupportActionBar(tb_toolbar);
-        MyRunnable runnable = new MyRunnable(this);
-        new Thread(runnable).start();
-        Log.d(TAG, "onCreate: ");
+            setSupportActionBar(tb_toolbar);
+            MyRunnable runnable = new MyRunnable(this);
+            new Thread(runnable).start();
+            Log.d(TAG, "onCreate: ");
 
-//        Intent service = new Intent(this, UpdateService.class);
-//        startService(service);
+        }else{
+            //showLong("请您检查一下网络 更新不了天气了");
+            setContentView(R.layout.activity_network_down);
+        }
 
     }
 
@@ -121,8 +124,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                 break;
 
             case R.id.id_settings:
-//                showShort("clicked");
-                showShort(WeatherConstant.weatherList.toString());
+                String str = (NetworkUtil.isNetworkAvailable(this)==true)?"Yes":"No";
+                showShort(str);
                 break;
             default:
         }
