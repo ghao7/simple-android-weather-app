@@ -108,6 +108,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_list, menu);
+        getMenuInflater().inflate(R.menu.menu_samples, menu);
         return true;
     }
 
@@ -117,6 +118,11 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             case R.id.action_list:
                 Intent intent = new Intent(MainActivity.this, CityListScrollingActivity.class);
                 startActivityForResult(intent,1);
+                break;
+
+            case R.id.id_settings:
+//                showShort("clicked");
+                showShort(WeatherConstant.weatherList.toString());
                 break;
             default:
         }
@@ -166,9 +172,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @Override
     public void onRefresh() {
         //WeatherConstant.weatherList.clear();
-//        WeatherConstant.updateRawWeather(swipeRefreshLayout,mPagerAdapter);
-        swipeRefreshLayout.setRefreshing(false);
-
+        WeatherConstant.updateRawWeather(swipeRefreshLayout,mPagerAdapter);
+//        WeatherConstant.updateSingleCity(viewPager.getCurrentItem(),swipeRefreshLayout,mPagerAdapter);
     }
 
     /**

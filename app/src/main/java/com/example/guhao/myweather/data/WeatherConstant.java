@@ -117,13 +117,15 @@ public class WeatherConstant{
             @Override
             public void onNext(WeatherEntity weatherEntity) {
                 Log.d(TAG, "updateRawWeather: " + i);
-                //weatherList.set(i, weatherEntity);
+                weatherList.set(i, weatherEntity);
+                Log.d(TAG, "onNext: " + weatherEntity.toString());
+
                 adapter.updateFragment(i,getSingleCityFragment(weatherEntity),weatherEntity);
                 layout.setRefreshing(false);
             }
         };
 
-        WeatherPre.getWeatherRequest(citySlotList.get(i), updateListener);
+        WeatherPre.getWeatherRequest(weatherList.get(i).toString(), updateListener);
     }
 
 
