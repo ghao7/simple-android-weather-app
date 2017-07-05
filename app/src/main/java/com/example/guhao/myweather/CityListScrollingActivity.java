@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-
 import com.example.guhao.myweather.adapter.CityRecycleViewAdapter;
 import com.example.guhao.myweather.adapter.MyItemOnClickListener;
 import com.example.guhao.myweather.adapter.SimpleItemTouchHelperCallback;
@@ -21,8 +20,6 @@ import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.network.SubscriberOnNextListener;
 import com.example.guhao.myweather.presenter.WeatherPre;
 import com.example.guhao.myweather.util.StringUtil;
-
-import java.util.List;
 
 public class CityListScrollingActivity extends BaseActivity {
     private final String TAG = "";
@@ -64,7 +61,6 @@ public class CityListScrollingActivity extends BaseActivity {
                 intent.putExtra("position",position);
                 setResult(RESULT_OK,intent);
                 finish();
-//                startActivity(intent);
             }
         });
     }
@@ -72,9 +68,6 @@ public class CityListScrollingActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        String result = getIntent().getStringExtra("city");
-//        showShort(result);
-        //update();
 
         Log.d(TAG, "onStart: cityslotlist" + WeatherConstant.citySlotList.size());
         Log.d(TAG, "onStart: weatherlist" + WeatherConstant.weatherList.size());
@@ -112,9 +105,7 @@ public class CityListScrollingActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
-                //showShort("Clicked");
                 Intent intent = new Intent(CityListScrollingActivity.this, CitySearchingActivity.class);
-                //startActivity(intent);
                 startActivityForResult(intent, 1);
                 break;
 
@@ -140,17 +131,12 @@ public class CityListScrollingActivity extends BaseActivity {
 
     public void initData(){
         rvAdapter = new CityRecycleViewAdapter(WeatherConstant.citySlotList, getApplicationContext());
-//        Log.d(TAG, "initData: cityslotlist size is " + WeatherConstant.citySlotList.size());
         ItemTouchHelper.Callback callback =
                 new SimpleItemTouchHelperCallback(rvAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(recyclerView);
-        //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(rvAdapter);
-        //recyclerView.setItemAnimator(new DefaultItemAnimator());
-        //recyclerView.addItemDecoration();
-        //showShort("呵呵");
 
         setSupportActionBar(tb_toolbar);
         tb_toolbar.setTitle(R.string.citylist);

@@ -71,6 +71,19 @@ public class StringUtil {
         args.putString("city_name", city_name);
         args.putString("now_temp", now_temp+"˚");
         args.putString("now_cond", condComb);
+
+
+
+        /*
+        args.putString("clothes_suggestion",);
+        args.putString("clothes_suggestion_content",);
+        args.putString("cold_suggestion",);
+        args.putString("cold_suggestion_content",);
+        args.putString("travel_suggestion",);
+        args.putString("travel_suggestion_content",);
+        args.putString("work_out_suggestion",);
+        args.putString("work_out_suggestion_content",);
+        */
         return args;
     }
 

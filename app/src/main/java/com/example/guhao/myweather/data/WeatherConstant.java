@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.guhao.myweather.adapter.CityFragmentPagerAdapter;
 import com.example.guhao.myweather.bean.WeatherEntity;
