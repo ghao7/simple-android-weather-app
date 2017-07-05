@@ -31,7 +31,6 @@ import com.example.guhao.myweather.presenter.DBOperation;
 import com.example.guhao.myweather.presenter.WeatherPre;
 import com.example.guhao.myweather.util.NetworkUtil;
 import com.example.guhao.myweather.util.StringUtil;
-import com.example.guhao.myweather.view.MySwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +47,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     private Toolbar tb_toolbar;
     private ViewPager viewPager;
-    private MySwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private SubscriberOnNextListener getWeatherOnNext;
     private CityFragmentPagerAdapter mPagerAdapter;
@@ -315,7 +314,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     public void findView() {
         tb_toolbar = (Toolbar) findViewById(R.id.tb_toolbar);
         viewPager = (ViewPager) findViewById(R.id.main_activity_view_pager);
-        swipeRefreshLayout = (MySwipeRefreshLayout) findViewById(R.id.city_fragment_swipe_refresh);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.city_fragment_swipe_refresh);
     }
 
 
