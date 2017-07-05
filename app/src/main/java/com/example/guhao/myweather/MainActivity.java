@@ -232,6 +232,14 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         args = StringUtil.makeArgs(args,entity);
         SingleCityFragment cityFragment = new SingleCityFragment();
         cityFragment.setArguments(args);
+        cityFragment.setOnMyPageScrollListener(new MyPageScrollListener() {
+            @Override
+            public void setRefresh(boolean set) {
+                if (swipeRefreshLayout != null){
+                    swipeRefreshLayout.setEnabled(set);
+                }
+            }
+        });
         return cityFragment;
     }
 

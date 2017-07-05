@@ -1,7 +1,9 @@
 package com.example.guhao.myweather.network;
 
 import com.example.guhao.myweather.bean.ForecastEntity;
+import com.example.guhao.myweather.bean.SearchEntity;
 import com.example.guhao.myweather.bean.WeatherEntity;
+import com.example.guhao.myweather.bean.CityEntity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -66,5 +68,11 @@ public class HttpMethods {
                 .subscribe(subscriber);
     }
 
+    public void getCity(Subscriber<SearchEntity> subscriber, String location, String key){
+        service.getSearchBean(location,key)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
 
 }

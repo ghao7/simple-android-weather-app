@@ -10,8 +10,12 @@ import android.widget.SearchView;
 
 import com.example.guhao.myweather.adapter.SearchListAdapter;
 import com.example.guhao.myweather.bean.CityEntity;
+import com.example.guhao.myweather.bean.SearchEntity;
+import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
+import com.example.guhao.myweather.network.SubscriberOnNextListener;
 import com.example.guhao.myweather.presenter.DBOperation;
+import com.example.guhao.myweather.presenter.WeatherPre;
 //import com.example.guhao.myweather.presenter.WeatherPre;
 
 import java.util.ArrayList;
@@ -20,7 +24,7 @@ import java.util.List;
 public class CitySearchingActivity extends BaseActivity {
     private final String TAG = "citysearch";
 
-
+    private SubscriberOnNextListener subscriberOnNextListener;
     private DBOperation dbOperation;
     private SearchView searchView;
     private ListView listView;
@@ -53,6 +57,21 @@ public class CitySearchingActivity extends BaseActivity {
         searchView.setFocusable(true);
         searchView.setIconified(false);
         searchView.requestFocusFromTouch();
+
+        subscriberOnNextListener = new SubscriberOnNextListener<SearchEntity>(){
+            @Override
+            public void onNext(SearchEntity searchEntity) {
+//                showShort(searchEntity.getHeWeather5().get(0).getBasic().getCity());
+                List<CityEntity> newList = new ArrayList<>();
+                SearchEntity.HeWeather5Bean.BasicBean bean = searchEntity.getHeWeather5().get(0).getBasic();
+                String area_code = bean.getId();
+                String city_cn = bean.getCity();
+                CityEntity entity = new CityEntity(area_code,"",city_cn,"","","","","","");
+                newList.add(entity);
+                setCityList(newList);
+                searchListListener(newList);
+            }
+        };
     }
 
     public void initListener(){
@@ -72,6 +91,8 @@ public class CitySearchingActivity extends BaseActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 //search international cities
+                //showShort("search");
+                WeatherPre.getCityRequest(query, subscriberOnNextListener);
                 return false;
             }
         });
@@ -90,6 +111,7 @@ public class CitySearchingActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.putExtra("city", cityEntity.getArea_code());
                 setResult(RESULT_OK, intent);
+//                showShort(cityEntity.getCity_cn());
                 finish();
             }
         });

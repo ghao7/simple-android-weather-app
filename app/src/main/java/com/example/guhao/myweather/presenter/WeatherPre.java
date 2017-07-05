@@ -2,6 +2,8 @@ package com.example.guhao.myweather.presenter;
 
 import android.content.Context;
 
+import com.example.guhao.myweather.bean.SearchEntity;
+import com.example.guhao.myweather.network.CitySubscriber;
 import com.example.guhao.myweather.network.HttpMethods;
 import com.example.guhao.myweather.network.SubscriberOnNextListener;
 import com.example.guhao.myweather.network.WeatherSubscriber;
@@ -18,5 +20,9 @@ public class WeatherPre {
 
     public static void getWeatherRequest(String city, SubscriberOnNextListener listener){
         HttpMethods.getInstance().getWeather(new WeatherSubscriber(listener), city, KEY);
+    }
+
+    public static void getCityRequest(String city, SubscriberOnNextListener listener){
+        HttpMethods.getInstance().getCity(new CitySubscriber(listener), city, KEY);
     }
 }
