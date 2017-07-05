@@ -22,6 +22,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.example.guhao.myweather.adapter.CityFragmentPagerAdapter;
+import com.example.guhao.myweather.adapter.MyPageScrollListener;
 import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.fragment.SingleCityFragment;
@@ -30,6 +31,7 @@ import com.example.guhao.myweather.presenter.DBOperation;
 import com.example.guhao.myweather.presenter.WeatherPre;
 import com.example.guhao.myweather.util.NetworkUtil;
 import com.example.guhao.myweather.util.StringUtil;
+import com.example.guhao.myweather.view.MySwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     private Toolbar tb_toolbar;
     private ViewPager viewPager;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private MySwipeRefreshLayout swipeRefreshLayout;
 
     private SubscriberOnNextListener getWeatherOnNext;
     private CityFragmentPagerAdapter mPagerAdapter;
@@ -138,12 +140,14 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         mPagerAdapter = new CityFragmentPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(mPagerAdapter);
         viewPager.setOnPageChangeListener(this);
+        //viewPager.set
         loadCityPreferences();
         //set scrollable view adapter
 
         //tb_toolbar.setTitle(R.string.citylist);
         swipeRefreshLayout.setColorSchemeColors(Color.RED);
         swipeRefreshLayout.setOnRefreshListener(this);
+
     }
 
     @Override
@@ -236,6 +240,14 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         Bundle args = new Bundle();
         args.putString("weather", city);
         SingleCityFragment cityFragment = new SingleCityFragment();
+        cityFragment.setOnMyPageScrollListener(new MyPageScrollListener() {
+            @Override
+            public void setRefresh(boolean set) {
+                if (swipeRefreshLayout != null){
+                    swipeRefreshLayout.setEnabled(set);
+                }
+            }
+        });
         cityFragment.setArguments(args);
         return cityFragment;
     }
@@ -303,7 +315,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     public void findView() {
         tb_toolbar = (Toolbar) findViewById(R.id.tb_toolbar);
         viewPager = (ViewPager) findViewById(R.id.main_activity_view_pager);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.city_fragment_swipe_refresh);
+        swipeRefreshLayout = (MySwipeRefreshLayout) findViewById(R.id.city_fragment_swipe_refresh);
     }
 
 

@@ -26,7 +26,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleInstance">
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,11 +36,13 @@
         </activity>
         <activity
             android:name=".CitySearchingActivity"
-            android:label="@string/title_activity_city_list" />
+            android:label="@string/title_activity_city_list"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".CityListScrollingActivity"
             android:label="@string/title_activity_city_list_scrolling"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name="com.baidu.location.f"

@@ -6,9 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.guhao.myweather.R;
+import com.example.guhao.myweather.adapter.MyPageScrollListener;
 import com.example.guhao.myweather.bean.WeatherEntity;
 
 
@@ -16,7 +19,9 @@ public class SingleCityFragment extends Fragment{
     private TextView city_name;
     private TextView now_temp;
     private TextView now_cond;
+    private ScrollView scrollView;
     private View view;
+    private MyPageScrollListener listener;
 
     public SingleCityFragment() {
         // Required empty public constructor
@@ -30,6 +35,12 @@ public class SingleCityFragment extends Fragment{
         initData();
         return view;
     }
+
+    public void setOnMyPageScrollListener(MyPageScrollListener listener){
+        this.listener = listener;
+    }
+
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -53,6 +64,7 @@ public class SingleCityFragment extends Fragment{
         city_name = (TextView)view.findViewById(R.id.city_name);
         now_temp = (TextView) view.findViewById(R.id.now_temp);
         now_cond = (TextView) view.findViewById(R.id.now_cond);
+        scrollView = (ScrollView) view.findViewById(R.id.fragment_scroll_view);
     }
 
     public void initData(){
@@ -61,6 +73,14 @@ public class SingleCityFragment extends Fragment{
             now_temp.setText(getArguments().getString("now_temp"));
             now_cond.setText(getArguments().getString("now_cond"));
         }
+
+        scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                listener.setRefresh(scrollY == 0);
+            }
+        });
+
     }
 
     public void setWeatherInfo(WeatherEntity entity){
