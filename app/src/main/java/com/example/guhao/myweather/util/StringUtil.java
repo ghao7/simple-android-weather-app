@@ -36,15 +36,12 @@ public class StringUtil {
     }
 
     public static String getDisplay(WeatherEntity entity){
-        if (entity == null){
-            return "wrong";
-        }else {
             String city = entity.getHeWeather5().get(0).getBasic().getCity();
             String temp = entity.getHeWeather5().get(0).getNow().getTmp();
             String cond = entity.getHeWeather5().get(0).getNow().getCond().getTxt();
 
             return city + "\n" + temp + "\n" + cond;
-        }
+
     }
 
     public static void showPref(Context context){

@@ -83,17 +83,6 @@ public class CityListScrollingActivity extends BaseActivity {
     }
 
     public void update(){
-        String str;
-        if (WeatherConstant.weatherList.size() > 0) {
-            str = StringUtil.getDisplay(WeatherConstant.weatherList.get(0));
-        } else if (WeatherConstant.citySlotList.size() > 0) {
-            str = WeatherConstant.citySlotList.get(0);
-        } else {
-            str = "定位中";
-        }
-        rvAdapter.updateData(str,"","",0);
-
-
         for (int i = 0; i < WeatherConstant.weatherList.size(); i++){
             //String info = StringUtil.getDisplay(WeatherConstant.weatherList.get(i));
             updateMultipleData(i,WeatherConstant.weatherList.get(i));
@@ -101,11 +90,16 @@ public class CityListScrollingActivity extends BaseActivity {
     }
 
     public void updateMultipleData(int position, WeatherEntity entity){
-        WeatherEntity.HeWeather5Bean heWeather5Bean= entity.getHeWeather5().get(0);
-        String city = heWeather5Bean.getBasic().getCity();
-        String cond = heWeather5Bean.getNow().getCond().getTxt();
-        String temp = heWeather5Bean.getNow().getTmp();
-        rvAdapter.updateData(city,cond,temp,position);
+        if (entity != null) {
+            WeatherEntity.HeWeather5Bean heWeather5Bean = entity.getHeWeather5().get(0);
+            String city = heWeather5Bean.getBasic().getCity();
+            String cond = heWeather5Bean.getNow().getCond().getTxt();
+            String temp = heWeather5Bean.getNow().getTmp();
+            rvAdapter.addItems();
+            rvAdapter.updateData(city, cond, temp, position);
+        }else{
+            showShort("null");
+        }
     }
 
     @Override
@@ -173,10 +167,7 @@ public class CityListScrollingActivity extends BaseActivity {
         getWeatherOnNext = new SubscriberOnNextListener<WeatherEntity>() {
             @Override
             public void onNext(WeatherEntity entity) {
-                String cityName = entity.getHeWeather5().get(0).getBasic().getCity();
-//                showShort(cityName);
-                //WeatherConstant.cardList.get(0).setText(StringUtil.getDisplay(entity));
-                updateMultipleData(WeatherConstant.weatherList.size()-1,entity);
+                updateMultipleData(WeatherConstant.weatherList.size(),entity);
                 WeatherConstant.addWeatherEntity(entity);
             }
         };

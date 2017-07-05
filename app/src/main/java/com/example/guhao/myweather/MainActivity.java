@@ -324,10 +324,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     protected void onDestroy() {
         super.onDestroy();
 //        Log.d(TAG, "onDestroy: ");
-//        WeatherConstant.citySlotList.clear();
-//        WeatherConstant.weatherList.clear();
-
-//        onst
+        WeatherConstant.citySlotList.clear();
+        WeatherConstant.weatherList.clear();
     }
 
     @Override

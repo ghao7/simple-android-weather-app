@@ -78,6 +78,11 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
         notifyItemChanged(position);
     }
 
+    public void addItems(){
+        mCond.add("----");
+        mTemp.add("---");
+    }
+
     @Override
     public int getItemCount() {
         return mData == null ? 0 : mData.size();

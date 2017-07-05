@@ -69,6 +69,7 @@ public class SingleCityFragment extends Fragment{
         String min = tmpBean.getMin();
         String nowCond = entity.getHeWeather5().get(0).getNow().getCond().getTxt();
         String condComb = nowCond+" "+max+"˚"+"/"+min+"˚"+"C";
+
         city_name.setText(entity.getHeWeather5().get(0).getBasic().getCity());
         now_temp.setText(entity.getHeWeather5().get(0).getNow().getTmp()+"˚");
         now_cond.setText(condComb);

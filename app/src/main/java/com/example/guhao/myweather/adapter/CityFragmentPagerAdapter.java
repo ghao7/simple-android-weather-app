@@ -59,7 +59,6 @@ public class CityFragmentPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     public void clear(){
-//        fm.getFragments().clear();
         list = new ArrayList<>();
     }
 

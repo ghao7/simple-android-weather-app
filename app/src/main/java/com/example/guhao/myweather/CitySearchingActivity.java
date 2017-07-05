@@ -71,7 +71,7 @@ public class CitySearchingActivity extends BaseActivity {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //showShort(query);
+                //search international cities
                 return false;
             }
         });
@@ -86,18 +86,10 @@ public class CitySearchingActivity extends BaseActivity {
                 CityEntity cityEntity = cityList.get(position);
                 //showShort(cityEntity.getCity_cn());
 
-                //Intent intent = new Intent(CitySearchingActivity.this, CityListScrollingActivity.class);
-                //if (!WeatherConstant.checkIfExistCitySlot(cityEntity.getCity_cn())) {
-                    WeatherConstant.addCitySlot(cityEntity.getCity_cn(),getApplicationContext());
-                    Intent intent = new Intent();
-                    intent.putExtra("city", cityEntity.getArea_code());
-                    setResult(RESULT_OK, intent);
-//                }else{
-//                    Intent intent = new Intent();
-//                    intent.putExtra("city", cityEntity.getArea_code());
-//                    setResult(RESULT_CANCELED, intent);
-//
-//                }
+                WeatherConstant.addCitySlot(cityEntity.getCity_cn(),getApplicationContext());
+                Intent intent = new Intent();
+                intent.putExtra("city", cityEntity.getArea_code());
+                setResult(RESULT_OK, intent);
                 finish();
             }
         });
