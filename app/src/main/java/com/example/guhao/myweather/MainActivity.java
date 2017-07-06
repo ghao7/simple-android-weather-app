@@ -244,8 +244,9 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     }
 
     public SingleCityFragment getSingleCityFragmentLite(String city) {
-        Bundle args = new Bundle();
-        args.putString("weather", city);
+        //Bundle args = new Bundle();
+
+        //args.putString("weather", city);
         SingleCityFragment cityFragment = new SingleCityFragment();
         cityFragment.setOnMyPageScrollListener(new MyPageScrollListener() {
             @Override
@@ -255,7 +256,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                 }
             }
         });
-        cityFragment.setArguments(args);
+        //cityFragment.setArguments(args);
         return cityFragment;
     }
 
