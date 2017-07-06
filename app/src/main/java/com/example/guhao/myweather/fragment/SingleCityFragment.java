@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ public class SingleCityFragment extends Fragment{
     private ScrollView scrollView;
     private View view;
     private MyPageScrollListener listener;
+    private LinearLayout linearLayout;
 
     public SingleCityFragment() {
         // Required empty public constructor
@@ -33,7 +35,15 @@ public class SingleCityFragment extends Fragment{
         view = inflater.inflate(R.layout.fragment_single_city, container, false);
         findView();
         initData();
+        inflateTempBar(inflater, container);
         return view;
+    }
+
+    public void inflateTempBar(LayoutInflater inflater, ViewGroup container) {
+        for (int i = 0; i < 3; i++) {
+            View v = inflater.inflate(R.layout.layout_temp_bar, container, false);
+            linearLayout.addView(v);
+        }
     }
 
     public void setOnMyPageScrollListener(MyPageScrollListener listener){
@@ -65,6 +75,7 @@ public class SingleCityFragment extends Fragment{
         now_temp = (TextView) view.findViewById(R.id.now_temp);
         now_cond = (TextView) view.findViewById(R.id.now_cond);
         scrollView = (ScrollView) view.findViewById(R.id.fragment_scroll_view);
+        linearLayout = (LinearLayout) view.findViewById(R.id.fragment_linear_layout);
     }
 
     public void initData(){
@@ -80,6 +91,7 @@ public class SingleCityFragment extends Fragment{
                 listener.setRefresh(scrollY == 0);
             }
         });
+
 
     }
 
