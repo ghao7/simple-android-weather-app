@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -74,6 +75,7 @@ public class SingleCityFragment extends Fragment{
             TextView temp_min = (TextView) v.findViewById(R.id.temp_min);
             TextView temp_max = (TextView) v.findViewById(R.id.temp_max);
             TextView date = (TextView) v.findViewById(R.id.date);
+            ImageView tempBar = (ImageView) v.findViewById(R.id.temp_bar);
 
             WeatherEntity.HeWeather5Bean.DailyForecastBean.TmpBean tempBean = list.get(i).getTmp();
             String tempMin = tempBean.getMin();
@@ -85,6 +87,19 @@ public class SingleCityFragment extends Fragment{
             temp_min.setText(tempMin);
             temp_max.setText(tempMax);
             date.setText(XinQiji);
+
+            ViewGroup.LayoutParams params = tempBar.getLayoutParams();
+            int min = Integer.parseInt(tempMin);
+            int max = Integer.parseInt(tempMax);
+
+            params.width = (max - min)* unit*3;
+            int pad = unit*3*(min-absMin);
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(params);
+            layoutParams.setMargins(24+pad,32,24,24);
+
+//            Toast.makeText(this.getContext(),params.height+"",Toast.LENGTH_SHORT).show();
+            tempBar.setLayoutParams(layoutParams);
 
         }
     }
