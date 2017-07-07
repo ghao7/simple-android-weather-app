@@ -25,7 +25,7 @@ public class WeatherEntity implements Serializable{
         this.HeWeather5 = HeWeather5;
     }
 
-    public static class HeWeather5Bean {
+    public static class HeWeather5Bean implements Serializable{
         /**
          * aqi : {"city":{"aqi":"57","co":"1","no2":"59","o3":"69","pm10":"64","pm25":"29","qlty":"良","so2":"3"}}
          * basic : {"city":"北京","cnty":"中国","id":"CN101010100","lat":"39.90498734","lon":"116.40528870","update":{"loc":"2017-06-09 10:52","utc":"2017-06-09 02:52"}}
@@ -100,7 +100,7 @@ public class WeatherEntity implements Serializable{
             this.hourly_forecast = hourly_forecast;
         }
 
-        public static class AqiBean {
+        public static class AqiBean implements Serializable{
             /**
              * city : {"aqi":"57","co":"1","no2":"59","o3":"69","pm10":"64","pm25":"29","qlty":"良","so2":"3"}
              */
@@ -115,7 +115,7 @@ public class WeatherEntity implements Serializable{
                 this.city = city;
             }
 
-            public static class CityBean {
+            public static class CityBean implements Serializable{
                 /**
                  * aqi : 57
                  * co : 1
@@ -202,7 +202,7 @@ public class WeatherEntity implements Serializable{
             }
         }
 
-        public static class BasicBean {
+        public static class BasicBean implements Serializable{
             /**
              * city : 北京
              * cnty : 中国
@@ -267,7 +267,7 @@ public class WeatherEntity implements Serializable{
                 this.update = update;
             }
 
-            public static class UpdateBean {
+            public static class UpdateBean implements Serializable{
                 /**
                  * loc : 2017-06-09 10:52
                  * utc : 2017-06-09 02:52
@@ -294,7 +294,7 @@ public class WeatherEntity implements Serializable{
             }
         }
 
-        public static class NowBean {
+        public static class NowBean implements Serializable{
             /**
              * cond : {"code":"100","txt":"晴"}
              * fl : 30
@@ -379,7 +379,7 @@ public class WeatherEntity implements Serializable{
                 this.wind = wind;
             }
 
-            public static class CondBean {
+            public static class CondBean implements Serializable{
                 /**
                  * code : 100
                  * txt : 晴
@@ -405,7 +405,7 @@ public class WeatherEntity implements Serializable{
                 }
             }
 
-            public static class WindBean {
+            public static class WindBean implements Serializable{
                 /**
                  * deg : 294
                  * dir : 西南风
@@ -452,7 +452,7 @@ public class WeatherEntity implements Serializable{
             }
         }
 
-        public static class SuggestionBean {
+        public static class SuggestionBean implements Serializable{
             /**
              * comf : {"brf":"很不舒适","txt":"白天天气晴好，但烈日炎炎会使您会感到很热，很不舒适。"}
              * cw : {"brf":"较适宜","txt":"较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。"}
@@ -527,7 +527,7 @@ public class WeatherEntity implements Serializable{
                 this.uv = uv;
             }
 
-            public static class ComfBean {
+            public static class ComfBean implements Serializable{
                 /**
                  * brf : 很不舒适
                  * txt : 白天天气晴好，但烈日炎炎会使您会感到很热，很不舒适。
@@ -553,7 +553,7 @@ public class WeatherEntity implements Serializable{
                 }
             }
 
-            public static class CwBean {
+            public static class CwBean implements Serializable{
                 /**
                  * brf : 较适宜
                  * txt : 较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。
@@ -579,7 +579,7 @@ public class WeatherEntity implements Serializable{
                 }
             }
 
-            public static class DrsgBean {
+            public static class DrsgBean implements Serializable{
                 /**
                  * brf : 炎热
                  * txt : 天气炎热，建议着短衫、短裙、短裤、薄型T恤衫等清凉夏季服装。
@@ -605,7 +605,7 @@ public class WeatherEntity implements Serializable{
                 }
             }
 
-            public static class FluBean {
+            public static class FluBean implements Serializable{
                 /**
                  * brf : 少发
                  * txt : 各项气象条件适宜，发生感冒机率较低。但请避免长期处于空调房间中，以防感冒。
@@ -631,7 +631,7 @@ public class WeatherEntity implements Serializable{
                 }
             }
 
-            public static class SportBean {
+            public static class SportBean implements Serializable{
                 /**
                  * brf : 较适宜
                  * txt : 天气较好，但因风力稍强，户外可选择对风力要求不高的运动，推荐您进行室内运动。
@@ -657,7 +657,7 @@ public class WeatherEntity implements Serializable{
                 }
             }
 
-            public static class TravBean {
+            public static class TravBean implements Serializable{
                 /**
                  * brf : 较不宜
                  * txt : 天气较好，很热，但4、5级风能缓解炎热的感觉。出游请注意防暑防晒，可以选择水上娱乐等较清凉项目。
@@ -683,7 +683,7 @@ public class WeatherEntity implements Serializable{
                 }
             }
 
-            public static class UvBean {
+            public static class UvBean implements Serializable{
                 /**
                  * brf : 强
                  * txt : 紫外线辐射强，建议涂擦SPF20左右、PA++的防晒护肤品。避免在10点至14点暴露于日光下。
@@ -710,7 +710,7 @@ public class WeatherEntity implements Serializable{
             }
         }
 
-        public static class DailyForecastBean {
+        public static class DailyForecastBean implements Serializable{
             /**
              * astro : {"mr":"19:17","ms":"04:44","sr":"04:47","ss":"19:40"}
              * cond : {"code_d":"100","code_n":"101","txt_d":"晴","txt_n":"多云"}
@@ -825,7 +825,7 @@ public class WeatherEntity implements Serializable{
                 this.wind = wind;
             }
 
-            public static class AstroBean {
+            public static class AstroBean implements Serializable{
                 /**
                  * mr : 19:17
                  * ms : 04:44
@@ -871,7 +871,7 @@ public class WeatherEntity implements Serializable{
                 }
             }
 
-            public static class CondBeanX {
+            public static class CondBeanX implements Serializable{
                 /**
                  * code_d : 100
                  * code_n : 101
@@ -917,7 +917,7 @@ public class WeatherEntity implements Serializable{
                 }
             }
 
-            public static class TmpBean {
+            public static class TmpBean implements Serializable{
                 /**
                  * max : 37
                  * min : 21
@@ -943,7 +943,7 @@ public class WeatherEntity implements Serializable{
                 }
             }
 
-            public static class WindBeanX {
+            public static class WindBeanX implements Serializable{
                 /**
                  * deg : 245
                  * dir : 西南风
@@ -990,7 +990,7 @@ public class WeatherEntity implements Serializable{
             }
         }
 
-        public static class HourlyForecastBean {
+        public static class HourlyForecastBean implements Serializable{
             /**
              * cond : {"code":"100","txt":"晴"}
              * date : 2017-06-09 13:00
@@ -1065,7 +1065,7 @@ public class WeatherEntity implements Serializable{
                 this.wind = wind;
             }
 
-            public static class CondBeanXX {
+            public static class CondBeanXX implements Serializable{
                 /**
                  * code : 100
                  * txt : 晴
@@ -1091,7 +1091,7 @@ public class WeatherEntity implements Serializable{
                 }
             }
 
-            public static class WindBeanXX {
+            public static class WindBeanXX implements Serializable{
                 /**
                  * deg : 275
                  * dir : 西风

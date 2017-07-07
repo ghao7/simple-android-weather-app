@@ -3,6 +3,7 @@ package com.example.guhao.myweather.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import com.example.guhao.myweather.bean.WeatherEntity;
 
 
 public class SingleCityFragment extends Fragment{
+    private final String TAG = "";
+
     private TextView city_name;
     private TextView now_temp;
     private TextView now_cond;
@@ -56,7 +59,6 @@ public class SingleCityFragment extends Fragment{
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         outState.putSerializable("weather",entity);
     }
 
@@ -64,9 +66,12 @@ public class SingleCityFragment extends Fragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
-            this.entity = (WeatherEntity) savedInstanceState.getSerializable("weather");
+            this.entity = (WeatherEntity) savedInstanceState.getSerializable("weather");;
             if (entity != null) {
                 initView();
+                Log.d(TAG, "onActivityCreated: not null");
+            }else{
+                Log.d(TAG, "onActivityCreated: null");
             }
         }
     }
@@ -80,7 +85,7 @@ public class SingleCityFragment extends Fragment{
         String nowCond = entity.getHeWeather5().get(0).getNow().getCond().getTxt();
         String condComb = nowCond+" "+max+"˚"+"/"+min+"˚"+"C";
         city_name.setText(cityName);
-        now_temp.setText(nowTemp);
+        now_temp.setText(nowTemp+"˚");
         now_cond.setText(condComb);
     }
 
@@ -95,9 +100,7 @@ public class SingleCityFragment extends Fragment{
     public void initData(){
         if (getArguments() != null) {
             this.entity = (WeatherEntity) getArguments().getSerializable("weather");
-            if (entity != null){
-                initView();
-            }
+            initView();
 
         }
 
@@ -112,6 +115,7 @@ public class SingleCityFragment extends Fragment{
     }
 
     public void setWeatherInfo(WeatherEntity entity){
+        this.entity = entity;
         WeatherEntity.HeWeather5Bean.DailyForecastBean.TmpBean tmpBean = entity.getHeWeather5().get(0).getDaily_forecast().get(0).getTmp();
         String max = tmpBean.getMax();
         String min = tmpBean.getMin();
