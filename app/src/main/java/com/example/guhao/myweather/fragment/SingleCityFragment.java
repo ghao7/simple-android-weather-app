@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.guhao.myweather.R;
 import com.example.guhao.myweather.adapter.MyPageScrollListener;
 import com.example.guhao.myweather.bean.WeatherEntity;
+import com.example.guhao.myweather.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,15 +51,26 @@ public class SingleCityFragment extends Fragment{
 
         List<WeatherEntity.HeWeather5Bean.DailyForecastBean> list = entity.getHeWeather5().get(0).getDaily_forecast();
 
-
-        for (int i = 0; i < 3; i++) {
+//        Toast.makeText(this.getContext(),list.size()+"",Toast.LENGTH_SHORT).show();
+        for (int i = 0; i < list.size(); i++) {
             View v = inflater.inflate(R.layout.layout_temp_bar,null);
-            TextView temp_min = (TextView) view.findViewById(R.id.temp_min);
-            TextView temp_max = (TextView) view.findViewById(R.id.temp_max);
-            TextView date = (TextView) view.findViewById(R.id.date);
 
-            String tempMin;
             linearLayout.addView(v);
+            TextView temp_min = (TextView) v.findViewById(R.id.temp_min);
+            TextView temp_max = (TextView) v.findViewById(R.id.temp_max);
+            TextView date = (TextView) v.findViewById(R.id.date);
+
+            WeatherEntity.HeWeather5Bean.DailyForecastBean.TmpBean tempBean = list.get(i).getTmp();
+            String tempMin = tempBean.getMin();
+            String tempMax = tempBean.getMax();
+            String rawDate = list.get(i).getDate();
+
+            String XinQiji = getXinQiJi(i, rawDate);
+
+            temp_min.setText(tempMin);
+            temp_max.setText(tempMax);
+            date.setText(XinQiji);
+
         }
     }
 
@@ -66,6 +78,40 @@ public class SingleCityFragment extends Fragment{
         this.listener = listener;
     }
 
+    public String getXinQiJi(int position, String rawDate){
+        if (position == 0){
+            return getResources().getString(R.string.today);
+        }else{
+            String result;
+            int num = DateUtil.dayForWeek(rawDate);
+            switch (num){
+                case 1:
+                    result = getResources().getString(R.string.monday);
+                    break;
+                case 2:
+                    result = getResources().getString(R.string.tuesday);
+                    break;
+                case 3:
+                    result = getResources().getString(R.string.wednesday);
+                    break;
+                case 4:
+                    result = getResources().getString(R.string.thusday);
+                    break;
+                case 5:
+                    result = getResources().getString(R.string.friday);
+                    break;
+                case 6:
+                    result = getResources().getString(R.string.saturday);
+                    break;
+                case 7:
+                    result = getResources().getString(R.string.sunday);
+                    break;
+                default:
+                    result = "Wrong";
+            }
+            return result;
+        }
+    }
 
 
     @Override
@@ -112,7 +158,9 @@ public class SingleCityFragment extends Fragment{
         scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                listener.setRefresh(scrollY == 0);
+                if (listener != null) {
+                    listener.setRefresh(scrollY == 0);
+                }
             }
         });
 

@@ -39,16 +39,6 @@ public class CityFragmentPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
-    }
-
-    @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        return super.instantiateItem(container, position);
-    }
-
-    @Override
     public int getItemPosition(Object object) {
         return POSITION_NONE;
     }
