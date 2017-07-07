@@ -30,7 +30,7 @@
         android:text="23˚"/>
 
     <ImageView
-        android:layout_width="60dp"
+        android:layout_width="160dp"
         android:layout_height="20dp"
         android:layout_gravity="center_vertical"
         android:src="@drawable/temp_bar"/>

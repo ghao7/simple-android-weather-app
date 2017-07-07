@@ -98,7 +98,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                 WeatherConstant.citySlotList.add(city);
                 mPagerAdapter.addFragment(getSingleCityFragmentLite(city));
                 WeatherConstant.weatherList.add(null);
-                WeatherConstant.updateWeather(i, mPagerAdapter);
+                WeatherConstant.updateWeather(i, mPagerAdapter,swipeRefreshLayout);
                 i++;
             }else{
                 check = false;

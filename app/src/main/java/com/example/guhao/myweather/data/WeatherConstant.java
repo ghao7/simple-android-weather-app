@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.guhao.myweather.adapter.CityFragmentPagerAdapter;
+import com.example.guhao.myweather.adapter.MyPageScrollListener;
 import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.fragment.SingleCityFragment;
 import com.example.guhao.myweather.network.SubscriberOnNextListener;
@@ -93,12 +94,12 @@ public class WeatherConstant{
     }
 
 
-    public static void updateWeather(final int position, final CityFragmentPagerAdapter adapter){
+    public static void updateWeather(final int position, final CityFragmentPagerAdapter adapter, final SwipeRefreshLayout layout){
         listener = new SubscriberOnNextListener<WeatherEntity>(){
             @Override
             public void onNext(WeatherEntity entity) {
                 weatherList.set(position,entity);
-                adapter.updateFragment(position,getSingleCityFragment(entity),entity);
+                adapter.updateFragment(position,getSingleCityFragment(entity, layout),entity);
 //                adapter.addFragment(getSingleCityFragment(entity));
 
             }
@@ -121,7 +122,7 @@ public class WeatherConstant{
                 weatherList.set(i, weatherEntity);
                 Log.d(TAG, "onNext: " + weatherEntity.toString());
 
-                adapter.updateFragment(i,getSingleCityFragment(weatherEntity),weatherEntity);
+                adapter.updateFragment(i,getSingleCityFragment(weatherEntity,layout),weatherEntity);
                 layout.setRefreshing(false);
             }
         };
@@ -130,10 +131,18 @@ public class WeatherConstant{
     }
 
 
-    public static SingleCityFragment getSingleCityFragment(WeatherEntity entity) {
+    public static SingleCityFragment getSingleCityFragment(WeatherEntity entity, final SwipeRefreshLayout layout) {
         Bundle args = new Bundle();
         args = StringUtil.makeArgs(args,entity);
         SingleCityFragment cityFragment = new SingleCityFragment();
+        cityFragment.setOnMyPageScrollListener(new MyPageScrollListener() {
+            @Override
+            public void setRefresh(boolean set) {
+                if (layout != null){
+                    layout.setEnabled(set);
+                }
+            }
+        });
         cityFragment.setArguments(args);
         return cityFragment;
     }

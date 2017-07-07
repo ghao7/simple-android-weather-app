@@ -23,7 +23,7 @@ import java.util.List;
 
 public class SingleCityFragment extends Fragment{
     private final String TAG = "";
-
+    private final int BAR_MAX_LENGTH = 160;
     private TextView city_name;
     private TextView now_temp;
     private TextView now_cond;
@@ -51,7 +51,22 @@ public class SingleCityFragment extends Fragment{
 
         List<WeatherEntity.HeWeather5Bean.DailyForecastBean> list = entity.getHeWeather5().get(0).getDaily_forecast();
 
-//        Toast.makeText(this.getContext(),list.size()+"",Toast.LENGTH_SHORT).show();
+        //找到最大最小温度 以此调节温度调位置和长度
+        int absMin = Integer.MAX_VALUE;
+        int absMax = Integer.MIN_VALUE;
+        for (int i = 0; i < list.size();i++){
+            int tempMax = Integer.parseInt(list.get(i).getTmp().getMax());
+            int tempMin = Integer.parseInt(list.get(i).getTmp().getMin());
+            if (tempMax > absMax){
+                absMax = tempMax;
+            }
+            if (tempMin < absMin){
+                absMin = tempMin;
+            }
+        }
+
+        int unit = BAR_MAX_LENGTH/(absMax - absMin);
+
         for (int i = 0; i < list.size(); i++) {
             View v = inflater.inflate(R.layout.layout_temp_bar,null);
 
@@ -73,6 +88,7 @@ public class SingleCityFragment extends Fragment{
 
         }
     }
+
 
     public void setOnMyPageScrollListener(MyPageScrollListener listener){
         this.listener = listener;
@@ -158,9 +174,10 @@ public class SingleCityFragment extends Fragment{
         scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (listener != null) {
-                    listener.setRefresh(scrollY == 0);
-                }
+//                if (listener != null) {
+//                    listener.setRefresh(scrollY == 0);
+//                }
+                listener.setRefresh(scrollY == 0);
             }
         });
 
