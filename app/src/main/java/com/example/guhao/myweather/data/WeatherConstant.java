@@ -102,7 +102,7 @@ public class WeatherConstant{
     }
 
     public static void updateRawWeather(final SwipeRefreshLayout layout, CityFragmentPagerAdapter adapter){
-        for (int i = 0; i < citySlotList.size(); i++) {
+        for (int i = 1; i < citySlotList.size(); i++) {
             updateSingleCity(i,layout, adapter);
         }
     }

@@ -156,8 +156,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         loadCityPreferences();
         //set scrollable view adapter
 
-        //tb_toolbar.setTitle(R.string.citylist);
-        swipeRefreshLayout.setColorSchemeColors(Color.RED);
+        tb_toolbar.setTitle(R.string.citylist);
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
         swipeRefreshLayout.setOnRefreshListener(this);
 
     }
@@ -190,6 +190,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
+        locationService();
         WeatherConstant.updateRawWeather(swipeRefreshLayout,mPagerAdapter);
     }
 

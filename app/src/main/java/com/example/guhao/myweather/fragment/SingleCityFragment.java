@@ -16,6 +16,9 @@ import com.example.guhao.myweather.R;
 import com.example.guhao.myweather.adapter.MyPageScrollListener;
 import com.example.guhao.myweather.bean.WeatherEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class SingleCityFragment extends Fragment{
     private final String TAG = "";
@@ -44,8 +47,17 @@ public class SingleCityFragment extends Fragment{
 
     public void inflateTempBar() {
         LayoutInflater inflater = LayoutInflater.from(this.getContext());
+
+        List<WeatherEntity.HeWeather5Bean.DailyForecastBean> list = entity.getHeWeather5().get(0).getDaily_forecast();
+
+
         for (int i = 0; i < 3; i++) {
             View v = inflater.inflate(R.layout.layout_temp_bar,null);
+            TextView temp_min = (TextView) view.findViewById(R.id.temp_min);
+            TextView temp_max = (TextView) view.findViewById(R.id.temp_max);
+            TextView date = (TextView) view.findViewById(R.id.date);
+
+            String tempMin;
             linearLayout.addView(v);
         }
     }
