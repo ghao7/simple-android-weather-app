@@ -71,6 +71,12 @@ public class WeatherConstant{
 
     }
 
+    public static void updateLocal(String city, Context context){
+        SharedPreferences.Editor editor = context.getSharedPreferences("city",Context.MODE_PRIVATE).edit();
+        editor.putString("city0",city);
+        editor.commit();
+    }
+
     public static void addWeatherEntity(WeatherEntity entity){
         if (!checkIfExist(entity)){
             weatherList.add(entity);

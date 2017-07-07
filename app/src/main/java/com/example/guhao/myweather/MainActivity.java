@@ -191,6 +191,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @Override
     public void onRefresh() {
         locationService();
+        //WeatherConstant.updateSharedPreferences(MainActivity.this);
         WeatherConstant.updateRawWeather(swipeRefreshLayout,mPagerAdapter);
     }
 
@@ -287,6 +288,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             city = StringUtil.takeOutLastChar(city);
 
             WeatherConstant.addLocal(city,getApplicationContext());
+            WeatherConstant.updateLocal(city,MainActivity.this);
             WeatherPre.getWeatherRequest(city, getWeatherOnNext);
         }
 
