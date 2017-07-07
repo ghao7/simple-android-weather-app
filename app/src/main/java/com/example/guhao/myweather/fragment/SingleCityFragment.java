@@ -39,13 +39,13 @@ public class SingleCityFragment extends Fragment{
         view = inflater.inflate(R.layout.fragment_single_city, container, false);
         findView();
         initData();
-        inflateTempBar(inflater, container);
         return view;
     }
 
-    public void inflateTempBar(LayoutInflater inflater, ViewGroup container) {
+    public void inflateTempBar() {
+        LayoutInflater inflater = LayoutInflater.from(this.getContext());
         for (int i = 0; i < 3; i++) {
-            View v = inflater.inflate(R.layout.layout_temp_bar, container, false);
+            View v = inflater.inflate(R.layout.layout_temp_bar,null);
             linearLayout.addView(v);
         }
     }
@@ -65,15 +65,7 @@ public class SingleCityFragment extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null) {
-            this.entity = (WeatherEntity) savedInstanceState.getSerializable("weather");;
-            if (entity != null) {
-                initView();
-                Log.d(TAG, "onActivityCreated: not null");
-            }else{
-                Log.d(TAG, "onActivityCreated: null");
-            }
-        }
+
     }
 
     public void initView(){
@@ -87,6 +79,7 @@ public class SingleCityFragment extends Fragment{
         city_name.setText(cityName);
         now_temp.setText(nowTemp+"˚");
         now_cond.setText(condComb);
+        inflateTempBar();
     }
 
     public void findView(){
@@ -114,16 +107,4 @@ public class SingleCityFragment extends Fragment{
 
     }
 
-    public void setWeatherInfo(WeatherEntity entity){
-        this.entity = entity;
-        WeatherEntity.HeWeather5Bean.DailyForecastBean.TmpBean tmpBean = entity.getHeWeather5().get(0).getDaily_forecast().get(0).getTmp();
-        String max = tmpBean.getMax();
-        String min = tmpBean.getMin();
-        String nowCond = entity.getHeWeather5().get(0).getNow().getCond().getTxt();
-        String condComb = nowCond+" "+max+"˚"+"/"+min+"˚"+"C";
-
-        city_name.setText(entity.getHeWeather5().get(0).getBasic().getCity());
-        now_temp.setText(entity.getHeWeather5().get(0).getNow().getTmp()+"˚");
-        now_cond.setText(condComb);
-    }
 }

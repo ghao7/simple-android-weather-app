@@ -87,11 +87,11 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     }
 
     public void loadCityPreferences(){
-        Log.d(TAG, "loadCityPreferences: ");
         String key = "city";
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("city",MODE_PRIVATE);
         boolean check = true;
         int i = 0;
+        viewPager.setOffscreenPageLimit(0);
         while (check){
             String city = preferences.getString(key+i, "null");
             if (!city.equals("null")){
@@ -99,13 +99,26 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                 mPagerAdapter.addFragment(getSingleCityFragmentLite(city));
                 WeatherConstant.weatherList.add(null);
                 WeatherConstant.updateWeather(i, mPagerAdapter);
-//                UpdateWeatherRunnable runnable = new UpdateWeatherRunnable(i,city);
-//                new Thread(runnable).start();
-
                 i++;
             }else{
                 check = false;
             }
+        }
+    }
+
+    /**
+     * Refresh views if the user add cities in the list activity
+     */
+    public void loadCityInfo() {
+        mPagerAdapter.clear();
+        mPagerAdapter = new CityFragmentPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(mPagerAdapter);
+
+        for (int i = 0; i < WeatherConstant.weatherList.size(); i++) {
+            Log.d(TAG, "loadCityInfo: " + WeatherConstant.weatherList.get(i).getHeWeather5().get(0).getBasic().getCity());
+            WeatherEntity city = WeatherConstant.weatherList.get(i);
+            mPagerAdapter.addFragment(getSingleCityFragment(city));
+
         }
     }
 
@@ -125,7 +138,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                 break;
 
             case R.id.id_settings:
-                String str = (NetworkUtil.isNetworkAvailable(this)==true)?"Yes":"No";
+                String str = (NetworkUtil.isNetworkAvailable(this))?"Yes":"No";
                 showShort(str);
                 break;
             default:
@@ -177,29 +190,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        //WeatherConstant.weatherList.clear();
         WeatherConstant.updateRawWeather(swipeRefreshLayout,mPagerAdapter);
-//        WeatherConstant.updateSingleCity(viewPager.getCurrentItem(),swipeRefreshLayout,mPagerAdapter);
-    }
-
-    /**
-     * Refresh views if the user add cities in the list activity
-     */
-    public void loadCityInfo() {
-        Log.d(TAG, "loadCityInfo: need clear? "+ mPagerAdapter.getCount() + " " + WeatherConstant.weatherList.size());
-        mPagerAdapter.clear();
-        //viewPager.removeAllViews();
-        mPagerAdapter = new CityFragmentPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(mPagerAdapter);
-
-        for (int i = 0; i < WeatherConstant.weatherList.size(); i++) {
-            Log.d(TAG, "loadCityInfo: " + WeatherConstant.weatherList.get(i).getHeWeather5().get(0).getBasic().getCity());
-            WeatherEntity city = WeatherConstant.weatherList.get(i);
-            mPagerAdapter.addFragment(getSingleCityFragment(city));
-
-        }
-        Log.d(TAG, "loadCityInfo: after? "+ mPagerAdapter.getCount() + " " + WeatherConstant.weatherList.size());
-
     }
 
     @Override

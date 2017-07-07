@@ -3,6 +3,7 @@ package com.example.guhao.myweather.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.fragment.SingleCityFragment;
@@ -37,16 +38,27 @@ public class CityFragmentPagerAdapter extends FragmentStatePagerAdapter {
         return list.size();
     }
 
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        super.destroyItem(container, position, object);
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        return super.instantiateItem(container, position);
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
 
     public void updateFragment(int position, SingleCityFragment fragment, WeatherEntity entity){
         if (list.size() > 0){
-            if (position == 0 || position == 1){
-                setInfo(position,entity);
-            }else {
-                list.set(position, fragment);
-            }
 
-            notifyDataSetChanged();
+                list.set(position, fragment);
+                notifyDataSetChanged();
+
         }else{
             addFragment(fragment);
             notifyDataSetChanged();
@@ -62,7 +74,4 @@ public class CityFragmentPagerAdapter extends FragmentStatePagerAdapter {
         list = new ArrayList<>();
     }
 
-    public void setInfo(int position, WeatherEntity entity){
-        list.get(position).setWeatherInfo(entity);
-    }
 }
