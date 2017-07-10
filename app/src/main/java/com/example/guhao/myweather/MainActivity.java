@@ -353,9 +353,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
         LocationClientOption option = new LocationClientOption();
         option.setIsNeedAddress(true);
-        //option.setOpenGps(true);
 
-        //option.setScanSpan(0);
         locationClient.setLocOption(option);
         locationClient.registerLocationListener(new MylocationListener());
 

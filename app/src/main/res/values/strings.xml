@@ -101,14 +101,20 @@
     <string name="city">城市</string>
     <string name="city_cond">晴天</string>
     <string name="city_sample_temp">27˚</string>
-    <string name="clothes_suggestion">穿衣指数---热</string>
+    <string name="clothes_suggestion">穿衣指数</string>
     <string name="clothes_suggestion_content">建议穿短袖</string>
-    <string name="work_out_suggestion">运动指数---较适合</string>
+    <string name="work_out_suggestion">运动指数</string>
     <string name="work_out_suggestion_content">适宜运动</string>
-    <string name="travel_suggestion">旅游指数---适宜</string>
+    <string name="travel_suggestion">旅游指数</string>
     <string name="travel_suggestion_content">适宜旅游</string>
-    <string name="cold_suggestion">感冒指数---少发</string>
+    <string name="cold_suggestion">感冒指数</string>
     <string name="cold_suggestion_content">别在空调房</string>
+    <string name="uv_suggestion">紫外线指数</string>
+    <string name="uv_suggestion_content">紫外线强烈</string>
+    <string name="comf_suggestion">舒适指数</string>
+    <string name="comf_suggestion_content">不舒适</string>
+    <string name="cw_suggestion">洗车指数</string>
+    <string name="cw_suggestion_content">适合洗车</string>
 
     <string name="today">今天</string>
     <string name="monday">周一</string>

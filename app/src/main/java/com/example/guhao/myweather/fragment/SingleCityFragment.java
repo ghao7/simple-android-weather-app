@@ -54,8 +54,26 @@ public class SingleCityFragment extends Fragment{
         LayoutInflater inflater = LayoutInflater.from(this.getContext());
         WeatherEntity.HeWeather5Bean.SuggestionBean bean = entity.getHeWeather5().get(0).getSuggestion();
 
-        View v = inflater.inflate(R.layout.layout_suggestions,null);
-        linearLayout_suggestion.addView(v);
+        if (bean != null) {
+            View v = inflater.inflate(R.layout.layout_suggestions, null);
+            linearLayout_suggestion.addView(v);
+
+            TextView clothes_suggestion_content = (TextView) v.findViewById(R.id.clothes_suggestion_content);
+            TextView work_out_suggestion_content = (TextView) v.findViewById(R.id.work_out_suggestion_content);
+            TextView cold_suggestion_content = (TextView) v.findViewById(R.id.cold_suggestion_content);
+            TextView travel_suggestion_content = (TextView) v.findViewById(R.id.travel_sugegstion_content);
+            TextView comf_suggestion_content = (TextView) v.findViewById(R.id.comf_suggestion_content);
+            TextView uv_suggestion_content = (TextView) v.findViewById(R.id.uv_suggestion_content);
+            TextView cw_suggestion_content = (TextView) v.findViewById(R.id.cw_suggestion_content);
+
+            clothes_suggestion_content.setText(bean.getDrsg().getTxt());
+            work_out_suggestion_content.setText(bean.getSport().getTxt());
+            cold_suggestion_content.setText(bean.getFlu().getTxt());
+            travel_suggestion_content.setText(bean.getTrav().getTxt());
+            comf_suggestion_content.setText(bean.getComf().getTxt());
+            uv_suggestion_content.setText(bean.getUv().getTxt());
+            cw_suggestion_content.setText(bean.getCw().getTxt());
+        }
 
     }
 
