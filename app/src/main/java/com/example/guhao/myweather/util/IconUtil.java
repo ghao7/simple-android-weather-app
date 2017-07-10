@@ -9,7 +9,7 @@ import com.example.guhao.myweather.R;
  * Desc:
  */
 
-public class iconUtil {
+public class IconUtil {
     public static int getWeatherID(String code){
         int id;
         switch (code){
@@ -32,13 +32,19 @@ public class iconUtil {
                 id = R.mipmap.icons8_heavy_rain;
                 break;
             case "310":
-                id = R.mipmap.icons8_storm;
+                id = R.mipmap.icons8_torrential_rain;
                 break;
             case "308":
                 id = R.mipmap.icons8_intense_rain;
                 break;
             case "302":
                 id = R.mipmap.icons8_thunder_storm;
+                break;
+            case "300":
+                id = R.mipmap.icons8_partly_cloudy_rain;
+                break;
+            case "303":
+                id = R.mipmap.icons8_cloud_lightning;
                 break;
             default:
                 id = R.mipmap.ic_wb_sunny_black_24dp;

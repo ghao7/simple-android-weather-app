@@ -18,6 +18,8 @@ import com.example.guhao.myweather.R;
 import com.example.guhao.myweather.adapter.MyPageScrollListener;
 import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.util.DateUtil;
+import com.example.guhao.myweather.util.IconUtil;
+import com.example.guhao.myweather.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +95,9 @@ public class SingleCityFragment extends Fragment{
 
             hourly_time.setText(result[1]);
             hourly_temp.setText(list.get(i).getTmp()+"˚");
+
+            String weatherID = list.get(i).getCond().getCode();
+            hourly_icon.setImageDrawable(getResources().getDrawable(IconUtil.getWeatherID(weatherID),null));
         }
     }
 
@@ -125,7 +130,10 @@ public class SingleCityFragment extends Fragment{
             TextView temp_max = (TextView) v.findViewById(R.id.temp_max);
             TextView date = (TextView) v.findViewById(R.id.date);
             ImageView tempBar = (ImageView) v.findViewById(R.id.temp_bar);
+            ImageView icon = (ImageView) v.findViewById(R.id.weather_icon);
             TextView padding = (TextView) v.findViewById(R.id.padding);
+
+            icon.setImageDrawable(getResources().getDrawable(IconUtil.getWeatherID(list.get(i).getCond().getCode_d())));
 
             WeatherEntity.HeWeather5Bean.DailyForecastBean.TmpBean tempBean = list.get(i).getTmp();
             String tempMin = tempBean.getMin();

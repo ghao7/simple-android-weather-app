@@ -4,7 +4,7 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
+    f<ImageView
         android:layout_margin="8dp"
         android:id="@+id/weather_icon"
         android:layout_width="wrap_content"
