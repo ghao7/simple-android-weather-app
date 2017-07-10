@@ -28,7 +28,6 @@ import java.util.List;
 public class SingleCityFragment extends Fragment{
     private final String TAG = "";
     private final int BAR_MAX_LENGTH = 160;
-    private TextView city_name;
     private TextView now_temp;
     private TextView now_cond;
     private ScrollView scrollView;
@@ -133,7 +132,7 @@ public class SingleCityFragment extends Fragment{
             ImageView icon = (ImageView) v.findViewById(R.id.weather_icon);
             TextView padding = (TextView) v.findViewById(R.id.padding);
 
-            icon.setImageDrawable(getResources().getDrawable(IconUtil.getWeatherID(list.get(i).getCond().getCode_d())));
+            icon.setImageDrawable(getResources().getDrawable(IconUtil.getWeatherID(list.get(i).getCond().getCode_d()),null));
 
             WeatherEntity.HeWeather5Bean.DailyForecastBean.TmpBean tempBean = list.get(i).getTmp();
             String tempMin = tempBean.getMin();
@@ -153,10 +152,6 @@ public class SingleCityFragment extends Fragment{
             params.width = (max - min)* unit*3;
             int pad = unit*3*(min-absMin);
 
-            //LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(params);
-            //layoutParams.setMargins(24+pad,32,24,24);
-
-//            temp_min.setLayoutParams(layoutParams);
             ViewGroup.LayoutParams paddingParas = padding.getLayoutParams();
             paddingParas.width = pad;
 
@@ -224,7 +219,6 @@ public class SingleCityFragment extends Fragment{
         String min = tmpBean.getMin();
         String nowCond = entity.getHeWeather5().get(0).getNow().getCond().getTxt();
         String condComb = nowCond+" "+max+"˚"+"/"+min+"˚"+"C";
-        city_name.setText(cityName);
         now_temp.setText(nowTemp+"˚");
         now_cond.setText(condComb);
         inflateTempBar();
@@ -245,7 +239,6 @@ public class SingleCityFragment extends Fragment{
     }
 
     public void findView(){
-        city_name = (TextView)view.findViewById(R.id.city_name);
         now_temp = (TextView) view.findViewById(R.id.now_temp);
         now_cond = (TextView) view.findViewById(R.id.now_cond);
         scrollView = (ScrollView) view.findViewById(R.id.fragment_scroll_view);
@@ -255,6 +248,8 @@ public class SingleCityFragment extends Fragment{
     }
 
     public void initData(){
+
+
         if (getArguments() != null) {
             this.entity = (WeatherEntity) getArguments().getSerializable("weather");
             initView();

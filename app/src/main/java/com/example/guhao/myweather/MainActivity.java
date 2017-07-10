@@ -154,8 +154,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         //viewPager.set
         loadCityPreferences();
         //set scrollable view adapter
+        tb_toolbar.setTitle(WeatherConstant.citySlotList.get(viewPager.getCurrentItem()));
 
-        tb_toolbar.setTitle(R.string.citylist);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -197,6 +197,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @Override
     public void onPageScrollStateChanged(int state) {
         enableDisableSwipeRefresh(state == ViewPager.SCROLL_STATE_IDLE);
+//        showShort("changed");
+        tb_toolbar.setTitle(WeatherConstant.citySlotList.get(viewPager.getCurrentItem()));
     }
 
     @Override
@@ -236,9 +238,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     }
 
     public SingleCityFragment getSingleCityFragmentLite(String city) {
-        //Bundle args = new Bundle();
-
-        //args.putString("weather", city);
         SingleCityFragment cityFragment = new SingleCityFragment();
         cityFragment.setOnMyPageScrollListener(new MyPageScrollListener() {
             @Override
@@ -248,7 +247,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                 }
             }
         });
-        //cityFragment.setArguments(args);
         return cityFragment;
     }
 
