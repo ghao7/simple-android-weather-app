@@ -86,7 +86,7 @@ public class CityListScrollingActivity extends BaseActivity {
         if (entity != null) {
             WeatherEntity.HeWeather5Bean heWeather5Bean = entity.getHeWeather5().get(0);
             String city = heWeather5Bean.getBasic().getCity();
-            String cond = heWeather5Bean.getNow().getCond().getTxt();
+            String cond = heWeather5Bean.getNow().getCond().getCode();
             String temp = heWeather5Bean.getNow().getTmp();
             rvAdapter.addItems();
             rvAdapter.updateData(city, cond, temp, position);

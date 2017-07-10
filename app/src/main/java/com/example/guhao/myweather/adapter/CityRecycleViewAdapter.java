@@ -7,12 +7,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.guhao.myweather.R;
 import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
+import com.example.guhao.myweather.util.IconUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,7 +68,7 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.city_cond.setText(mCond.get(position));
+        holder.city_cond.setImageDrawable(context.getResources().getDrawable(IconUtil.getWeatherID(mCond.get(position))));
         holder.city_name.setText(mData.get(position));
         holder.city_temp.setText(mTemp.get(position)+"˚");
     }
@@ -91,14 +93,14 @@ public class CityRecycleViewAdapter extends RecyclerView.Adapter<CityRecycleView
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView city_name;
-        TextView city_cond;
+        ImageView city_cond;
         TextView city_temp;
         CardView cardview;
 
         public ViewHolder(View itemView) {
             super(itemView);
             cardview = (CardView) itemView.findViewById(R.id.city_card_view);
-            city_cond = (TextView) itemView.findViewById(R.id.city_cond);
+            city_cond = (ImageView) itemView.findViewById(R.id.city_cond);
             city_temp = (TextView) itemView.findViewById(R.id.city_temp);
             city_name = (TextView) itemView.findViewById(R.id.city_card_tv);
         }

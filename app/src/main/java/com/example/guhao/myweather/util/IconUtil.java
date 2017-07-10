@@ -46,8 +46,12 @@ public class IconUtil {
             case "303":
                 id = R.mipmap.icons8_cloud_lightning;
                 break;
+            case "309":
+                id = R.mipmap.icons8_light_rain;
+                break;
             default:
                 id = R.mipmap.ic_wb_sunny_black_24dp;
+                break;
         }
 
         return id;

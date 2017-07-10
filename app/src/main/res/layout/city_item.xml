@@ -40,9 +40,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.482" />
 
-        <TextView
+        <ImageView
             android:id="@+id/city_cond"
-            android:text="@string/city_cond"
+            android:src="@mipmap/icons8_sunny"
             android:textSize="20dp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
