@@ -5,7 +5,8 @@
     android:layout_height="wrap_content">
 
     f<ImageView
-        android:layout_margin="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_gravity="center"
         android:id="@+id/weather_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center"
         android:text="周日"/>
 
     <TextView
@@ -37,7 +38,7 @@
     <ImageView
         android:id="@+id/temp_bar"
         android:layout_width="160dp"
-        android:layout_height="20dp"
+        android:layout_height="16dp"
         android:layout_gravity="center_vertical"
         android:src="@drawable/temp_bar"/>
 

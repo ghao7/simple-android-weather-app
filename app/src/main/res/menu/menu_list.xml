@@ -7,7 +7,7 @@
         android:id="@+id/action_list"
         android:title="@string/search"
         android:visible="true"
-        android:icon="@mipmap/icons8_list"
+        android:icon="@mipmap/icons8_menu"
         />
 
 </menu>

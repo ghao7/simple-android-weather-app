@@ -47,9 +47,12 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     private Toolbar tb_toolbar;
     private ViewPager viewPager;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private MenuItem location_item;
 
     private SubscriberOnNextListener getWeatherOnNext;
     private CityFragmentPagerAdapter mPagerAdapter;
+
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,8 +126,12 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.mymenu,menu);
         getMenuInflater().inflate(R.menu.menu_list, menu);
         //getMenuInflater().inflate(R.menu.menu_samples, menu);
+
+        location_item = menu.findItem(R.id.action_location);
         return true;
     }
 
@@ -197,8 +204,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @Override
     public void onPageScrollStateChanged(int state) {
         enableDisableSwipeRefresh(state == ViewPager.SCROLL_STATE_IDLE);
-//        showShort("changed");
         tb_toolbar.setTitle(WeatherConstant.citySlotList.get(viewPager.getCurrentItem()));
+        location_item.setVisible(viewPager.getCurrentItem() == 0);
     }
 
     @Override
