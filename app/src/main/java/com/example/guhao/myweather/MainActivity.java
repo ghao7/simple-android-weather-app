@@ -362,10 +362,10 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(android.Manifest.permission.ACCESS_FINE_LOCATION);
         }
-        if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.READ_PHONE_STATE)
-                != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(android.Manifest.permission.READ_PHONE_STATE);
-        }
+//        if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.READ_PHONE_STATE)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            permissionList.add(android.Manifest.permission.READ_PHONE_STATE);
+//        }
         if (ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE);

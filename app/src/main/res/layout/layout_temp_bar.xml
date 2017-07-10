@@ -9,7 +9,7 @@
         android:id="@+id/weather_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_wb_sunny_black_24dp" />
+        app:srcCompat="@mipmap/icons8_sunny" />
 
     <TextView
         android:id="@+id/date"
