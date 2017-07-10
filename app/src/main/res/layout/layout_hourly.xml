@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/hourly_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/now"
+        android:layout_gravity="center"
+        android:layout_margin="12dp"
+        android:textSize="16sp"/>
+
+    <ImageView
+        android:id="@+id/hourly_cond_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_wb_sunny_black_24dp"
+        android:layout_gravity="center"
+        android:layout_margin="12dp"/>
+
+    <TextView
+        android:id="@+id/hourly_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:text="28˚"
+        />
+</LinearLayout>

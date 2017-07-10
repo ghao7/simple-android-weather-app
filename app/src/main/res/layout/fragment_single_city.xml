@@ -1,7 +1,6 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_scroll_view"
@@ -20,7 +19,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
-            android:text="City"
+            android:text=""
             android:textAllCaps="false"
             android:textSize="24sp"
             app:layout_constraintHorizontal_bias="0.501"
@@ -47,7 +46,7 @@
             android:id="@+id/now_cond"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Condition"
+            android:text=""
             app:layout_constraintTop_toBottomOf="@+id/now_temp"
             android:layout_marginRight="8dp"
             app:layout_constraintRight_toRightOf="parent"
@@ -66,12 +65,44 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/wind_sc"
+
+        <LinearLayout
+            android:id="@+id/test_linear_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/large_text"
             app:layout_constraintTop_toBottomOf="@+id/fragment_linear_layout"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent">
+
+        <HorizontalScrollView
+            android:id="@+id/hourly_scrollview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+
+            android:scrollbars="none"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/hourly_forecast">
+
+
+
+            </LinearLayout>
+        </HorizontalScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/suggestion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/test_linear_layout"
             android:layout_marginRight="8dp"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginLeft="8dp"

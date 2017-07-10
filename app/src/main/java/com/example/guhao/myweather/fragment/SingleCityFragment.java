@@ -1,5 +1,6 @@
 package com.example.guhao.myweather.fragment;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,8 @@ public class SingleCityFragment extends Fragment{
     private View view;
     private MyPageScrollListener listener;
     private LinearLayout linearLayout;
+    private LinearLayout linearLayout_hourly;
+    private LinearLayout linearLayout_suggestion;
     private WeatherEntity entity;
 
     public SingleCityFragment() {
@@ -45,6 +48,34 @@ public class SingleCityFragment extends Fragment{
         findView();
         initData();
         return view;
+    }
+
+    public void inflateSuggestion(){
+        LayoutInflater inflater = LayoutInflater.from(this.getContext());
+        WeatherEntity.HeWeather5Bean.SuggestionBean bean = entity.getHeWeather5().get(0).getSuggestion();
+
+        View v = inflater.inflate(R.layout.layout_suggestions,null);
+        linearLayout_suggestion.addView(v);
+
+    }
+
+    public void inflateHourly(){
+        LayoutInflater inflater = LayoutInflater.from(this.getContext());
+        List<WeatherEntity.HeWeather5Bean.HourlyForecastBean> list = entity.getHeWeather5().get(0).getHourly_forecast();
+
+        for (int i = 0; i < list.size(); i++){
+            View v = inflater.inflate(R.layout.layout_hourly,null);
+            linearLayout_hourly.addView(v);
+            TextView hourly_time = (TextView) v.findViewById(R.id.hourly_time);
+            TextView hourly_temp = (TextView) v.findViewById(R.id.hourly_temp);
+            ImageView hourly_icon = (ImageView) v.findViewById(R.id.hourly_cond_icon);
+
+            String fullDate = list.get(i).getDate();
+            String[] result = fullDate.split("\\s");
+
+            hourly_time.setText(result[1]);
+            hourly_temp.setText(list.get(i).getTmp()+"˚");
+        }
     }
 
     public void inflateTempBar() {
@@ -76,6 +107,7 @@ public class SingleCityFragment extends Fragment{
             TextView temp_max = (TextView) v.findViewById(R.id.temp_max);
             TextView date = (TextView) v.findViewById(R.id.date);
             ImageView tempBar = (ImageView) v.findViewById(R.id.temp_bar);
+            TextView padding = (TextView) v.findViewById(R.id.padding);
 
             WeatherEntity.HeWeather5Bean.DailyForecastBean.TmpBean tempBean = list.get(i).getTmp();
             String tempMin = tempBean.getMin();
@@ -84,8 +116,8 @@ public class SingleCityFragment extends Fragment{
 
             String XinQiji = getXinQiJi(i, rawDate);
 
-            temp_min.setText(tempMin);
-            temp_max.setText(tempMax);
+            temp_min.setText(tempMin+"˚");
+            temp_max.setText(tempMax+"˚");
             date.setText(XinQiji);
 
             ViewGroup.LayoutParams params = tempBar.getLayoutParams();
@@ -95,11 +127,12 @@ public class SingleCityFragment extends Fragment{
             params.width = (max - min)* unit*3;
             int pad = unit*3*(min-absMin);
 
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(params);
-            layoutParams.setMargins(24+pad,32,24,24);
+            //LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(params);
+            //layoutParams.setMargins(24+pad,32,24,24);
 
-//            Toast.makeText(this.getContext(),params.height+"",Toast.LENGTH_SHORT).show();
-            tempBar.setLayoutParams(layoutParams);
+//            temp_min.setLayoutParams(layoutParams);
+            ViewGroup.LayoutParams paddingParas = padding.getLayoutParams();
+            paddingParas.width = pad;
 
         }
     }
@@ -169,6 +202,20 @@ public class SingleCityFragment extends Fragment{
         now_temp.setText(nowTemp+"˚");
         now_cond.setText(condComb);
         inflateTempBar();
+        inflateHourly();
+        inflateSuggestion();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(ScrollView.FOCUS_UP);
+            }
+        });
+
     }
 
     public void findView(){
@@ -177,6 +224,8 @@ public class SingleCityFragment extends Fragment{
         now_cond = (TextView) view.findViewById(R.id.now_cond);
         scrollView = (ScrollView) view.findViewById(R.id.fragment_scroll_view);
         linearLayout = (LinearLayout) view.findViewById(R.id.fragment_linear_layout);
+        linearLayout_hourly = (LinearLayout) view.findViewById(R.id.hourly_forecast);
+        linearLayout_suggestion = (LinearLayout) view.findViewById(R.id.suggestion);
     }
 
     public void initData(){
@@ -189,9 +238,6 @@ public class SingleCityFragment extends Fragment{
         scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//                if (listener != null) {
-//                    listener.setRefresh(scrollY == 0);
-//                }
                 listener.setRefresh(scrollY == 0);
             }
         });
