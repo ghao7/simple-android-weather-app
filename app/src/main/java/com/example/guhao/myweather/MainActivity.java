@@ -52,8 +52,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     private SubscriberOnNextListener getWeatherOnNext;
     private CityFragmentPagerAdapter mPagerAdapter;
 
-    private Menu menu;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +124,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.menu = menu;
         getMenuInflater().inflate(R.menu.mymenu,menu);
         getMenuInflater().inflate(R.menu.menu_list, menu);
         //getMenuInflater().inflate(R.menu.menu_samples, menu);
