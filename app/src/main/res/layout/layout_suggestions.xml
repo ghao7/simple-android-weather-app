@@ -28,7 +28,7 @@
         android:id="@+id/iv_comf"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="24dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:src="@mipmap/icons8_watch_tv_in_bed"
@@ -61,7 +61,7 @@
         android:id="@+id/iv_uv"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="24dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:src="@mipmap/icons8_sun_glasses_color"
@@ -86,12 +86,12 @@
         android:text="舒适"
         app:layout_constraintTop_toBottomOf="@+id/comf_suggestion"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="0.0"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toLeftOf="@+id/guideline3" />
 
     <TextView
         android:id="@+id/uv_suggestion"
@@ -114,9 +114,9 @@
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/uv_suggestion"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toLeftOf="@+id/guideline3" />
 
     <TextView
         android:id="@+id/cw_suggestion"
@@ -139,9 +139,9 @@
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/cw_suggestion"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.035"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toLeftOf="@+id/guideline3" />
 
     <TextView
         android:id="@+id/clothes_suggestion"
@@ -164,8 +164,9 @@
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/clothes_suggestion"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toLeftOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <ImageView
         android:id="@+id/iv_flu"
@@ -194,14 +195,14 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="1dp"
         android:text="@string/cold_suggestion_content"
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/cold_suggestion"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginEnd="8dp"
-        app:layout_constraintHorizontal_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintRight_toLeftOf="@+id/guideline3" />
     <TextView
         android:id="@+id/travel_sugegstion"
         android:layout_width="wrap_content"
@@ -222,10 +223,10 @@
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/travel_sugegstion"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="2dp"
-        app:layout_constraintHorizontal_bias="0.0" />
+        android:layout_marginTop="1dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintRight_toLeftOf="@+id/guideline3" />
 
     <ImageView
         android:id="@+id/iv_sports"
@@ -253,14 +254,16 @@
 
     <TextView
         android:id="@+id/work_out_suggestion_content"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="1dp"
         android:text="@string/work_out_suggestion_content"
         app:layout_constraintLeft_toLeftOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/work_out_suggestion" />
+        app:layout_constraintTop_toBottomOf="@+id/work_out_suggestion"
+        app:layout_constraintRight_toLeftOf="@+id/guideline3"
+        android:layout_marginRight="8dp" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
@@ -270,5 +273,12 @@
         app:layout_constraintGuide_percent="0.24"
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="95dp" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline3"
+        app:layout_constraintGuide_begin="379dp"
+        android:orientation="vertical" />
 
 </android.support.constraint.ConstraintLayout>

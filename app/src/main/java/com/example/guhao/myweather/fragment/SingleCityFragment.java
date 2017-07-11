@@ -31,6 +31,7 @@ public class SingleCityFragment extends Fragment{
     private LinearLayout linearLayout;
     private LinearLayout linearLayout_hourly;
     private LinearLayout linearLayout_suggestion;
+    private LinearLayout linearLayout_detailed;
     private WeatherEntity entity;
 
     public SingleCityFragment() {
@@ -70,6 +71,31 @@ public class SingleCityFragment extends Fragment{
             uv_suggestion_content.setText(bean.getUv().getTxt());
             cw_suggestion_content.setText(bean.getCw().getTxt());
         }
+
+    }
+
+    public void inflateDetailedInfo(){
+        LayoutInflater inflater = LayoutInflater.from(this.getContext());
+        WeatherEntity.HeWeather5Bean.NowBean bean = entity.getHeWeather5().get(0).getNow();
+        View v = inflater.inflate(R.layout.layout_detailed_info,null);
+
+        linearLayout_detailed.addView(v);
+
+        TextView fl = (TextView) v.findViewById(R.id.fl_temp_content_tv);
+        TextView vis = (TextView) v.findViewById(R.id.vis_content_tv);
+        TextView hum = (TextView) v.findViewById(R.id.hum_content_tv);
+        TextView wd = (TextView) v.findViewById(R.id.wd_tv);
+        TextView wd_content = (TextView) v.findViewById(R.id.wd_content_tv);
+        TextView pres = (TextView) v.findViewById(R.id.pres_content_tv);
+        TextView pcpn = (TextView) v.findViewById(R.id.pcpn_content_tv);
+
+        fl.setText(bean.getFl()+"˚");
+        vis.setText(bean.getVis()+"千米");
+        hum.setText(bean.getHum()+"%");
+        pres.setText(bean.getPres());
+        pcpn.setText(bean.getPcpn()+"毫米");
+        wd.setText(bean.getWind().getDir());
+        wd_content.setText(bean.getWind().getSc());
 
     }
 
@@ -232,7 +258,10 @@ public class SingleCityFragment extends Fragment{
         inflateTempBar();
         inflateHourly();
         inflateSuggestion();
+        inflateDetailedInfo();
     }
+
+
 
     public void backToTop(){
         scrollView.post(new Runnable() {
@@ -252,6 +281,7 @@ public class SingleCityFragment extends Fragment{
         linearLayout = (LinearLayout) view.findViewById(R.id.fragment_linear_layout);
         linearLayout_hourly = (LinearLayout) view.findViewById(R.id.hourly_forecast);
         linearLayout_suggestion = (LinearLayout) view.findViewById(R.id.suggestion);
+        linearLayout_detailed = (LinearLayout) view.findViewById(R.id.detailed_layout);
     }
 
     public void initData(){

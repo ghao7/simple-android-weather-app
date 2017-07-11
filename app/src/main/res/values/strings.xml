@@ -127,5 +127,20 @@
     <string name="now">现在</string>
 
     <string name="percent">%</string>
+    <string name="fl">体感温度</string>
+    <string name="hum">湿度</string>
+    <string name="pcpn">降水量</string>
+    <string name="pres">气压</string>
+    <string name="vis">能见度</string>
+    <string name="wd">风向</string>
+    <string name="e_w">东风</string>
+    <string name="ne_w">东北风</string>
+    <string name="n_w">北风</string>
+    <string name="nw_w">西北风</string>
+    <string name="w_w">西风</string>
+    <string name="sw_w">西南风</string>
+    <string name="s_w">南风</string>
+    <string name="se_w">东南风</string>
+
 
 </resources>
