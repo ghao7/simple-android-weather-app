@@ -229,16 +229,14 @@ public class SingleCityFragment extends Fragment{
         inflateSuggestion();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    public void backToTop(){
         scrollView.post(new Runnable() {
             @Override
             public void run() {
-                scrollView.fullScroll(ScrollView.FOCUS_UP);
+                //scrollView.fullScroll(ScrollView.FOCUS_UP);
+                scrollView.scrollTo(0,0);
             }
         });
-
     }
 
     public void findView(){

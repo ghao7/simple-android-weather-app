@@ -43,6 +43,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     private DBOperation dbOperation;
     private LocationClient locationClient;
+    private int currentPageNum = 0;
 
     private Toolbar tb_toolbar;
     private ViewPager viewPager;
@@ -202,16 +203,26 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         enableDisableSwipeRefresh(state == ViewPager.SCROLL_STATE_IDLE);
         tb_toolbar.setTitle(WeatherConstant.citySlotList.get(viewPager.getCurrentItem()));
         location_item.setVisible(viewPager.getCurrentItem() == 0);
+
+
     }
+
+
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        //showShort(positionOffset+"");
+//        SingleCityFragment fragment = (SingleCityFragment)mPagerAdapter.getItem(position);
+//        fragment.backToTop();
 
     }
 
     @Override
     public void onPageSelected(int position) {
-
+        //showShort(position+"");
+        SingleCityFragment fragment = (SingleCityFragment)mPagerAdapter.getItem(currentPageNum);
+        fragment.backToTop();
+        currentPageNum = position;
     }
 
     /**
