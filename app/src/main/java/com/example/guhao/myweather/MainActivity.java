@@ -126,7 +126,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.mymenu,menu);
         getMenuInflater().inflate(R.menu.menu_list, menu);
-        //getMenuInflater().inflate(R.menu.menu_samples, menu);
 
         location_item = menu.findItem(R.id.action_location);
         return true;

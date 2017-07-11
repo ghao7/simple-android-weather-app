@@ -30,6 +30,7 @@ public class SingleCityFragment extends Fragment{
     private final int BAR_MAX_LENGTH = 160;
     private TextView now_temp;
     private TextView now_cond;
+    private TextView max_min;
     private ScrollView scrollView;
     private View view;
     private MyPageScrollListener listener;
@@ -218,9 +219,11 @@ public class SingleCityFragment extends Fragment{
         String max = tmpBean.getMax();
         String min = tmpBean.getMin();
         String nowCond = entity.getHeWeather5().get(0).getNow().getCond().getTxt();
-        String condComb = nowCond+" "+max+"˚"+"/"+min+"˚"+"C";
+        String condComb = nowCond;
+        String maxMin = min+"˚"+"/"+max+"˚"+"C";
         now_temp.setText(nowTemp+"˚");
         now_cond.setText(condComb);
+        max_min.setText(maxMin);
         inflateTempBar();
         inflateHourly();
         inflateSuggestion();
@@ -241,6 +244,7 @@ public class SingleCityFragment extends Fragment{
     public void findView(){
         now_temp = (TextView) view.findViewById(R.id.now_temp);
         now_cond = (TextView) view.findViewById(R.id.now_cond);
+        max_min = (TextView) view.findViewById(R.id.max_min);
         scrollView = (ScrollView) view.findViewById(R.id.fragment_scroll_view);
         linearLayout = (LinearLayout) view.findViewById(R.id.fragment_linear_layout);
         linearLayout_hourly = (LinearLayout) view.findViewById(R.id.hourly_forecast);
