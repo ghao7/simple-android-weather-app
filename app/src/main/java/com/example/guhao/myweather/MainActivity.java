@@ -211,15 +211,11 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        //showShort(positionOffset+"");
-//        SingleCityFragment fragment = (SingleCityFragment)mPagerAdapter.getItem(position);
-//        fragment.backToTop();
 
     }
 
     @Override
     public void onPageSelected(int position) {
-        //showShort(position+"");
         SingleCityFragment fragment = (SingleCityFragment)mPagerAdapter.getItem(currentPageNum);
         fragment.backToTop();
         currentPageNum = position;

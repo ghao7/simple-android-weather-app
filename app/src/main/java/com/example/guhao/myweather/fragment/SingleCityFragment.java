@@ -1,10 +1,8 @@
 package com.example.guhao.myweather.fragment;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,21 +10,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.guhao.myweather.R;
 import com.example.guhao.myweather.adapter.MyPageScrollListener;
 import com.example.guhao.myweather.bean.WeatherEntity;
 import com.example.guhao.myweather.util.DateUtil;
 import com.example.guhao.myweather.util.IconUtil;
-import com.example.guhao.myweather.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class SingleCityFragment extends Fragment{
-    private final String TAG = "";
     private final int BAR_MAX_LENGTH = 160;
     private TextView now_temp;
     private TextView now_cond;
