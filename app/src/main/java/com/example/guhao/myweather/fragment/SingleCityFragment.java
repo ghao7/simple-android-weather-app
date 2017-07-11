@@ -156,6 +156,17 @@ public class SingleCityFragment extends Fragment{
             ViewGroup.LayoutParams paddingParas = padding.getLayoutParams();
             paddingParas.width = pad;
 
+            String pop = list.get(i).getPop();
+            if (Integer.parseInt(pop) > 0){
+                View vv = inflater.inflate(R.layout.pop,null);
+                TextView pop_tv = (TextView) vv.findViewById(R.id.tv_pop);
+                pop_tv.setText(pop + "%");
+                LinearLayout layout = (LinearLayout) v.findViewById(R.id.daily_jyl);
+                layout.addView(vv);
+
+                date.setTextSize(16);
+            }
+
         }
     }
 

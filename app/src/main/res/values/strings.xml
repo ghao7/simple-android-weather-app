@@ -126,4 +126,6 @@
     <string name="sunday">周日</string>
     <string name="now">现在</string>
 
+    <string name="percent">%</string>
+
 </resources>

@@ -2,24 +2,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:weightSum="1">
 
-    f<ImageView
+    <ImageView
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:layout_gravity="center"
         android:id="@+id/weather_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/icons8_sunny" />
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        app:srcCompat="@mipmap/icons8_sunny"/>
 
-    <TextView
-        android:id="@+id/date"
-        android:layout_margin="8dp"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="44dp"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:orientation="vertical"
         android:layout_gravity="center"
-        android:text="周日"/>
+        android:id="@+id/daily_jyl">
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:text="周日"/>
+
+    </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/padding"
@@ -38,7 +51,7 @@
     <ImageView
         android:id="@+id/temp_bar"
         android:layout_width="160dp"
-        android:layout_height="16dp"
+        android:layout_height="20dp"
         android:layout_gravity="center_vertical"
         android:src="@drawable/temp_bar"/>
 
