@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -14,6 +16,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -39,12 +44,11 @@ import java.util.List;
  */
 public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, ViewPager.OnPageChangeListener{
     private final String TAG = "main activity";
-    private static final int NUM_PAGES = 5;
 
-    private DBOperation dbOperation;
     private LocationClient locationClient;
     private int currentPageNum = 0;
 
+    private DBOperation dbOperation;
     private Toolbar tb_toolbar;
     private ViewPager viewPager;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -159,10 +163,21 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         loadCityPreferences();
         //set scrollable view adapter
         tb_toolbar.setTitle(WeatherConstant.citySlotList.get(viewPager.getCurrentItem()));
+//        tb_toolbar.setBackgroundColor(getResources().getColor(R.color.transparent_primary,null));
+//        tb_toolbar.getBackground().setAlpha(0);
 
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent,null));
         swipeRefreshLayout.setOnRefreshListener(this);
 
+        setBackground();
+
+    }
+
+    public void setBackground(){
+        //AnimationDrawable animationDrawable =
+        //main_layout.setBackground(getResources().getDrawable(R.anim.alpha_anim));
+        //Animation animation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.scale);
+        //test_anim.startAnimation(animation);
     }
 
     @Override
@@ -203,7 +218,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         enableDisableSwipeRefresh(state == ViewPager.SCROLL_STATE_IDLE);
         tb_toolbar.setTitle(WeatherConstant.citySlotList.get(viewPager.getCurrentItem()));
         location_item.setVisible(viewPager.getCurrentItem() == 0);
-
 
     }
 
@@ -266,7 +280,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case 1:
                 if (grantResults.length > 0) {
@@ -325,6 +338,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         tb_toolbar = (Toolbar) findViewById(R.id.tb_toolbar);
         viewPager = (ViewPager) findViewById(R.id.main_activity_view_pager);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.city_fragment_swipe_refresh);
+        //test_anim = (ImageView) findViewById(R.id.test_anim);
     }
 
 
