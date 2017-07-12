@@ -46,6 +46,9 @@ public class IconUtil {
             case "303":
                 id = R.mipmap.icons8_cloud_lightning;
                 break;
+            case "301":
+                id = R.mipmap.icons8_stormy_weather;
+                break;
             case "309":
                 id = R.mipmap.icons8_light_rain;
                 break;

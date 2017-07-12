@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,9 +17,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -53,6 +56,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     private ViewPager viewPager;
     private SwipeRefreshLayout swipeRefreshLayout;
     private MenuItem location_item;
+    private LinearLayout main_layout;
 
     private SubscriberOnNextListener getWeatherOnNext;
     private CityFragmentPagerAdapter mPagerAdapter;
@@ -163,12 +167,13 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         loadCityPreferences();
         //set scrollable view adapter
         tb_toolbar.setTitle(WeatherConstant.citySlotList.get(viewPager.getCurrentItem()));
-//        tb_toolbar.setBackgroundColor(getResources().getColor(R.color.transparent_primary,null));
+        tb_toolbar.setBackgroundColor(getResources().getColor(R.color.transparent,null));
 //        tb_toolbar.getBackground().setAlpha(0);
-
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent,null));
         swipeRefreshLayout.setOnRefreshListener(this);
 
+        Window window = getWindow();
+        window.setStatusBarColor(Color.TRANSPARENT);
         setBackground();
 
     }
@@ -338,7 +343,10 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         tb_toolbar = (Toolbar) findViewById(R.id.tb_toolbar);
         viewPager = (ViewPager) findViewById(R.id.main_activity_view_pager);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.city_fragment_swipe_refresh);
+        main_layout = (LinearLayout) findViewById(R.id.main_layout);
         //test_anim = (ImageView) findViewById(R.id.test_anim);
+
+//        main_layout.setBackground();
     }
 
 

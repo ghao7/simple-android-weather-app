@@ -9,6 +9,15 @@
         <!--<item name="android:statusBarColor">@color/colorPrimary</item>-->
     </style>
 
+    <style name="LightAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!--<item name="android:statusBarColor">@color/colorPrimary</item>-->
+    </style>
+
     <style name="OverFlowMenuTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:actionMenuTextColor">#FFFFFF</item>
         <item name="android:textColorSecondary">#FFFFFF</item>

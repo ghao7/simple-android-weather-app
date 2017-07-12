@@ -300,6 +300,7 @@ public class SingleCityFragment extends Fragment{
             }
         });
 
+        scrollView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
     }
 

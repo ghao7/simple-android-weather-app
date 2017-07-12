@@ -140,6 +140,9 @@ public class CityListScrollingActivity extends BaseActivity {
 
         setSupportActionBar(tb_toolbar);
         tb_toolbar.setTitle(R.string.citylist);
+        tb_toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+
     }
 
     public void findView() {
