@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    android:background="@color/colorPrimary"
+    android:background="@color/myPrimary"
     android:elevation="0dp"
     />
 

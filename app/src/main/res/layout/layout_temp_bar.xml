@@ -44,6 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:textColor="@color/text"
         android:layout_margin="8dp"
         android:text="23˚"
         android:textSize="20sp" />
@@ -61,6 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
+        android:textColor="@color/text"
         android:layout_gravity="center_vertical"
         android:text="33˚"/>
 

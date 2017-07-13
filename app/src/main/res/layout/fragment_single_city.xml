@@ -19,6 +19,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="480dp"
             android:text="10˚"
+            android:textColor="@color/myPrimary"
             android:textSize="96sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -29,6 +30,7 @@
             android:layout_height="wrap_content"
             android:text="10˚/20˚"
             android:textSize="16sp"
+            android:textColor="@color/text"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintTop_toBottomOf="@+id/now_temp"
@@ -44,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
             android:text="晴"
+            android:textColor="#6d6d6d"
             android:textSize="32sp"
             app:layout_constraintBottom_toTopOf="@+id/now_temp"
             app:layout_constraintLeft_toLeftOf="parent"

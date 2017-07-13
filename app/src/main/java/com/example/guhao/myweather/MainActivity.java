@@ -166,7 +166,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 //        tb_toolbar.setBackgroundColor(getResources().getColor(R.color.transparent_primary,null));
 //        tb_toolbar.getBackground().setAlpha(0);
 
-        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent,null));
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.myAccent,null));
         swipeRefreshLayout.setOnRefreshListener(this);
 
         setBackground();

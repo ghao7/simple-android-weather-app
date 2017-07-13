@@ -11,7 +11,11 @@
     <color name="black">#000</color>
     <color name="white">#ffffff</color>
     <color name="gray">#999</color>
-    <color name="light_indigo">#E8EAF6</color>
+    <color name="light_indigo">#EEEEEE</color>
     <color name="sky_blue">#0288d1</color>
-    <color name="text">#ffffff</color>
+    <color name="text">#1b1b1b</color>
+
+    <color name="myPrimary">#424242</color>
+    <color name="myPrimaryDark">#1b1b1b</color>
+    <color name="myAccent">#ff1744</color>
 </resources>
