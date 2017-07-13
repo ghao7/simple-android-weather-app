@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="0dp"
-        app:elevation="0dp">
+        >
 
         <include layout="@layout/include_toolbar" />
 
