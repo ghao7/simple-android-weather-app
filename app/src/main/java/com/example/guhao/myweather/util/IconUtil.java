@@ -22,6 +22,9 @@ public class IconUtil {
             case "103":
                 id = R.mipmap.icons8_partly_cloudy;
                 break;
+            case "104":
+                id = R.mipmap.icons8_clouds;
+                break;
             case "305":
                 id = R.mipmap.icons8_light_rain;
                 break;
