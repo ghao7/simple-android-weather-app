@@ -6,19 +6,17 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.guhao.myweather.adapter.CityFragmentPagerAdapter;
-import com.example.guhao.myweather.adapter.MyPageScrollListener;
-import com.example.guhao.myweather.bean.WeatherEntity;
-import com.example.guhao.myweather.fragment.SingleCityFragment;
-import com.example.guhao.myweather.network.SubscriberOnNextListener;
-import com.example.guhao.myweather.presenter.WeatherPre;
+import com.example.guhao.myweather.ui.adapter.CityFragmentPagerAdapter;
+import com.example.guhao.myweather.ui.adapter.MyPageScrollListener;
+import com.example.guhao.myweather.data.bean.WeatherEntity;
+import com.example.guhao.myweather.ui.fragment.SingleCityFragment;
+import com.example.guhao.myweather.data.network.SubscriberOnNextListener;
+import com.example.guhao.myweather.data.presenter.WeatherPre;
 import com.example.guhao.myweather.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 /**
  * Author: GuHao

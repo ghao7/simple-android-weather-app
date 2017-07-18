@@ -25,7 +25,7 @@
             android:value="kb3C7PnlQyfPgbYtOdsFfGRTFTLEXFr2" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/LightAppTheme">
@@ -37,11 +37,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CitySearchingActivity"
+            android:name=".ui.CitySearchingActivity"
             android:label="@string/title_activity_city_list"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".CityListScrollingActivity"
+            android:name=".ui.CityListScrollingActivity"
             android:label="@string/title_activity_city_list_scrolling"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"/>
@@ -51,7 +51,7 @@
             android:enabled="true"
             android:process=":remote" />
         <service
-            android:name=".service.UpdateService"
+            android:name=".data.service.UpdateService"
             android:enabled="true"
             android:exported="true"></service>
     </application>

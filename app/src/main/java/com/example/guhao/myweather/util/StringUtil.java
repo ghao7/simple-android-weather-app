@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.guhao.myweather.bean.WeatherEntity;
+import com.example.guhao.myweather.data.bean.WeatherEntity;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
