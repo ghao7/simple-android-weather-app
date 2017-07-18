@@ -308,10 +308,13 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     public class MylocationListener implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
-            String city = bdLocation.getCity();
-            //showShort(city);
-            city = StringUtil.takeOutLastChar(city);
-
+            final String city = StringUtil.takeOutLastChar(bdLocation.getCity());
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tb_toolbar.setTitle(city);
+                }
+            });
             WeatherConstant.addLocal(city,getApplicationContext());
             WeatherConstant.updateLocal(city,MainActivity.this);
             WeatherPre.getWeatherRequest(city, getWeatherOnNext);
