@@ -13,6 +13,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.transition.Slide;
 import android.transition.TransitionInflater;
 import android.util.Log;
@@ -90,7 +92,12 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     private void setupWindowAnimations() {
         // Re-enter transition is executed when returning to this activity
         Slide slide = (Slide)TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
+        Fade fade = (Fade)TransitionInflater.from(this).inflateTransition(R.transition.activity_fade);
+        Explode explode = (Explode)TransitionInflater.from(this).inflateTransition(R.transition.activity_explode);
         getWindow().setExitTransition(slide);
+        getWindow().setReenterTransition(fade);
+        getWindow().setAllowEnterTransitionOverlap(false);
+        getWindow().setAllowReturnTransitionOverlap(false);
     }
 
     @Override
@@ -208,14 +215,16 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                 if (resultCode == RESULT_OK) {
                     loadCityInfo();
                     final int position = data.getIntExtra("position",0);
-//                    viewPager.setCurrentItem(position,false);
-                    viewPager.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            viewPager.setCurrentItem(position);
-                            tb_toolbar.setTitle(WeatherConstant.citySlotList.get(viewPager.getCurrentItem()));
-                        }
-                    });
+                    tb_toolbar.setTitle(WeatherConstant.citySlotList.get(position));
+                    viewPager.setCurrentItem(position,false);
+
+//                    viewPager.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            viewPager.setCurrentItem(position);
+//                            tb_toolbar.setTitle(WeatherConstant.citySlotList.get(viewPager.getCurrentItem()));
+//                        }
+//                    });
                 }
                 break;
             default:
