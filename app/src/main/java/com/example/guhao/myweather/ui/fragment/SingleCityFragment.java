@@ -264,13 +264,15 @@ public class SingleCityFragment extends Fragment{
 
 
     public void backToTop(){
-        scrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                //scrollView.fullScroll(ScrollView.FOCUS_UP);
-                scrollView.scrollTo(0,0);
-            }
-        });
+        if (scrollView != null) {
+            scrollView.post(new Runnable() {
+                @Override
+                public void run() {
+                    //scrollView.fullScroll(ScrollView.FOCUS_UP);
+                    scrollView.scrollTo(0, 0);
+                }
+            });
+        }
     }
 
     public void findView(){

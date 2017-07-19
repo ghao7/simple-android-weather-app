@@ -1,5 +1,6 @@
 package com.example.guhao.myweather.ui;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,9 +63,10 @@ public class CityListScrollingActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.putExtra("position",position);
                 setResult(RESULT_OK,intent);
-                finish();
+//                finish();
+                finishAfterTransition();
 
-                //overridePendingTransition(0,0);
+//                overridePendingTransition();
             }
         });
     }
@@ -108,8 +111,11 @@ public class CityListScrollingActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
+                View searchMenu = tb_toolbar.findViewById(R.id.action_search);
                 Intent intent = new Intent(CityListScrollingActivity.this, CitySearchingActivity.class);
-                startActivityForResult(intent, 1);
+                Bundle options = ActivityOptions.makeSceneTransitionAnimation(this, searchMenu,
+                        getString(R.string.search)).toBundle();
+                startActivityForResult(intent, 1, options);
                 break;
 
             default:

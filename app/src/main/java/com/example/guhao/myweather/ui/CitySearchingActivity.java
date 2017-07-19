@@ -1,8 +1,11 @@
 package com.example.guhao.myweather.ui;
 
+import android.app.SharedElementCallback;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.transition.TransitionSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,6 +19,8 @@ import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.data.network.SubscriberOnNextListener;
 import com.example.guhao.myweather.data.presenter.DBOperation;
 import com.example.guhao.myweather.data.presenter.WeatherPre;
+import com.example.guhao.myweather.ui.transition.CircularReveal;
+import com.example.guhao.myweather.util.TransitionsUtil;
 //import com.example.guhao.myweather.data.presenter.WeatherPre;
 
 import java.util.ArrayList;
@@ -40,6 +45,9 @@ public class CitySearchingActivity extends BaseActivity {
         initView();
         initListener();
 
+
+
+        //setUpTransitions();
     }
 
     public void initData(){
@@ -56,6 +64,7 @@ public class CitySearchingActivity extends BaseActivity {
         searchView.setIconifiedByDefault(true);
         searchView.setFocusable(true);
         searchView.setIconified(false);
+        searchView.setQueryHint("");
         searchView.requestFocusFromTouch();
 
         subscriberOnNextListener = new SubscriberOnNextListener<SearchEntity>(){
@@ -119,5 +128,25 @@ public class CitySearchingActivity extends BaseActivity {
 
     public void setCityList(List<CityEntity> list){
         listView.setAdapter(new SearchListAdapter(this,R.layout.city_list_dropdown_item,list));
+    }
+
+    public void setUpTransitions(){
+        setEnterSharedElementCallback(new SharedElementCallback() {
+            @Override
+            public void onSharedElementStart(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
+                if (sharedElements != null && !sharedElements.isEmpty()) {
+                    View searchIcon = sharedElements.get(0);
+                    if (searchIcon.getId() != R.id.action_search) return;
+                    //transition
+                    int centerX = (searchIcon.getLeft() + searchIcon.getRight()) / 2;
+                    CircularReveal hideResults = (CircularReveal) TransitionsUtil.findTransition(
+                            (TransitionSet) getWindow().getReturnTransition(),
+                            CircularReveal.class, R.id.searchView);
+                    if (hideResults != null) {
+                        hideResults.setCenter(new Point(centerX, 0));
+                    }
+                }
+            }
+        });
     }
 }

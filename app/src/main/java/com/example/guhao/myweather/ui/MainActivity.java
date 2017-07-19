@@ -1,5 +1,6 @@
 package com.example.guhao.myweather.ui;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,7 +13,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -63,9 +67,13 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
         if (NetworkUtil.isNetworkAvailable(this)) {
             setContentView(R.layout.activity_main);
+            setupWindowAnimations();
+
             findView();
             initData();
             initListener();
+
+
 
             setSupportActionBar(tb_toolbar);
             MyRunnable runnable = new MyRunnable(this);
@@ -77,6 +85,12 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             setContentView(R.layout.activity_network_down);
         }
 
+    }
+
+    private void setupWindowAnimations() {
+        // Re-enter transition is executed when returning to this activity
+        Slide slide = (Slide)TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
+        getWindow().setExitTransition(slide);
     }
 
     @Override
@@ -131,7 +145,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.mymenu,menu);
         getMenuInflater().inflate(R.menu.menu_list, menu);
-
         location_item = menu.findItem(R.id.action_location);
         return true;
     }
@@ -141,7 +154,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         switch (item.getItemId()) {
             case R.id.action_list:
                 Intent intent = new Intent(MainActivity.this, CityListScrollingActivity.class);
-                startActivityForResult(intent,1);
+                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
+                startActivityForResult(intent,1,bundle);
                 break;
 
             case R.id.id_settings:
@@ -199,6 +213,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
                         @Override
                         public void run() {
                             viewPager.setCurrentItem(position);
+                            tb_toolbar.setTitle(WeatherConstant.citySlotList.get(viewPager.getCurrentItem()));
                         }
                     });
                 }
@@ -217,9 +232,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @Override
     public void onPageScrollStateChanged(int state) {
         enableDisableSwipeRefresh(state == ViewPager.SCROLL_STATE_IDLE);
-        tb_toolbar.setTitle(WeatherConstant.citySlotList.get(viewPager.getCurrentItem()));
         location_item.setVisible(viewPager.getCurrentItem() == 0);
-
+        tb_toolbar.setTitle(WeatherConstant.citySlotList.get(viewPager.getCurrentItem()));
     }
 
 
