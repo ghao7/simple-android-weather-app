@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.transition.TransitionSet;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -44,9 +45,6 @@ public class CitySearchingActivity extends BaseActivity {
         findView();
         initView();
         initListener();
-
-
-
         //setUpTransitions();
     }
 
@@ -61,11 +59,19 @@ public class CitySearchingActivity extends BaseActivity {
     }
 
     public void initView(){
+        getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark,null));
         searchView.setIconifiedByDefault(true);
         searchView.setFocusable(true);
         searchView.setIconified(false);
         searchView.setQueryHint("");
         searchView.requestFocusFromTouch();
+
+
+
+        EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        if (searchEditText != null) {
+            searchEditText.setHintTextColor(getResources().getColor(R.color.white));
+        }
 
         subscriberOnNextListener = new SubscriberOnNextListener<SearchEntity>(){
             @Override
@@ -107,6 +113,12 @@ public class CitySearchingActivity extends BaseActivity {
         });
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0,0);
     }
 
     public void searchListListener(final List<CityEntity> cityList){

@@ -48,12 +48,12 @@ public class CityListScrollingActivity extends BaseActivity {
         weatherSubscriberListener();
         recyclerviewListener();
 
-        fab.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                StringUtil.showPref(getApplicationContext());
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                StringUtil.showPref(getApplicationContext());
+//            }
+//        });
     }
 
     public void recyclerviewListener(){
@@ -65,8 +65,6 @@ public class CityListScrollingActivity extends BaseActivity {
                 setResult(RESULT_OK,intent);
 //                finish();
                 finishAfterTransition();
-
-//                overridePendingTransition();
             }
         });
     }
@@ -115,7 +113,8 @@ public class CityListScrollingActivity extends BaseActivity {
                 Intent intent = new Intent(CityListScrollingActivity.this, CitySearchingActivity.class);
                 Bundle options = ActivityOptions.makeSceneTransitionAnimation(this, searchMenu,
                         getString(R.string.search)).toBundle();
-                startActivityForResult(intent, 1, options);
+                startActivityForResult(intent, 1);
+                overridePendingTransition(0,0);
                 break;
 
             default:
@@ -157,7 +156,7 @@ public class CityListScrollingActivity extends BaseActivity {
     public void findView() {
         recyclerView = (RecyclerView) findViewById(R.id.city_list_recycler_view);
         tb_toolbar = (Toolbar) findViewById(R.id.tb_toolbar);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab = (FloatingActionButton) findViewById(R.id.fab);
     }
 
 

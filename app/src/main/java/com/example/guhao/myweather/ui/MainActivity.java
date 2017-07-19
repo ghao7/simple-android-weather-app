@@ -22,6 +22,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -38,6 +39,8 @@ import com.example.guhao.myweather.ui.fragment.SingleCityFragment;
 import com.example.guhao.myweather.data.network.SubscriberOnNextListener;
 import com.example.guhao.myweather.data.presenter.DBOperation;
 import com.example.guhao.myweather.data.presenter.WeatherPre;
+import com.example.guhao.myweather.ui.transition.CardReveal;
+import com.example.guhao.myweather.ui.transition.CircularReveal;
 import com.example.guhao.myweather.util.NetworkUtil;
 import com.example.guhao.myweather.util.StringUtil;
 
@@ -92,8 +95,13 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     private void setupWindowAnimations() {
         // Re-enter transition is executed when returning to this activity
         Slide slide = (Slide)TransitionInflater.from(this).inflateTransition(R.transition.activity_slide);
+        slide.setInterpolator(AnimationUtils.loadInterpolator(this,android.R.interpolator.linear_out_slow_in));
         Fade fade = (Fade)TransitionInflater.from(this).inflateTransition(R.transition.activity_fade);
         Explode explode = (Explode)TransitionInflater.from(this).inflateTransition(R.transition.activity_explode);
+
+        CardReveal cardReveal = new CardReveal();
+        CircularReveal circularReveal = new CircularReveal();
+
         getWindow().setExitTransition(slide);
         getWindow().setReenterTransition(fade);
         getWindow().setAllowEnterTransitionOverlap(false);
