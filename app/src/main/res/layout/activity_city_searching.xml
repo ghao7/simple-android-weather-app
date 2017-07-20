@@ -5,30 +5,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/scroll_ll"
     tools:context="com.example.guhao.myweather.ui.CitySearchingActivity">
-
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@color/colorPrimary"
-        android:elevation="2dp"
-        android:theme="@style/MySearchViewStyle"
-        app:layout_constraintHorizontal_bias="0.0"
-        />
-
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="2dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/searchback_back"/>
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+
+            android:searchHintIcon="@color/transparent"
+            android:theme="@style/MySearchViewStyle"
+            app:layout_constraintHorizontal_bias="0.0"
+        />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/listview_ll"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toBottomOf="@+id/searchView"
-        android:background="#EEFFFFFF">
+        android:background="#00000000">
+
         <ListView
             android:id="@+id/list_view"
-            android:hapticFeedbackEnabled="true"
-            android:layout_height="wrap_content"
+            android:transcriptMode="disabled"
             android:layout_width="match_parent"
-            />
+            android:layout_height="wrap_content"
+            android:divider="#00000000"
+            android:hapticFeedbackEnabled="true" />
 
     </LinearLayout>
 

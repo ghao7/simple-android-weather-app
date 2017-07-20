@@ -1,6 +1,11 @@
 package com.example.guhao.myweather.util;
 
+import android.graphics.Bitmap;
+import android.os.Environment;
+
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,4 +34,23 @@ public class FileUtil {
             System.out.print(e.getMessage());
         }
     }
+
+    public static boolean saveBitmap(Bitmap bmp, String filename)
+    {
+        if (bmp == null || filename == null)
+            return false;
+        Bitmap.CompressFormat format = Bitmap.CompressFormat.JPEG;
+        int quality = 100;
+        OutputStream stream = null;
+        try {
+            stream = new FileOutputStream(filename);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return bmp.compress(format, quality, stream);
+
+    }
+
+//File.delete();  这个是删除保存在手机的临时图片代码
 }

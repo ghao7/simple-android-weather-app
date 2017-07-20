@@ -1,7 +1,12 @@
 package com.example.guhao.myweather.ui;
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,7 +27,15 @@ import com.example.guhao.myweather.data.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.data.network.SubscriberOnNextListener;
 import com.example.guhao.myweather.data.presenter.WeatherPre;
+import com.example.guhao.myweather.util.FileUtil;
+import com.example.guhao.myweather.util.IconUtil;
+import com.example.guhao.myweather.util.MathUtil;
 import com.example.guhao.myweather.util.StringUtil;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+
+import jp.wasabeef.glide.transformations.internal.FastBlur;
 
 public class CityListScrollingActivity extends BaseActivity {
     private final String TAG = "";
@@ -47,13 +60,6 @@ public class CityListScrollingActivity extends BaseActivity {
     public void initListner() {
         weatherSubscriberListener();
         recyclerviewListener();
-
-//        fab.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                StringUtil.showPref(getApplicationContext());
-//            }
-//        });
     }
 
     public void recyclerviewListener(){
@@ -111,6 +117,16 @@ public class CityListScrollingActivity extends BaseActivity {
             case R.id.action_search:
                 View searchMenu = tb_toolbar.findViewById(R.id.action_search);
                 Intent intent = new Intent(CityListScrollingActivity.this, CitySearchingActivity.class);
+                Bundle imageBundle = new Bundle();
+                Bitmap bitmap = getBitmapFromView(recyclerView);
+                Bitmap blur = FastBlur.blur(bitmap,20,true);
+                int width = blur.getWidth();
+                int height = blur.getHeight();
+                //int cut = MathUtil.convertDpToPixels(56,this);
+                //blur = Bitmap.createBitmap(blur,0, cut,width,height-cut);
+
+                createImageFromBitmap(blur);
+
                 Bundle options = ActivityOptions.makeSceneTransitionAnimation(this, searchMenu,
                         getString(R.string.search)).toBundle();
                 startActivityForResult(intent, 1);
@@ -122,6 +138,21 @@ public class CityListScrollingActivity extends BaseActivity {
         return true;
     }
 
+    public String createImageFromBitmap(Bitmap bitmap) {
+        String fileName = "myImage";//no .png or .jpg needed
+        try {
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+            FileOutputStream fo = openFileOutput(fileName, Context.MODE_PRIVATE);
+            fo.write(bytes.toByteArray());
+            // remember close file output
+            fo.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fileName = null;
+        }
+        return fileName;
+    }
 
 
     @Override
@@ -151,6 +182,26 @@ public class CityListScrollingActivity extends BaseActivity {
         tb_toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
 
+    }
+
+    public Bitmap getBitmapFromView(View view) {
+        //Define a bitmap with the same size as the view
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(),Bitmap.Config.ARGB_8888);
+
+        //Bind a canvas to it
+        Canvas canvas = new Canvas(returnedBitmap);
+        //Get the view's background
+        Drawable bgDrawable =view.getBackground();
+        if (bgDrawable!=null)
+            //has background drawable, then draw it on the canvas
+            bgDrawable.draw(canvas);
+        else
+            //does not have background drawable, then draw white background on the canvas
+            canvas.drawColor(Color.WHITE);
+        // draw the view on the canvas
+        view.draw(canvas);
+        //return the bitmap
+        return returnedBitmap;
     }
 
     public void findView() {
