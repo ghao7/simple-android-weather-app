@@ -119,7 +119,7 @@ public class CityListScrollingActivity extends BaseActivity {
                 Intent intent = new Intent(CityListScrollingActivity.this, CitySearchingActivity.class);
                 Bundle imageBundle = new Bundle();
                 Bitmap bitmap = getBitmapFromView(recyclerView);
-                Bitmap blur = FastBlur.blur(bitmap,20,true);
+                Bitmap blur = FastBlur.blur(bitmap,45,true);
                 int width = blur.getWidth();
                 int height = blur.getHeight();
                 //int cut = MathUtil.convertDpToPixels(56,this);
@@ -130,7 +130,8 @@ public class CityListScrollingActivity extends BaseActivity {
                 Bundle options = ActivityOptions.makeSceneTransitionAnimation(this, searchMenu,
                         getString(R.string.search)).toBundle();
                 startActivityForResult(intent, 1);
-                overridePendingTransition(0,0);
+
+                //overridePendingTransition(0,0);
                 break;
 
             default:

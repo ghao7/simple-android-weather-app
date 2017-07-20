@@ -41,9 +41,9 @@
 
         <ListView
             android:id="@+id/list_view"
-            android:transcriptMode="disabled"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:isScrollContainer="false"
             android:divider="#00000000"
             android:hapticFeedbackEnabled="true" />
 

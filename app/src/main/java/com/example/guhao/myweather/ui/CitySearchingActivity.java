@@ -19,6 +19,7 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -74,27 +75,6 @@ public class CitySearchingActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        //setUpBackGround();
-
-    }
-
-    private void setUpBackGround(){
-        int scaleRatio = 10;
-        int blurRadius = 8;
-
-        Bitmap bitmap = getBitmapFromView(scroll_ll);
-
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap,
-                bitmap.getWidth() / scaleRatio,
-                bitmap.getHeight() / scaleRatio,
-                false);
-        Bitmap blur = FastBlur.blur(bitmap,blurRadius,true);
-
-        listview_ll.setBackground(new BitmapDrawable(blur));
-    }
 
     public void initData(){
         dbOperation = new DBOperation(this);
@@ -140,27 +120,15 @@ public class CitySearchingActivity extends BaseActivity {
         };
     }
 
-    public Bitmap getBitmapFromView(View view) {
-        //Define a bitmap with the same size as the view
-        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(),Bitmap.Config.ARGB_8888);
-
-        //Bind a canvas to it
-        Canvas canvas = new Canvas(returnedBitmap);
-        //Get the view's background
-        Drawable bgDrawable =view.getBackground();
-        if (bgDrawable!=null)
-            //has background drawable, then draw it on the canvas
-            bgDrawable.draw(canvas);
-        else
-            //does not have background drawable, then draw white background on the canvas
-            canvas.drawColor(Color.WHITE);
-        // draw the view on the canvas
-        view.draw(canvas);
-        //return the bitmap
-        return returnedBitmap;
-    }
-
     public void initListener(){
+//        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                    showInputMethod(v.findFocus());
+//                }
+//            }
+//        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override
             public boolean onQueryTextChange(String newText) {
@@ -184,6 +152,13 @@ public class CitySearchingActivity extends BaseActivity {
         });
 
 
+    }
+
+    private void showInputMethod(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.showSoftInput(view, 0);
+        }
     }
 
     @Override
