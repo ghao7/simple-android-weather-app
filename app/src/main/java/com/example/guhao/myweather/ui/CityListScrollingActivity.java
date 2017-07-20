@@ -8,12 +8,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.transition.Explode;
+import android.transition.ChangeImageTransform;
+import android.transition.ChangeTransform;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,9 +28,6 @@ import com.example.guhao.myweather.data.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.data.network.SubscriberOnNextListener;
 import com.example.guhao.myweather.data.presenter.WeatherPre;
-import com.example.guhao.myweather.util.FileUtil;
-import com.example.guhao.myweather.util.IconUtil;
-import com.example.guhao.myweather.util.MathUtil;
 import com.example.guhao.myweather.util.StringUtil;
 
 import java.io.ByteArrayOutputStream;
@@ -42,7 +40,6 @@ public class CityListScrollingActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private Toolbar tb_toolbar;
     private CityRecycleViewAdapter rvAdapter;
-    private FloatingActionButton fab;
 
     private SubscriberOnNextListener getWeatherOnNext;
 
@@ -55,6 +52,7 @@ public class CityListScrollingActivity extends BaseActivity {
         initData();
         initListner();
         update();
+        setupWindowAnimations();
     }
 
     public void initListner() {
@@ -126,10 +124,12 @@ public class CityListScrollingActivity extends BaseActivity {
                 //blur = Bitmap.createBitmap(blur,0, cut,width,height-cut);
 
                 createImageFromBitmap(blur);
+//                Bundle options = ActivityOptions.makeSceneTransitionAnimation(this, searchMenu,
+//                    getString(R.string.search)).toBundle();
+                Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
 
-                Bundle options = ActivityOptions.makeSceneTransitionAnimation(this, searchMenu,
-                        getString(R.string.search)).toBundle();
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, 1,bundle);
+
 
                 //overridePendingTransition(0,0);
                 break;
@@ -137,6 +137,14 @@ public class CityListScrollingActivity extends BaseActivity {
             default:
         }
         return true;
+    }
+
+    private void setupWindowAnimations() {
+        ChangeTransform fade = (ChangeTransform) TransitionInflater.from(this).inflateTransition(R.transition.change_image);
+//        fade.excludeTarget(android.R.id.statusBarBackground,true);
+//        fade.excludeTarget(android.R.id.navigationBarBackground, true);
+        getWindow().setExitTransition(fade);
+        getWindow().setReenterTransition(fade);
     }
 
     public String createImageFromBitmap(Bitmap bitmap) {
@@ -202,6 +210,8 @@ public class CityListScrollingActivity extends BaseActivity {
         // draw the view on the canvas
         view.draw(canvas);
         //return the bitmap
+
+
         return returnedBitmap;
     }
 

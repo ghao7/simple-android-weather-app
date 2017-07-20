@@ -12,6 +12,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.transition.TransitionSet;
@@ -22,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -53,6 +55,7 @@ public class CitySearchingActivity extends BaseActivity {
     private ListView listView;
     private LinearLayout listview_ll;
     private LinearLayout scroll_ll;
+    private ImageView searchBack;
 //    private WeatherPre weatherPre;
 
     @Override
@@ -86,16 +89,16 @@ public class CitySearchingActivity extends BaseActivity {
         listView = (ListView)findViewById(R.id.list_view);
         listview_ll = (LinearLayout)findViewById(R.id.listview_ll);
         scroll_ll = (LinearLayout)findViewById(R.id.scroll_ll);
+        searchBack = (ImageView)findViewById(R.id.searchback);
     }
 
     public void initView(){
-        getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark,null));
+        //getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark,null));
         searchView.setIconifiedByDefault(true);
         searchView.setFocusable(true);
         searchView.setIconified(false);
         searchView.setQueryHint("");
         searchView.requestFocusFromTouch();
-
 
         //listview_ll.setBackground(getResources().getDrawable(R.color.white));
         Bundle bundle = getIntent().getExtras();
@@ -129,6 +132,13 @@ public class CitySearchingActivity extends BaseActivity {
 //                }
 //            }
 //        });
+        searchBack.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finishAfterTransition();
+            }
+        });
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override
             public boolean onQueryTextChange(String newText) {

@@ -101,7 +101,6 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
         CardReveal cardReveal = new CardReveal();
         CircularReveal circularReveal = new CircularReveal();
-
         getWindow().setExitTransition(slide);
         getWindow().setReenterTransition(fade);
         getWindow().setAllowEnterTransitionOverlap(false);

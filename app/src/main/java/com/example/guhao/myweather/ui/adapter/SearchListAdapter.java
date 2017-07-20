@@ -53,7 +53,6 @@ public class SearchListAdapter extends ArrayAdapter<CityEntity> {
             cityName = cityEntity.getCity_cn() + " " + cityEntity.getUp_cn() + " " + cityEntity.getState_cn();
         }
         textView.setText(cityName);
-        textView.setTextSize(20);
         //textView.
         return textView;
     }

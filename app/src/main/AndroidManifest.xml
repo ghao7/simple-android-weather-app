@@ -40,7 +40,6 @@
             android:name=".ui.CitySearchingActivity"
             android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_city_list"
-            android:theme="@style/Theme.AppCompat.Translucent"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.CityListScrollingActivity"
