@@ -99,8 +99,9 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         Fade fade = (Fade)TransitionInflater.from(this).inflateTransition(R.transition.activity_fade);
         Explode explode = (Explode)TransitionInflater.from(this).inflateTransition(R.transition.activity_explode);
 
-        CardReveal cardReveal = new CardReveal();
-        CircularReveal circularReveal = new CircularReveal();
+
+        slide.setSlideEdge(Gravity.LEFT);
+//        slide.setDuration(500);
         getWindow().setExitTransition(slide);
         getWindow().setReenterTransition(fade);
         getWindow().setAllowEnterTransitionOverlap(false);

@@ -14,7 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.transition.ChangeImageTransform;
 import android.transition.ChangeTransform;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.transition.TransitionSet;
+import android.transition.TransitionValues;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +33,7 @@ import com.example.guhao.myweather.data.bean.WeatherEntity;
 import com.example.guhao.myweather.data.WeatherConstant;
 import com.example.guhao.myweather.data.network.SubscriberOnNextListener;
 import com.example.guhao.myweather.data.presenter.WeatherPre;
+import com.example.guhao.myweather.ui.transition.NonTransition;
 import com.example.guhao.myweather.util.StringUtil;
 
 import java.io.ByteArrayOutputStream;
@@ -52,7 +58,7 @@ public class CityListScrollingActivity extends BaseActivity {
         initData();
         initListner();
         update();
-        setupWindowAnimations();
+//        setupWindowAnimations();
     }
 
     public void initListner() {
@@ -113,22 +119,27 @@ public class CityListScrollingActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
+//                showShort("hjehe");
+
                 View searchMenu = tb_toolbar.findViewById(R.id.action_search);
                 Intent intent = new Intent(CityListScrollingActivity.this, CitySearchingActivity.class);
                 Bundle imageBundle = new Bundle();
                 Bitmap bitmap = getBitmapFromView(recyclerView);
-                Bitmap blur = FastBlur.blur(bitmap,45,true);
+                Bitmap blur = FastBlur.blur(bitmap,50,true);
                 int width = blur.getWidth();
                 int height = blur.getHeight();
                 //int cut = MathUtil.convertDpToPixels(56,this);
                 //blur = Bitmap.createBitmap(blur,0, cut,width,height-cut);
 
+
                 createImageFromBitmap(blur);
 //                Bundle options = ActivityOptions.makeSceneTransitionAnimation(this, searchMenu,
 //                    getString(R.string.search)).toBundle();
+
                 Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
 
                 startActivityForResult(intent, 1,bundle);
+//                startActivityForResult(intent, 1);
 
 
                 //overridePendingTransition(0,0);
@@ -140,11 +151,22 @@ public class CityListScrollingActivity extends BaseActivity {
     }
 
     private void setupWindowAnimations() {
-        ChangeTransform fade = (ChangeTransform) TransitionInflater.from(this).inflateTransition(R.transition.change_image);
-//        fade.excludeTarget(android.R.id.statusBarBackground,true);
-//        fade.excludeTarget(android.R.id.navigationBarBackground, true);
-        getWindow().setExitTransition(fade);
-        getWindow().setReenterTransition(fade);
+
+        TransitionSet set = (TransitionSet) TransitionInflater.from(this).inflateTransition(R.transition.change_image);
+//        NonTransition nonTransition = new NonTransition();
+//        nonTransition.addTarget(R.id.appbar);
+//        nonTransition.addTarget(android.R.id.statusBarBackground);
+//        set.addTransition(nonTransition);
+//        fade.excludeTarget(findViewById(android.R.id.statusBarBackground),true);
+//        fade.excludeTarget(findViewById(R.id.appbar), true);
+
+        set.excludeTarget(R.id.appbar,true);
+        set.excludeTarget(R.id.tb_toolbar,true);
+        set.excludeTarget(android.R.id.statusBarBackground,true);
+        set.excludeTarget(android.R.id.navigationBarBackground,true);
+
+        getWindow().setExitTransition(set);
+        getWindow().setReenterTransition(set);
     }
 
     public String createImageFromBitmap(Bitmap bitmap) {

@@ -15,6 +15,7 @@ import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.transition.TransitionInflater;
 import android.transition.TransitionSet;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -99,6 +100,7 @@ public class CitySearchingActivity extends BaseActivity {
         searchView.setIconified(false);
         searchView.setQueryHint("");
         searchView.requestFocusFromTouch();
+        overridePendingTransition(0,0);
 
         //listview_ll.setBackground(getResources().getDrawable(R.color.white));
         Bundle bundle = getIntent().getExtras();
@@ -121,6 +123,20 @@ public class CitySearchingActivity extends BaseActivity {
                 searchListListener(newList);
             }
         };
+
+        //setupWindowAnimations();
+
+    }
+
+    private void setupWindowAnimations() {
+
+        TransitionSet fade = (TransitionSet) TransitionInflater.from(this).inflateTransition(R.transition.enter_search);
+
+//        fade.excludeTarget(findViewById(android.R.id.statusBarBackground),true);
+//        fade.excludeTarget(findViewById(R.id.appbar), true);
+
+        getWindow().setEnterTransition(null);
+        getWindow().setReturnTransition(null);
     }
 
     public void initListener(){
